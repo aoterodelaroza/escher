@@ -21,3 +21,8 @@
 * lector de offs
 * simetria 
 * molmotif, etc. -> mas eficiente
+
+
+Daniel
+--------------
+* correct test data location scripts (getenv(),strcat()))
