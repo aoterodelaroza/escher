@@ -1,0 +1,72 @@
+* Instructions
+o means optional
+x means required
++ means function
+- not yet fully functional
+xxx to do
+
+* Crystal
+
+|     | Variable         | Type     | Dim.      | Apropos                                         |
+|-----+------------------+----------+-----------+-------------------------------------------------|
+| o   | name             | string   |           | Name of the crystal                             |
+| x   | a                | array    | 1x3       | Cell lengths (bohr)                             |
+| x   | b                | array    | 1x3       | Cell angles (degrees)                           |
+| x   | nat              | number   |           | Number of atoms in the unit cell                |
+| x   | ntyp             | number   |           | Number of atomic species                        |
+| x   | typ              | array    | 1xnat     | Atom type index (1..ntyp)                       |
+| x   | x                | array    | natx3     | Atomic positions (cryst)                        |
+| x   | attyp            | cell str | 1xntyp    | Symbols of atomic species                       |
+| x   | ztyp             | array    | 1xntyp    | Atomic numbers of species                       |
+| o   | rvdwtyp          | array    | 1xntyp    | Van der Waals radii (bohr, cr_vdwewald)         |
+| o   | c6typ            | array    | ntypxntyp | C6 coefficients (au, cr_vdwewald)               |
+| o   | zvaltyp          | array    | 1xntyp    | Valence atomic numbers                          |
+| o   | qtyp             | array    | 1xntyp    | Atomic charges (cr_qewald, cr_xrd)              |
+| xxx | omega            | array    |           |                                                 |
+| xxx | r                | array    |           |                                                 |
+| xxx | g                | array    |           |                                                 |
+| +   | crystal          | fun      |           | create an empty cr                              |
+| +   | cr_read_espresso | fun      |           | read cr from QE output                          |
+| +   | cr_read_vasp     | fun      |           | read cr from VASP POSCAR                        |
+| +   | cr_crystalbox    | fun      |           | create mol by cutting a parallelepiped from cr  |
+| +   | cr_spherebox     | fun      |           | create mol by cutting a sphere from cr          |
+| +   | cr_molmotif      | fun      |           | create mol by molecular completion in main cell |
+| +   | cr_unitcell      | fun      |           | create rep for the unit cell using sticks       |
+| +   | cr_write_tessel  | fun      |           | write cr to a tessel input file                 |
+| +   | cr_write_vasp    | fun      |           | write cr to a POSCAR                            |
+| +   | cr_write_cif     | fun      |           | write cr to a cif file                          |
+| +   | cr_write_critic2 | fun      |           | write cr to a critic2 input file                |
+| +   | cr_popinfo       | fun      |           | print info about the cr                         |
+| +   | cr_c2x           | fun      |           | cartesian to crystallographic                   |
+| +   | cr_x2c           | fun      |           | crystallographic to cartesian                   |
+| +   | cr_xrd           | fun      |           | calculate the powder x-ray diffraction pattern  |
+| +   | cr_qewald        | fun      |           | calculate electrostatic energy by Ewald         |
+| +   | cr_vdwewald      | fun      |           | calculate vdw energy by Ewald                   |
+| -   | cr_newcell       | fun      |           | transform the unit cell                         |
+| -   | cr_pw2cell       | fun      |           | ???                                             |
+
+* Molecule
+
+|   | Variable         | Type   | Dim. | Apropos                                                     |
+|---+------------------+--------+------+-------------------------------------------------------------|
+| o | name             | string |      | Name of the mol                                             |
+| + | mol_burst        | fun    |      | Partition a mol into a cell array of connected submolecules |
+| + | mol_getfragment  | fun    |      | Create a mol from a subset of atoms of another mol          |
+| + | mol_merge        | fun    |      | Merge two mols                                              |
+| + | mol_distmatrix   | fun    |      | Calculate the distance matrix                               |
+| + | mol_fillatnumber | fun    |      | Fill mol.atnumber using mol.atname                          |
+| + | mol_fillatmass   | fun    |      | Fill mol.atmass using mol.atnumber                          |
+| + | mol_cmass        | fun    |      | Calculate the center of mass                                |
+|   |                  |        |      |                                                             |
+
+name
+atname
+atnumber
+atxyz
+atmass
+conn?
+nfrag?
+ifrag?
+cmfrag?
+nat?
+

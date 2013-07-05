@@ -1,0 +1,511 @@
+==================================
+MolWare user's and reference guide
+==================================
+
+:Author:  Víctor Luaña (VLC) and Alberto Otero-de-la-Roza (AOR)
+:Contact: victor@carbono.quimica.uniovi.es
+:Address: Departamento de Química Física y Analítica, Universidad de Oviedo,
+          Principado de Asturias,
+          Julián Clavería 8, 33007 Oviedo, Spain
+:Contact: aoterodelaroza@ucmerced.edu
+:Address: School of Natural Sciences,
+          University of California, Merced, 5200 North Lake Road, Merced,
+          California 95343, USA.
+:Version: 0.1 (2011-12-23)
+
+.. raw:: latex
+
+   \thispagestyle{empty}
+   \enlargethispage{+1\baselineskip}
+
+.. image:: molware.png
+   :align: center
+   :scale: 65
+
+
+.. raw:: latex
+
+   \clearpage
+
+.. contents::
+
+.. raw:: latex
+
+   \clearpage
+
+.. sectnum::
+   :depth: 2
+
+
+Introduction
+============
+
+MolWare is a collection of octave routines and awk scripts developed with
+the purpose of working with molecules and crystals and interfacing with
+other codes that work with molecules and crystals.
+
+The package includes a number of scripts designed to analyze the output of
+several electronic structure codes and extract relevant information from
+there:
+
+   * extract-bond.awk:
+   * extract-del2rho.awk:
+   * extract-extreme.awk:
+   * extract-g98.awk:
+   * extract-gamess.awk:
+   * extract-gmseorb.awk:
+   * extract-irc.awk:
+   * extract-LCP.awk:
+   * extract-pn.awk:
+   * extract-proaimv.awk:
+   * extract_cryst_qe.awk - Analysis of the quantum espresso output that
+     corresponds to the optimization of a molecular crystal. The last geometry
+     is converted to a tessel input.
+   * extract_txyz_promolden.awk: extracts xyz coordinates of the atoms and
+     the critical points, plust the scalar values of the cps, from a
+     promolden output of the topology of an scalar field.
+   * extract_txyz_critic2g.awk: extracts xyz coordinates of the atoms and
+     the critical points, from a critic2g output of the topology of an scalar
+     field.
+   * extract_xyz_nwchem.awk: analyzes the output of a NWChem calculation
+     and extracts xyz files corresponding to the different geometries
+     found. See the "NWChem notes" section.
+   * extract_xyz_g09.awk:
+   * extract_xyz_gamess.awk:
+
+There are also a collection of octave based complete tasks:
+
+   * get_geom_xyz.m: get the geometry of an xyz file.
+   * get_xyz_geom_c6x6_yz3.m: geometry of an c6x6_yz3 adduct.
+
+Finally, the standalone octave programs are made of a collection of
+routines:
+
+   * cr_read_espresso.m: read in the optimized geometry for a crystal from
+     a quantum espresso (pwscf) calculation.
+   * cr_read_vasp.m: read in the crystal geometry from a vasp calculation
+     (POSCAR and POTCAR).
+   * cr_write_vasp.m: write a vasp-style crystal geometry (POSCAR).
+   * cr_write_cif.m: write the crystal description as a cif file.
+   * cr_molmotif.m: extracts one or more molecular motifs from a molecular
+     crystal description. Similar to the molmotif routine in tessel.
+   * cr_crystalbox.m: extract a molecular description from a
+     parallelpiped in crystallographic coordinates.
+   * cr_qewald.m: calculate the electrostatic energy of a lattice of
+     point charges using the Ewald method.
+   * cr_vdwewald.m: calculate the dispesrion energy of a crystal
+     (R^{-6} lattice sum) using Ewald method. 
+   * cr_popinfo.m: write some information about a crystal struct to
+     a file or to standard output.
+   * cr_xrd.m: calculates the x-ray powder diffractogram.
+   * cr_dbxrd.m: atomic scattering factor database.
+   * cr_xrd_gnuplot.m: uses the output from cr_xrd.m to plot the
+     powder diffraction diagram.
+   * color.m: transform a X11 color name into a rgb triplet.
+   * cylindermodel.m: create the vertices and faces of a normalized cylinder.
+   * mol_2molsgeometry.m: geometry between two different molecules.
+   * mol_addatom.m: add a new atom to a molecular database.
+   * mol_adduct.m: forms a new molecule from two fragments.
+   * mol_align.m: least square align a part of a molecule to the equivalent
+     part of another molecule.
+   * mol_angle.m: returns the angle between three atoms in the molecule.
+   * mol_ball.m: create a ball representation from a molecule.
+   * mol_classify.m: classify atoms in a molecule by atomic number and binding.
+   * mol_cmass.m: determines the center of mass of a molecule.
+   * mol_cuberange.m: prapare the input of cubegen for a molecule.
+   * mol_dbatom.m: get the properties of an atom from its atomic symbol.
+   * mol_dbstart.m: initialize the atomic properties database.
+   * mol_dbsymbol.m: get the properties of an atom from its atomic number.
+   * mol_dist.m: returns the distance between two atoms in the molecule.
+   * mol_dist2.m: returns the matrix of distances between groups of atoms
+     in two molecules.
+   * mol_fsck2topo.m: automatic MEP analysis from *.fsck.
+   * mol_getfragment.m: copies part of a molecule into a new fragment.
+   * mol_groupgeometry.m: geometry between two different fragments in
+     a molecule.
+   * mol_inertiamatrix.m: determines and diagonalizes the inertia matrix.
+   * mol_internalgeometry.m: obtains the connectivity between atoms and
+     the non connected fragments in a molecule.
+   * mol_islinear.m: checks if the molecule is linear.
+   * mol_isnew.m: checks if some coordinates are already in the molecule.
+   * mol_isplanar.m: checks if the molecule is planar.
+   * mol_limits.m: gets a bounding box for the molecule:
+   * mol_readcube.m: reads a gaussian cube file.
+   * mol_read_fchk.m: reads the molecular geometry from a gaussian fchk file.
+   * mol_readxyz.m: reads a molecule from a xyz file.
+   * mol_reorder.m: reorders the list of atoms.
+   * mol_smiles2xyz.m: uses smiles (and open babel) to produce the xyz
+     coordinates of a molecule.
+   * mol_stick.m: create a stick representation from a molecule.
+   * mol_transform.m: applies a 3x4 (rotation+traslation) matrix.
+   * mol_uniqatoms.m: detects atoms closer than eps and returns a list of
+     the unique atoms.
+   * mol_unitconvert.m: converts units in a mol description.
+   * mol_writeg09.m: prepares a gaussian09 input file for a molecule.
+   * mol_writenw.m: prepares a NWChem input file.
+   * mol_writexyz.m: writes a molecule to a xyz file.
+   * op_prod.m: product of two rotation-translation operations (Seitz op.)
+     Each operation is 3x4 and it is assumed to work on a 3x1 column
+     vector.
+   * op_rot3D.m: returns the matrix corresponding to a rotation in 3D,
+     defined in terms of three Euler angles, plus a translation.
+   * op_rotx.m: returns the matrix corresponding to a counter clockwise
+     rotation of "angle" degrees around the x axis plus the addition
+     translation.
+   * op_roty.m and op_rotz.m: 
+   * zmat_step.m: calculates the coordinates of new atom given three points
+     and a zmat reference: distance, angle, and dihedral angle.
+   * rep_addcamera.m: add a camera to a scene.
+   * rep_addlight.m: add a light to a scene.
+   * rep_setdefaultscene.m: add camera, lights and background to a
+     graphical representation using the objects in it and reasonable
+     default values.
+   * rep_write_obj.m: write a wavefront obj file from a graphical
+     representation.
+   * rep_write_off.m: write a geomview (OFF) file from a graphical
+     representation.
+   * rep_write_pov.m: write a povray file from a graphical
+     representation.
+   * rep_texdbstart.m: initialize the texture database.
+   * rep_texture.m: retrieve a texture from the database.
+   * rep_addpovtexture.m: add a pov texture to the database.
+   * rep_addobjtexture.m: add an obj texture to the database.
+   * rep_setbgcolor.m: change the background color of a scene.
+   * spheremodel.m: create the vertices and faces of a normalized sphere.
+
+The molecular structure
+-----------------------
+
+The crystal structure
+---------------------
+
+The structure describing a crystal (cr) contains the following fields: 
+
+* cr.name : name of the crystal, only for labelling purposes.
+* cr.ntyp : number of atomic species (types).
+* cr.zvaltyp(1,cr.ntyp) : valence atomic number for each atomic
+  type. 
+* cr.attyp{1,cr.ntyp} : atomic symbols for each atomic type. 
+* cr.ztyp(1,cr.ntyp) : atomic numbers for each atomic type.
+* cr.qtyp(1,cr.ntyp) : atomic formalx charges. Used by qewald.m in the
+  calculation of the electrostatic lattice energy. Also, by xrd.m to
+  load the correct atomic scattering factors from the database.
+* cr.typcount(1,cr.ntyp) : number of atoms of each type.
+* cr.c6typ(cr.ntyp,cr.ntyp) : matrix of dispersion interaction
+  coefficients. Used in cr_vdwewald.m.
+* cr.rvdwtyp(cr.ntyp,cr.ntyp) : matrix of van der Waals radii. Used
+  in cr_vdwewald.m only if damping is activated.
+* cr.nat : total number of atoms in the unit cell.
+* cr.typ(1,cr.nat) : type of each atom in the unit cell. cr.typ(i)
+  is index to the cr.*typ arrays.
+* cr.x(cr.nat,3) : crystallographic coordinates for each atom in the
+  unit cell.
+* cr.r(3,3) : crystallographic to cartesian matrix (bohr).
+* cr.g(3,3) : metric tensor (bohr^2).
+* cr.a(1,3) : cell lengths (bohr).
+* cr.b(1,3) : cell angles (radians).
+* cr.omega : cell volume (bohr^3).
+
+The graphical representations
+-----------------------------
+
+* rep.name: title of the representation.
+* rep.nball: number of balls.
+* rep.ball{1:rep.nball}: cell array of balls. Each ball is a
+  structure, with the following fields:
+  - rep.ball{i}.name: (atomic) name associated to the ball.
+  - rep.ball{i}.x: coordinates of the ball in angstrom.
+  - rep.ball{i}.r: radius (angstrom).
+  - rep.ball{i}.rgb: color triplet (from 0 to 255).
+* rep.nstick: number of sticks.
+* rep.stick{1:rep.stick}: cell array of sticks. Each stick is a
+  structure, with the following fields:
+  - rep.stick{i}.name: name associated to the stick.
+  - rep.stick{i}.x0: coordinates of the first point.
+  - rep.stick{i}.x1: coordinates of the second point.
+  - rep.stick{i}.r: radius.
+  - rep.stick{i}.rgb: color triplet (from 0 to 255).
+* rep.cam: a structure containing the definition of the camera. Its
+  fields are (all units are angstrom):   
+  - rep.cam.cop: the position of the camera.  
+  - rep.cam.sky: the sky direction.
+  - rep.cam.vuv: the up direction.
+  - rep.cam.rht: the right direction.
+  - rep.cam.drt: the third direction.
+  - rep.cam.vrp: the point the camera is pointing at.
+* rep.nlight: the number of lights
+* rep.light{1:rep.nlight}: a cell array with the descriptions of the
+  lights. It is:
+  - rep.light{i}.x: coordinates of the light (angstrom).
+  - rep.light{i}.color: color string.
+* rep.bgcolor: the background color as an integer triplet (0 to 255). 
+
+Installation of the package on a unix-like operating system
+-----------------------------------------------------------
+
+The MolWare package is distributed as a single compressed tar file. Let
+us assume that you want to install it in one of your personal
+directories, for instance in ''~/src/''. Then you should
+
+::
+
+   mv molware.tgz ~/src
+   cd ~/src
+   tar xtvf molware.tgz
+
+This will create the tree of directories
+
+::
+
+   ~/src/molware/doc/
+   ~/src/molware/src/
+   ~/src/molware/test/
+
+``doc`` contains this documentation, ``src`` is the home of all the
+routines forming the package, and ``test`` contains a set of scripts and
+data files for testing. The ``src`` directory must be added to the path
+where octave looks for files and routines. This can be done adding the
+next line to the ``~/.octaverc`` configuration file:
+
+::
+
+   addpath("~/src/molware/src/");
+
+Finally, we have found very useful to create a symbolic link of the main
+tasks in the binary directory where most of the personal executables can
+be found
+
+::
+
+   cd ~/bin
+   ln -s ~/src/molware/src/extract_xyz_nwchem.awk extract_xyz_nwchem.awk
+
+In this way, just by making sure that ``~/bin`` is included in the path
+of binaries, we can use asturfit and the rest of tasks on any working
+directory.
+
+The package can also be installed in a system directory for the access
+of all the users and added to the general octave path.
+
+Citation of this package
+------------------------
+
+Please, consider citing ref. [mw1]_ if you find the MolWare package
+useful for your work.
+
+.. [mw1] Víctor Luaña and Alberto Otero-de-la-Roza,
+   "MolWare: a package of molecular tools",
+   http://azufre.quimica.uniovi.es/software.html
+
+
+Compatibility with MatLab
+-------------------------
+
+MolWare is made of octave routines and scripts. No attempt has been made
+to ensure compatibility with MatLab. However, we anticipate only a few
+potential problems:
+
+   (1) the ''endfunction'', ''endfor'', and ''endif'' should be converted
+       to simple ''end''s;
+
+
+Some examples
+=============
+
+Test01: Reading a xyz file and analyzing the molecule
+-----------------------------------------------------
+
+
+Notes concerning the electronic structure codes
+===============================================
+
+g03
+---
+
+g09
+---
+
+gamess
+------
+
+NWchem
+------
+
+Format of relevant I/O files
+============================
+
+xyz files with coordinates
+--------------------------
+
+
+Internal representation of a molecule
+=====================================
+
+
+Alphabetic list of routines and routine documentation
+=====================================================
+
+mol_addatom.m
+-------------
+
+::
+
+   # octave
+   function molout = mol_addatom (atname, atxyz, molin, newmol=0, LOG=1)
+
+Add a new atom (if it is not included) to the molecule.
+
+Required input variables:
+
+* atmane: name of new atom.
+* atxyz: (1:3) array with the cartesian coordinates of the new atom.
+* molin: structure with the input molecular description. The format is:
+    * molin.name ---> title of the molecule.
+    * molin.atname --> {1:M} cell array with the symbols of the atoms
+                       (M is the number of atoms in the molecule).
+    * molin.xyz -----> Mx3 matrix with the atomic coordinates.
+    * molin.mass ----> [1:M] vectos with atomic masses.
+
+Optional input variables (all have default values):
+
+* {LOG = 1}: print information about the data read in if LOG>0.
+         * LOG = 0  no output.
+         * LOG = 1  number of points read in, volume and energy range.
+         * LOG = 2  like 1 plus a complete list of the points read in.
+* {newmol = 0}: Enter newmol!= to create a new molecule or clean and restart
+              an old molecule.
+
+Required output variables:
+
+* molout: structure with the input molecular description. The format is:
+      * molout.name ---> title of the molecule.
+      * molout.atname --> {1:M} cell array with the symbols of the atoms
+                          (M is the number of atoms in the molecule).
+      * molout.xyz -----> Mx3 matrix with the atomic coordinates.
+
+mol_adduct.m
+------------
+
+
+mol_align.m
+-----------
+
+
+mol_cmass.m
+-----------
+
+
+mol_dbatom.m
+------------
+
+
+mol_dbstart.m
+-------------
+
+
+mol_dbsymbol.m
+--------------
+
+
+mol_dist.m
+----------
+
+
+mol_dist2.m
+-----------
+
+
+mol_getfragment.m
+-----------------
+
+
+mol_inertiamatrix.m
+-------------------
+
+
+mol_internalgeometry.m
+----------------------
+
+
+mol_islinear.m
+--------------
+
+
+mol_isnew.m
+-----------
+
+
+mol_isplanar.m
+--------------
+
+
+mol_readxyz.m
+-------------
+
+
+mol_transform.m
+---------------
+
+
+mol_unitconvert.m
+-----------------
+
+
+mol_uniqatoms.m
+---------------
+
+
+mol_writeg09.m
+--------------
+
+
+mol_writenw.m
+-------------
+
+
+mol_writexyz.m
+--------------
+
+
+op_prod.m
+---------
+
+
+op_rot3D.m
+----------
+
+
+op_rotx.m, op_roty.m, op_rotz.m
+-------------------------------
+
+
+zmat_step.m
+-----------
+
+
+Copyright notice
+================
+
+Copyright |copy| 2011-2012, Víctor Luaña <victor@carbono.quimica.uniovi.es>,
+Departamento de Química Física y Analítica, Universidad de Oviedo,
+E-33007 Oviedo, Principado de Asturias, Spain
+and Alberto Otero-de-la-Roza <aoterodelaroza@ucmerced.edu>, School of
+Natural Sciences, University of California, Merced, 5200 North Lake Road,
+Merced, California 95343, USA.
+
+.. |copy| unicode:: 0xA9 .. copyright sign
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+MA 02111-1307, USA.

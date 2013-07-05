@@ -1,0 +1,4 @@
+Test: dispersion energy of fcc Ar, graphite and CdCl2 using the 
+Ewald method. The results are compared to the same computation 
+using the brute-force approach, and with and without damping.
+

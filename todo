@@ -1,0 +1,23 @@
+* reimplementar __marching_cubes__.m en c++ para isosurface.
+* convertir ball{:}.x en ballx[:] en algunas rutinas para 
+  las operaciones de algebra lineal.
+* modificar rep_surface para consistencia con rep_read_basin.
+* sticks con los colores de los atomos, enlaces dobles, a rayas, etc.
+* A~nadir mol.nat .
+* completar devs.org
+* similar to cr_molmotif but reads a mol and returns a cell array of connected molecules. 
+  To be used with cr_crystalbox.
+* define functions for color scales
+* cr_molmotif -> mas eficiente.
+* cr_molmotif -> incluir parte del borde.
+* equivalente a cr_molmotif para eliminar los fragmentos con menos de n atomos.
+  de una molecula.
+* mol_merge comprueba si hay atomos repetidos.
+* mol_getfragment acepta cell array con simbolos + regexp.
+* mapeados en povray.
+* pintar los ejes de referencia
+* construir una supercelda.
+* opciones para los sticks.
+* lector de offs
+* simetria 
+* molmotif, etc. -> mas eficiente

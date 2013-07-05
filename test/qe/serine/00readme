@@ -1,0 +1,4 @@
+Test: geometry relaxation of the serine crystal at constant pressure
+using quantum espresso. The test script reads the optimized crystal
+geometry and writes out some data.
+
