@@ -35,7 +35,9 @@ function rep = rep_addlight(repi,pos,r="",LOG=0);
   rep.nlight = rep.nlight + 1;
   rep.light{rep.nlight}.x = pos;
   rep.light{rep.nlight}.color = "rgb<1.0,1.0,1.0>"; ## same as "rgb 1"
-  rep.light{rep.nlight}.matrix = r;
+  if (!isempty(r))
+    rep.light{rep.nlight}.matrix = r;
+  endif
 
   if (LOG>0) 
     printf("Added light number %d at <%.5f,%.5f,%.5f> angstrom, white\n",rep.nlight,pos)

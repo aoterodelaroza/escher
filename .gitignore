@@ -3,7 +3,8 @@
 *gif
 *tags
 
-CVS
+# workaround camera placement with g3dviewer
+tools/
 
 #--------------------
 # test/ directory

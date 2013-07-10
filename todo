@@ -1,3 +1,6 @@
+* molecular template on crystal: mol+cr -> cryst. positions
+  of the mol. crtemplate class: atom id + lattice vector.
+  molmotif starting from a template.
 * reimplementar __marching_cubes__.m en c++ para isosurface.
 * convertir ball{:}.x en ballx[:] en algunas rutinas para 
   las operaciones de algebra lineal.
@@ -21,6 +24,8 @@
 * lector de offs
 * simetria 
 * molmotif, etc. -> mas eficiente
+* mol_readxyz detects automatically whether it's atomic name or
+  atomic symbol.
 
 
 Daniel

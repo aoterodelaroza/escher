@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function g = grid()
-% function g = grid()
+function g = grid_()
+% function g = grid_()
 %
 % grid - create an empty grid structure.
 %

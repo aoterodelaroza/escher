@@ -115,14 +115,13 @@ function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
           continue
        elseif (count==4)
           xyz = cellfun('str2num',g(2:4));
-          [sv,st] = cellfun('str2double',g(1));
-          if (st == 0)
+          if (!ischar(g{1}))
              columns = "nxyz";
-             atnumber = sv;
+             atnumber = str2num(g{1});
              [atsymbol,atprop] = mol_dbsymbol(atnumber);
           else
              columns = "axyz";
-             atsymbol = cell2mat(g(1));
+             atsymbol = g{1};
              [atnumber,atprop] = mol_dbatom(atsymbol);
           endif
        elseif (count==5)

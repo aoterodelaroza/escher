@@ -11,8 +11,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function smol = mol_burst(mol, bondfactor=1.20)
-% function smol = mol_burst(mol, bondfactor=1.20)
+function [smol idxmol] = mol_burst(mol, bondfactor=1.20)
+% function [smol idxmol] = mol_burst(mol, bondfactor=1.20)
 %
 % mol_burst - from a molecule (mol), extract a cell array of molecules
 % containing each molecualr motif.
@@ -26,6 +26,7 @@ function smol = mol_burst(mol, bondfactor=1.20)
 %
 % Required output variables:
 % {smol}: cell array of molecules containing the molecular motifs.
+% {idxmol}: cell array of index vectors to the original supermolecule.
 %
 
   ## distance matrix
@@ -43,6 +44,7 @@ function smol = mol_burst(mol, bondfactor=1.20)
 
   ## build the fragments
   smol = cell();
+  idxmol = cell();
   nout = 0;
   slat = lat(find(active));
   do
@@ -71,6 +73,7 @@ function smol = mol_burst(mol, bondfactor=1.20)
     slat = lat(find(active));
     nout += 1;
     smol{nout} = mol_getfragment(mol,idx);
+    idxmol{nout} = idx;
   until (isempty(slat))
 
 endfunction

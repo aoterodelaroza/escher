@@ -11,8 +11,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [mol] = cr_molmotif(cr, allinmaincell=1, ilist=[], bondfactor=1.20, LOG=0)
-% function [mol] = cr_molmotif(cr, allinmaincell=1, ilist=[], bondfactor=1.20, LOG=1)
+function [mol mask] = cr_molmotif(cr, allinmaincell=1, ilist=[], bondfactor=1.20, LOG=0)
+% function [mol mask] = cr_molmotif(cr, allinmaincell=1, ilist=[], bondfactor=1.20, LOG=1)
 %
 % cr_molmotif - return one or several molecular motifs where, at least,
 % one atom is within the main unit cell.
@@ -29,6 +29,8 @@ function [mol] = cr_molmotif(cr, allinmaincell=1, ilist=[], bondfactor=1.20, LOG
 % Required output variables:
 % {mol}: description of the molecular motifs, including the cartesian
 %      coordinates of the atoms.
+% {mask}: cell array containing the mask that generates the mol. The
+%      mask contains the atom indices and lattice translations.
 %
 
 bohr2angstrom = 0.52917720859;
@@ -82,6 +84,8 @@ if (allinmaincell == 1)
                endif
                atindex(nall) = l;
                xyz(1:3,nall) = cr.x(l,1:3)' + [i;j;k];
+               lxyz(nall,1:3) = [i j k];
+               ixyz(nall) = l;
             endfor
          endfor
       endfor
@@ -192,6 +196,8 @@ endif
 # Create the final mol output:
 listin = find(inmotif>=1);
 n = 0;
+mol = molecule();
+mask = crmask();
 for i = listin
    ++n;
    i1 = atindex(i);
@@ -202,5 +208,8 @@ for i = listin
    mol.atmass(n) = atom.mass;
    mol.atxyz(1:3,n) = xyz(1:3,i);
 endfor
+mask.nat = length(listin);
+mask.l = lxyz;
+mask.i = ixyz;
 
 endfunction

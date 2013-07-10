@@ -1,3 +1,47 @@
+2013-07-09  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* .gitignore: included tools/.
+
+2013-07-08  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_readxyz.m: fixed bug. g{1}, not g(1).
+
+	* test/: fixed the tests to work with the new veresions.
+
+	* test/qe/epxars_fepxas/testme.m: added. Crystal masks and
+	polymorph plotting.
+
+	* src/cr_applymask.m: added. Applies a mask to a crystal geomtery
+	to obtain a molecule.
+
+	* src/mol_burst.m: added a cell array of vector indices as a
+	second output.
+
+	* src/cr_crystalbox.m: returns the crystal mask as a second
+	output.
+
+	* src/cr_molmotif.m: returns the crystal mask as a second output.
+
+	* src/crmask.m: added the object 'crystal mask'. It saves some
+	atomic indices of a crystal structure and associated lattice
+	vectors. Then, you can apply it to a similar crystal to obtain an
+	equivalent cutout molecule from it.
+
+2013-07-07  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_merge.m: fixed bug--empty atmass.
+
+	* src/grid_readcube.m: grid -> grid_
+
+	* src/grid.m: moved to grid_.m to avoid the stupid warnings.
+
+	* src/rep_addlight.m: do not add empty matrix to rep.light.
+
+	* src/rep_write_pov.m: careful with empty matrices in rep.light.
+
+	* src/rep_setdefaultscene.m: fixed bug using ismatrix. Now
+	isnumeric and !isscalar (?).
+
 2013-07-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src-attic/: added.

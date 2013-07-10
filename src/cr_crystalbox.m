@@ -11,8 +11,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol = cr_crystalbox(cr, x0=[-0.05 -0.05 -0.05], x1=[1.05 1.05 1.05], nmol=-1, LOG=0)
-% function mol = cr_crystalbox(cr, x0=[-0.05 -0.05 -0.05], x1=[1.05 1.05 1.05], nmol=-1, LOG=0)
+function [mol mask] = cr_crystalbox(cr, x0=[-0.05 -0.05 -0.05], x1=[1.05 1.05 1.05], nmol=-1, LOG=0)
+% function [mol mask] = cr_crystalbox(cr, x0=[-0.05 -0.05 -0.05], x1=[1.05 1.05 1.05], nmol=-1, LOG=0)
 %
 % cr_crystalbox - create a molecule by cutting a parallelepiped from a crystal.
 %
@@ -28,6 +28,8 @@ function mol = cr_crystalbox(cr, x0=[-0.05 -0.05 -0.05], x1=[1.05 1.05 1.05], nm
 %
 % Required output variables:
 % {mol}: the molecular description.
+% {mask}: cell array containing the mask that generates the mol. The
+%      mask contains the atom indices and lattice translations.
 %
 
 bohr2angstrom = 0.52917720859;
@@ -78,6 +80,7 @@ mol = struct();
 mol.atname = cell();
 mol.atnumber = zeros(1,nvecsm1*cr.nat+nvecs*cr.nat/4);
 mol.atxyz = zeros(3,nvecsm1*cr.nat+nvecs*cr.nat/4);
+mask = crmask();
 n = 0;
 for i = 1:cr.nat
   for j = 1:nvecs
@@ -87,6 +90,9 @@ for i = 1:cr.nat
       mol.atname{n} = cr.attyp{cr.typ(i)};
       mol.atnumber(n) = cr.ztyp(cr.typ(i));
       mol.atxyz(:,n) = x * r;
+      mask.nat += 1;
+      mask.l(mask.nat,1:3) = lvecs(j,:);
+      mask.i(mask.nat) = i;
     endif
   endfor
 endfor
@@ -98,13 +104,20 @@ else
 endif
 
 if (nmol > 0)
-  smol = mol_burst(mol);
+  [smol idxmol] = mol_burst(mol);
   mol = molecule();
+  amask = crmask();
   for i = 1:length(smol)
     if (length(smol{i}.atnumber) >= nmol)
       mol = mol_merge(mol,smol{i});
+      n = amask.nat;
+      amask.nat = amask.nat + length(idxmol{i});
+      amask.l(n+1:amask.nat,1:3) = mask.l(idxmol{i},1:3);
+      amask.i(n+1:amask.nat) = mask.i(idxmol{i});
     endif
   endfor
+  mask = amask;
+  clear amask;
 endif
 
 if (isfield(cr,"name") && !isempty(cr.name))

@@ -46,7 +46,7 @@ for i = 1:length(varargin)
       mol.atxyz(1:3,n) = mol1.atxyz(1:3,j);
       mol.atname{n} = mol1.atname{j};
       mol.atnumber(n) = mol1.atnumber(j);
-      if (isfield(mol1,"atmass"))
+      if (isfield(mol1,"atmass") && !isempty(mol1.atmass))
         mol.atmass(n) = mol1.atmass(j);
       endif
     endfor

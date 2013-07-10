@@ -32,7 +32,7 @@ function rep = rep_setdefaultscene(repi,r="",LOG=0);
     printf("Adopting default parameters for representation...\n");
   endif
   ## add the camera, default placement
-  if (ismatrix(r))
+  if (isnumeric(r) && !isscalar(r))
     rep = rep_addcamera_modelview(rep,r,45,LOG);
   else
     rep = rep_addcamera(rep,:,:,LOG);

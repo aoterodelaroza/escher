@@ -36,7 +36,7 @@ function g = grid_readcube (cubefile, LOG=0)
     error("mol_readcube: Could not open -- %s",cubefile);
   endif
 
-  g = grid();
+  g = grid_();
 
   ## title lines in the cube file
   g.name = fgetl(fqub); title{2} = fgetl(fqub);

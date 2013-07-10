@@ -199,7 +199,7 @@ function rep_write_pov(rep,file="",LOG=0)
   if (isfield(rep,"nlight") && !isempty(rep.nlight))
     for i = 1:rep.nlight
       fprintf(fid,"light_source {\n  <%.5f,%.5f,%.5f>\n  color %s\n",rep.light{i}.x,rep.light{i}.color);
-      if (isfield(rep.light{i},"matrix") && ismatrix(rep.light{i}.matrix))
+      if (isfield(rep.light{i},"matrix") && ismatrix(rep.light{i}.matrix) && !isempty(rep.light{i}.matrix))
         fprintf(fid,"  transform{\n");
         fprintf(fid,"    translate <%.10f, %.10f, %.10f>\n",rep.cam.cop);
         fprintf(fid,"  inverse }\n");
