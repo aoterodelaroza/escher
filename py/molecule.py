@@ -25,7 +25,7 @@ class Molecule():
     '''
     molecule data structure
     >>> mol = Molecule()
-    >>> mol.readcube('../data/mol/ethylene_iso/c2h4.cube')
+    >>> mol.readcube('../../escher_data/mol/ethylene_iso/c2h4.cube')
     >>> mol.a
     array([[ 13.33332 ,   0.      ,   0.      ],
            [  0.      ,  13.33332 ,   0.      ],
@@ -134,6 +134,13 @@ class Molecule():
                     self.alldata.extend([float(k) for k in lex.split(lines[n+j])])
                 self.alldata = np.array(self.alldata)
                 log.info('Grid data points {0:d}'.format(len(self.alldata)))
+        self.f = np.zeros(self.n)
+        ndim = 0
+        for i in range(self.n[0]):
+            for j in range(self.n[1]):
+                self.f[i,j,:] = self.alldata[ndim:ndim+self.n[2]] 
+                ndim = ndim + self.n[2]
+
 
 
                 
