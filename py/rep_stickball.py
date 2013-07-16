@@ -105,14 +105,9 @@ renWin.StereoCapableWindowOn()
 iren = vtkRenderWindowInteractor()
 iren.SetRenderWindow(renWin)
 
-
-
-
-
 a = Molecule()
 a.readcube('../../escher_data/mol/ethylene_iso/c2h4.cube')
 #a.readcube('/home/daniel/pkg/vis/VTKData/Data/m4_TotalDensity.cube')
-
 
 for i in range(len(a.atxyz)):
     if a.atname[i] == 'H':
@@ -132,27 +127,23 @@ for i in range(len(a.atxyz)):
             ren.AddActor(stick(a.atxyz[i], a.atxyz[j]))
 
 
+def start():
+    # enable user interface interactor
+    iren.Initialize()
+    iren.Start()
+
+    pov = vtk.vtkPOVExporter()
+    pov.SetRenderWindow(renWin)
+    pov.SetFileName('out.pov')
+    pov.Write()
+
+    ## image
+    #wif = vtk.vtkWindowToImageFilter()
+    #wif.SetInputData(renWin)
+    #png = vtk.vtkPNGWriter()
+    #png.SetInputConnection(wif.GetOutputPort())
+    #png.SetFileName('img.png')
+    #png.Write()
 
 
-
-
-
-# enable user interface interactor
-iren.Initialize()
-
-
-iren.Start()
-
-pov = vtk.vtkPOVExporter()
-pov.SetRenderWindow(renWin)
-pov.SetFileName('out.pov')
-pov.Write()
-
-## image
-#wif = vtk.vtkWindowToImageFilter()
-#wif.SetInputData(renWin)
-#png = vtk.vtkPNGWriter()
-#png.SetInputConnection(wif.GetOutputPort())
-#png.SetFileName('img.png')
-#png.Write()
-
+start()

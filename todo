@@ -29,5 +29,12 @@
 
 
 Daniel
---------------
-* correct test data location scripts (getenv(),strcat()))
+--------
+* keyboard vtk window interaction (POVExport, PNG, camera position, ...)
+* NCIPlots(colourediso), critical points(polyhedra), ORTEP(ellipsoid),
+    popplot
+* surface espresso input generation
+* mol_readxyz.m --> .py
+* set camera parameters for any input data
+* dictionary of atom colors
+* bond colors and double, triple bonds

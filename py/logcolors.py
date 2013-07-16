@@ -169,8 +169,8 @@ class MyFormatter(logging.Formatter):
         return result
 
 
-def qelog():
-    log = logging.getLogger('qelog')
+def escherlog():
+    log = logging.getLogger('escherlog')
     log.setLevel(logging.DEBUG)
     #formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(funcName)s:%(lineno)d %(message)s')
     formatter = MyFormatter()
@@ -180,7 +180,7 @@ def qelog():
     return log
 
 if __name__ == '__main__':
-    log = qelog()
+    log = escherlog()
     log.debug('DEBUG')
     log.info('INFO')
     log.warning('WARNING')
