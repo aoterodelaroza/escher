@@ -63,14 +63,8 @@ class Molecule():
         self.atmass = np.array([])
         # Atomic coordinates
         self.atxyz = []
-#        # metric matrix
-#        self.a = np.zeros([3,3])
-#        # cube grid spacings
-#        self.dx = self.a
-#        # cube grid dimensions
-#        self.n = np.array([], dtype=np.int)
-#        # all cube scalr data dim=1 array
-#        self.alldata = []
+        self.rep = Representation()
+        self.rep.window()
 
 
     def abrir(self, filename):
@@ -113,47 +107,22 @@ class Molecule():
                 self.title = i
             elif n==2: # third line
                 self.nat = int(lex.split(i)[0])
-#                self.x0 = [float(j) for j in lex.split(i)[1:4]]
-#                log.info('Grid origin {0:.6f} {1:.6f} {2:.6f}'.format(*self.x0))
+                log.debug('Number of atoms: {}'.format(self.nat))
                 # initialize atomic names, coordinates with right size
                 self.atxyz = np.zeros([self.nat,3])
-#            elif n==3:
-#                for j in range(3):
-#                    # reading grid dimensions
-#                    self.n = np.append(self.n, [int(lex.split(lines[n+j])[0])])
-#                    # reading grid spacings
-#                    self.dx[j,:] = np.array([float(k) for k in lex.split(lines[n+j])[1:4]])
-#                    log.info('Grid matrix {0:15.9f} {1:15.9f} {2:15.9f}'.format(*self.dx[j,:]))
-#                    self.a[j,:] = self.dx[j,:].dot(self.n[j])
-#                log.info('Grid dimensions {0:d} {1:d} {2:d}'.format(*self.n))
-#                self.omega = np.linalg.det(self.a)
             elif n==6:
                 for j in range(self.nat):
-                    self.atnumber = np.append(self.atnumber, [int(lex.split(lines[n+j])[0])])
+                    self.atnumber = np.append(self.atnumber, 
+                            [int(lex.split(lines[n+j])[0])])
                     self.atname.append(elements.find(self.atnumber[-1]))
-                    self.atmass = np.append(self.atmass, [float(lex.split(lines[n+j])[1])])
-                    self.atxyz[j,:] = np.array([float(k) for k in lex.split(lines[n+j])[2:5]])
-#            elif n==(6+self.nat):
-#                for j in range(len(lines)-6-self.nat):
-#                    self.alldata.extend([float(k) for k in lex.split(lines[n+j])])
-#                self.alldata = np.array(self.alldata)
-#                log.info('Grid data points {0:d}'.format(len(self.alldata)))
-#        self.f = np.zeros(self.n)
-#        ndim = 0
-#        for i in range(self.n[0]):
-#            for j in range(self.n[1]):
-#                self.f[i,j,:] = self.alldata[ndim:ndim+self.n[2]] 
-#                ndim = ndim + self.n[2]
-
-    def nciplot(self, file1, file2):
-        densgrid = Grid()
-        gradgrid = Grid()
-
-        #densgrid.readcube('../../escher_data/mol/ethylene_iso/c2h4.cube')
+                    self.atmass = np.append(self.atmass, 
+                            [float(lex.split(lines[n+j])[1])])
+                    self.atxyz[j,:] = np.array( \
+                            [float(k) for k in lex.split(lines[n+j])[2:5]])
+                log.debug('Atoms: \n {}'.format(self.atname))
+                log.debug('Atomic coordinates: \n {}'.format(self.atxyz))
 
     def stickball(self):
-        rep = Representation()
-        rep.window()
         log.debug('Add stick/ball representation')
         for i in range(self.nat):
             # instead use a dictionary
@@ -167,8 +136,8 @@ class Molecule():
                 color = [1,0,0]
             else:
                 color = [0.5,0.5,0.5]
-            sphereatom = rep.ball(0.6, self.atxyz[i], color)
-            rep.ren.AddActor(sphereatom)
+            sphereatom = self.rep.ball(0.6, self.atxyz[i], color)
+            self.rep.ren.AddActor(sphereatom)
 
         for i in range(self.nat):
             for j in range(i):
@@ -176,23 +145,32 @@ class Molecule():
                             (self.atxyz[i][1] - self.atxyz[j][1])**2 + 
                             (self.atxyz[i][2] - self.atxyz[j][2])**2)
                 if (dist) < 3. :
-                    rep.ren.AddActor(rep.stick(self.atxyz[i], 
-                                      self.atxyz[j]))
-        self.rep = rep
+                    stickbond = self.rep.stick(self.atxyz[i], 
+                                               self.atxyz[j])
+                    self.rep.ren.AddActor(stickbond)
 
-    def isosurface(self):
+    def isosurface(self, filename, isovalue):
         dens = Grid()
-        dens.readcube('../../escher_data/mol/ethylene_iso/c2h4.cube')
-        #delta = [dens.dx[0,0]/dens.n[0], dens.dx[1,1]/dens.n[1], 
-        #         dens.dx[2,2]/dens.n[2]]
+        #dens.readcube('../../escher_data/mol/ethylene_iso/c2h4.cube')
+        dens.readcube(filename)
         delta = [dens.dx[0,0], dens.dx[1,1], dens.dx[2,2]]
         self.rep.gridvolume(dens.x0, delta, dens.n, dens.f)
-        self.rep.marchingcubes()
+        self.rep.marchingcubes(isovalue)
         
+    def nciplot(self, file1, file2):
+        dens = Grid()
+        grad = Grid()
+
+        dens.readcube(file1)
+        grad.readcube(file2)
+        delta = [grad.dx[0,0], grad.dx[1,1], grad.dx[2,2]]
+        self.rep.gridvolume(grad.x0, delta, grad.n, grad.f)
+        self.rep.volumescalar(dens.n, dens.f)
+        self.rep.marchingcubes(0.5)
+
     def start(self):
 
         self.rep.start()
-
 
                 
 if __name__ == '__main__':

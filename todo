@@ -36,5 +36,7 @@ Daniel
 * surface espresso input generation
 * mol_readxyz.m --> .py
 * set camera parameters for any input data
-* dictionary of atom colors
+* dictionary of atom colors and radius
 * bond colors and double, triple bonds
+* radial distribution function g(r)
+* use debug variable ESCHER_DEBUG='ON'
