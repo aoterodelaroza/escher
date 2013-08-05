@@ -1,5 +1,8 @@
 2013-08-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* escher_data/mol/polygon/: added. Example on how to use the
+	rep_polygon routine.
+
 	* src/mol_write_zmat.m: modified calling sequence.
 
 	* src/rep_polygon.m: added. Draw a polygon in the scene.
