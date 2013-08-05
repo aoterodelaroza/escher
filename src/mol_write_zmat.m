@@ -11,7 +11,7 @@
 % more details.
 
 function mol_write_zmat(mol,file="")
-% function zmat = mol_write_zmat(mol, method, route, LOG=1)
+% function zmat = mol_write_zmat(mol, file="")
 %
 % mol_write_zmat - write a zmatrix using the cartesian coordinates in mol.
 %                  The order is not changed.

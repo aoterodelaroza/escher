@@ -1,3 +1,15 @@
+2013-08-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_write_zmat.m: modified calling sequence.
+
+	* src/rep_polygon.m: added. Draw a polygon in the scene.
+
+	* src/mol_polyhedron.m: fixed defaults in the documentation.
+
+2013-07-29  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_write_zmat.m: corrected documentation.
+
 2013-07-15  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* escher_data/mol/burrito/: added test. Carbon nanotube with
