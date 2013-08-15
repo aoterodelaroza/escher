@@ -1,3 +1,7 @@
+2013-08-15  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* README: wrote a simple README file for escher.
+
 2013-08-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* escher_data/mol/polygon/: added. Example on how to use the
