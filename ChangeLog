@@ -1,5 +1,7 @@
 2013-08-17  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/mol_polyhedron.m: caught bug in the generation of faces.
+
 	* src/cr_newcell.m: created. Change the unit cell of a crystal
 	by giving the new lattice vectors in the crystallographic
 	coordinates of the original cell. Implements tessel's

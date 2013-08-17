@@ -138,7 +138,6 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
           rep.vertex{rep.nvertex}.x = molv.atxyz(:,idx(i))';
           rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
         endfor
-        nv0 = rep.ntriangle;
         for i = 1:size(h,1)
           rep.ntriangle += 1;
           rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
