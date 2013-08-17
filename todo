@@ -1,3 +1,5 @@
+* improve cr_newcell
+* use crystal() for all the object construction -> simpler idiom for if(isfield(bleh))
 * molecular template on crystal: mol+cr -> cryst. positions
   of the mol. crtemplate class: atom id + lattice vector.
   molmotif starting from a template.
