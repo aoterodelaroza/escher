@@ -1,3 +1,12 @@
+2013-08-17  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/cr_newcell.m: created. Change the unit cell of a crystal
+	by giving the new lattice vectors in the crystallographic
+	coordinates of the original cell. Implements tessel's
+	newunitcell, but allows creating a new crystal object.
+
+	* src/cr_unitcell.m: fixed bug--mol, not cr.
+
 2013-08-15  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* README: wrote a simple README file for escher.

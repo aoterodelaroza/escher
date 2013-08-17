@@ -42,8 +42,8 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
     rep = addto;
   else
     rep = representation();
-    if (isfield(mol,"name") && !isempty(mol.name))
-      rep.name = mol.name;
+    if (isfield(cr,"name") && !isempty(cr.name))
+      rep.name = cr.name;
     endif
   endif
   if (!isfield(rep,"nstick"))
