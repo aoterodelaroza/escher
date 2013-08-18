@@ -1,3 +1,10 @@
+2013-08-18  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* README: small fix.
+
+	* escher_data/001_agtao3: added test 001 corresponding to tale
+	4 in the webpage.
+
 2013-08-17  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/mol_polyhedron.m: caught bug in the generation of faces.

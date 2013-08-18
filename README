@@ -212,8 +212,8 @@ the camera is pointing at. The (1:3,4) block is the actual position of
 the center of projection. If set to [0; 0; 0], which we strongly
 recommend, then it is taken as the center of mass of the system.
 
-Image gallery
--------------
+Examples
+--------
 
 You can find several examples of escher plots in the examples
 directory (escher_data) and also in the [[Image gallery|Image Gallery]] and in the
