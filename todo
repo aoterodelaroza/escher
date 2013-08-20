@@ -1,3 +1,4 @@
+* camera from meshlab copy shot!!
 * surfaces in the obj file.
 * improve cr_newcell
 * use crystal() for all the object construction -> simpler idiom for if(isfield(bleh))
