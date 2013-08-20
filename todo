@@ -1,3 +1,4 @@
+* surfaces in the obj file.
 * improve cr_newcell
 * use crystal() for all the object construction -> simpler idiom for if(isfield(bleh))
 * molecular template on crystal: mol+cr -> cryst. positions
