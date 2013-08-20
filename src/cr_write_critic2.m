@@ -40,7 +40,6 @@ function cr_write_critic2(cr,file="",LOG=0)
   for i = 1:cr.nat
     fprintf(lu,"  neq   %.10f %.10f %.10f %s\n",cr.x(i,:),cr.attyp{cr.typ(i)});
   endfor
-  fprintf(lu,"  guess\n");
   fprintf(lu,"endcrystal\n");
   fprintf(lu,"#auto\n");
   fprintf(lu,"#qtree 6\n");

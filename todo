@@ -1,3 +1,5 @@
+* routine to build crystal from scratch. Clean up r/g/a,b descriptions.
+* adapt shmueli symmetry builder.
 * camera from meshlab copy shot!!
 * surfaces in the obj file.
 * improve cr_newcell
