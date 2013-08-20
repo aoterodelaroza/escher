@@ -10,7 +10,7 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function cr_write_vasp(cr,file="",LOG=1)
+function cr_write_vasp(cr,file="",LOG=0)
 % function cr_write_vasp(cr,file="")
 %
 % cr_write_vasp -- write a vasp POSCAR file to file or to the stdout if
