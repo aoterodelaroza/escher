@@ -43,8 +43,8 @@ function cr = cr_newcell(cr0, v1, v2, v3);
   mat = [v1; v2; v3];
   minv = inv(mat);
   fvol = det(mat);
-  if (abs(fvol) < 1d-6) 
-    error("Unit cell with zero volume");
+  if (fvol < 1d-6)
+    error("Unit cell with zero or negative volume. Check axes");
   endif
   
   cr = crystal();
