@@ -11,7 +11,7 @@
 % more details.
 
 function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15], \
-                              frgb=[0 0 128 0 225], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",\
+                              frgb=[0 0 128 115 115], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",\
                               erad=0.025)
 % function rep = mol_polyhedron(molc, molv, rep="", at="", by="", dist=[-1 1.15], \
 %                               frgb=[0 0 128 0 225], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",
@@ -127,6 +127,11 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
           idx = [idx iv];
         endif
       endfor
+
+      ## skip polyhedra with less than 4 points
+      if (length(idx) < 4)
+        continue
+      endif
 
       ## build the polyhedron using the convex hull
       v = molv.atxyz(:,idx)';

@@ -11,14 +11,16 @@
 % more details.
 
 function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
-% function [cr] = cr_readvasp(file)
+% function [cr] = cr_readvasp(file="CONTCAR",potcar="POTCAR",LOG=0)
 %
 % cr_readvasp -- read a VASP crystal structure (POSCAR or CONTCAR)
-%                and the atomic types from the POTCAR.
+%                and the atomic types from the POTCAR (or from a cell 
+%                array provided by the user).
 %
 % Input:
 % file: the name of the POSCAR or CONTCAR file.
-% potcar: the name of the POTCAR file
+% potcar: the name of the POTCAR file or, alternatively, a cell array
+%         containing the atomic symbols (e.g. {"Si","O"}).
 %
 % Output: 
 % cr: crystal description. If no POTCAR is provided, the atom types
@@ -102,10 +104,7 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
   for i = 1:length(cr.attyp)
     cr.attyp{i} = "Bq";
   endfor
-  if (potcar)
-    if (!exist(potcar,"file"))
-      error(sprintf("Could not find file: %s\n",potcar));
-    endif
+  if (exist(potcar,"file"))
     fid = fopen(potcar,"r");
 
     ## read it
@@ -122,12 +121,21 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
       endif
     until (feof(fid))
     fclose(fid);
-
-    ## convert to Z
-    for i = 1:cr.ntyp
-      cr.ztyp(i) = mol_dbatom(cr.attyp{i},0);
+  elseif (iscell(potcar))
+    if (length(potcar) != cr.ntyp) 
+      error("Wrong number of atom types in cell array");
+    endif
+    for i = 1:length(potcar)
+      cr.attyp{i} = potcar{i};
     endfor
+  else
+    error(sprintf("Not a cell array and could not find file: %s\n",potcar));
   endif
+
+  ## convert to Z
+  for i = 1:cr.ntyp
+    cr.ztyp(i) = mol_dbatom(cr.attyp{i},0);
+  endfor
 
   if (LOG > 0)
     printf("cr_read_vasp: Reading %s\n", file);

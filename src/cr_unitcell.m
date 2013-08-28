@@ -22,7 +22,7 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
 % addto: input representation on which the new representation is 
 %        added.
 % i0: initial lattice vectors. 
-% i1: final lattice vectors. Reprenst all cells from i0 to i1.
+% i1: final lattice vectors. Represent all cells from i0 to i1.
 %     Default: only the main cell (i0 = i1 = [0 0 0])
 % radius: the stick radius. By default, 0.05.
 % rgb: the stick color. By default, red. rgb can be given as three integer numbers 
