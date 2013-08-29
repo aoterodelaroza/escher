@@ -1,3 +1,8 @@
+2013-08-29  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_ball.m: changed the default radius in mol_ball from 0.5
+	to 0.6.
+
 2013-08-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/mol_polyhedron.m: changed default for transparency.

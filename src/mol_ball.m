@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
-% function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+% function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
 %
 % mol_ball - create balls for an atomic type given by its symbol.
 %
