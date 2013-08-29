@@ -1,5 +1,8 @@
 2013-08-29  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/rep_refaxes.m: commented out negative axes. Sticks a little
+	thicker (0.01 -> 0.03).
+
 	* src/mol_ball.m: changed the default radius in mol_ball from 0.5
 	to 0.6.
 
