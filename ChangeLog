@@ -1,8 +1,12 @@
 2013-09-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/mol_writexyz.m: write a xyz using the 'correct' atomic
+	symbol, and not the symbol coming from the calculation. E.g. for
+	VASP it's Ta_pv instead of Ta, which avogadro doesn't understand. 
+
 	* src/cr_spherebox.m (xc): fixed cr_crystalbox -> was giving
 	strange results for slabs because ix0 was not negative for some
-	x0. 
+	x0.
 
 	* src/mol_dbstart.m: made continuation symbol '\' be '...' -> the
 	latest version of octave says \ is going to be deprecated soon.
