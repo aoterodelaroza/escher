@@ -40,6 +40,9 @@ else
   rmin = rad0(1);
 endif
 
+## transform x0 to the main cell
+x0 = x0 - floor(x0);
+
 ## crystal to cartesian
 if (isfield(cr,"r"))
   r = cr.r;
@@ -62,8 +65,8 @@ rinv = inv(r);
 xc = x0 * r;
 xc0 = xc - [rad rad rad];
 xc1 = xc + [rad rad rad];
-ix0 = floor(xc0 * rinv);
-ix1 = ceil(xc1 * rinv)-1;
+ix0 = -abs(floor(xc0 * rinv));
+ix1 = abs(ceil(xc1 * rinv)-1);
 nvecs = prod(ix1-ix0+1); nvecsm1 = max(prod(ix1-1-(ix0+1)+1),0);
 lvecs = zeros(nvecs,3);
 n = 0;
