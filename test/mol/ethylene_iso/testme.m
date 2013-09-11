@@ -1,4 +1,4 @@
-#! /usr/bin/octave -q
+#! /etc/alternatives/octave -q
 
 r = [
      0.1135832071, 0.1106972098, -0.9873424768,

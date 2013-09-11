@@ -1,4 +1,4 @@
-#! /usr/bin/octave -q
+#! /etc/alternatives/octave -q
 
 addpath("../../../src");
 cr = cr_read_vasp("POSCAR","POTCAR",1);

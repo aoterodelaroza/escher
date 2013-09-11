@@ -1,4 +1,4 @@
-#! /usr/bin/octave -q
+#! /etc/alternatives/octave -q
 % Copyright (C) 2010 Victor Lua~na and Alberto Otero-de-la-Roza
 %
 % This octave routine is free software: you can redistribute it and/or modify
