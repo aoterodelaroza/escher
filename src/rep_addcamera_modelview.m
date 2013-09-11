@@ -36,12 +36,8 @@ function rep = rep_addcamera_modelview(repi,r,fov,LOG=0)
   if (size(r,2) > 3)
     rep.cam.cop = r(1:3,4)'; ## use the cop in the modelview matrix
   else
-    ## calculate the barycenter of the balls
-    cm = [0 0 0];
-    for i = 1:repi.nball
-      cm += repi.ball{i}.x;
-    endfor
-    rep.cam.cop = cm / repi.nball;
+    [xct xmin xmax xdel] = rep_getcm(repi);
+    rep.cam.cop = xct;
   endif
   rep.cam.sky = [0 1 0]; ## default
   rep.cam.vuv = [0 1 0]; ## default

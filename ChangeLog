@@ -1,7 +1,11 @@
 2013-09-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/rep_addcamera_modelview.m: use rep_getcm to get the center
+	of mass instead of the calculating the barycenter of the balls on
+	the spot.
+
 	* src/rep_write_pov.m: continuation lines with '...' instead of
-	'\'. 
+	'\'.
 
 	* all: moved /usr/bin/octave to /etc/alternatives/octave .
 
