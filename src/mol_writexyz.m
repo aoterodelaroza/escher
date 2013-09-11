@@ -78,7 +78,7 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
     fprintf(fid,"# File title\n");
   endif
   for i = 1 : nat
-    iz = mol_dbatom(sy);
+    iz = mol_dbatom(mol.atname{i});
     sy = mol_dbsymbol(iz);
     if (strcmpi(mode, "axyz"))
       fprintf(fid," %-2s  ", sy);
