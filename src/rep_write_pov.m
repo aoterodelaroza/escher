@@ -124,21 +124,21 @@ function rep_write_pov(rep,file="",LOG=0)
       str = getfield(itex,rep.triangle{i}.tex).pigment;
       s = sprintf("%s %s %s","   triangle{<%.9f,%.9f,%.9f> <%.9f,%.9f,%.9f> <%.9f,%.9f,%.9f> texture {%s",str,"}}\n");
       n = sum(str == "%");
-      rgb = fillrgb((rep.vertex{rep.triangle{i}.idx(1)}.rgb+\
-                       rep.vertex{rep.triangle{i}.idx(2)}.rgb+\
+      rgb = fillrgb((rep.vertex{rep.triangle{i}.idx(1)}.rgb+...
+                       rep.vertex{rep.triangle{i}.idx(2)}.rgb+...
                        rep.vertex{rep.triangle{i}.idx(3)}.rgb)/3)/255;
       rgb = rgb(1:n);
       if (!isempty(rgb))
         fprintf(fid,s,
-                rep.vertex{rep.triangle{i}.idx(1)}.x,\
-                rep.vertex{rep.triangle{i}.idx(2)}.x,\
-                rep.vertex{rep.triangle{i}.idx(3)}.x,\
+                rep.vertex{rep.triangle{i}.idx(1)}.x,...
+                rep.vertex{rep.triangle{i}.idx(2)}.x,...
+                rep.vertex{rep.triangle{i}.idx(3)}.x,...
                 rep.triangle{i}.tex,rgb);
       else
         fprintf(fid,s,
-                rep.vertex{rep.triangle{i}.idx(1)}.x,\
-                rep.vertex{rep.triangle{i}.idx(2)}.x,\
-                rep.vertex{rep.triangle{i}.idx(3)}.x,\
+                rep.vertex{rep.triangle{i}.idx(1)}.x,...
+                rep.vertex{rep.triangle{i}.idx(2)}.x,...
+                rep.vertex{rep.triangle{i}.idx(3)}.x,...
                 rep.triangle{i}.tex);
       end
     endfor

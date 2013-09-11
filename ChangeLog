@@ -1,5 +1,8 @@
 2013-09-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/rep_write_pov.m: continuation lines with '...' instead of
+	'\'. 
+
 	* all: moved /usr/bin/octave to /etc/alternatives/octave .
 
 	* src/cr_spherebox.m: a more reasonable definition of the
