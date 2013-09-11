@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15], \
-                              frgb=[0 0 128 115 115], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",\
-                              erad=0.025)
-% function rep = mol_polyhedron(molc, molv, rep="", at="", by="", dist=[-1 1.15], \
+function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15],...
+                                frgb=[0 0 128 115 115], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",...
+                                erad=0.025)
+% function [rep molc1 molv1] = mol_polyhedron(molc, molv, rep="", at="", by="", dist=[-1 1.15], \
 %                               frgb=[0 0 128 0 225], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",
 %                               erad=0.025)
 %
@@ -46,14 +46,19 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
 % etex: edge texture.
 % erad: edge radius.
 %
+% Output variables:
+% rep: the representation containing the polyhedra
+% molc1: the molecule containing the polyhedra centers (subset of molc).
+% molv1: the molecule containing the polyhedra vertices (subset of molv).
+%
 
   ## initial representation 
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
     rep = representation();
-    if (isfield(mol,"name") && !isempty(mol.name))
-      rep.name = mol.name;
+    if (isfield(molc,"name") && !isempty(molc.name))
+      rep.name = molc.name;
     endif
   endif
 
@@ -93,6 +98,9 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
     endfor
   endif
 
+  ## build the polyhedra
+  ic1 = [];
+  iv1 = [];
   for ic = 1:nc
     useit = (ischar(at) && regexp(molc.atname{ic},at));
     useit = useit || (isscalar(at) && molc.atnumber(ic) == at);
@@ -133,6 +141,9 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
         continue
       endif
 
+      ic1 = [ic1 ic];
+      iv1 = unique([iv1 idx]);
+
       ## build the polyhedron using the convex hull
       v = molv.atxyz(:,idx)';
       h = convhulln(v);
@@ -167,5 +178,8 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
       endif
     endif
   endfor
+
+  molc1 = mol_getfragment(molc,ic1);
+  molv1 = mol_getfragment(molv,iv1);
 
 endfunction
