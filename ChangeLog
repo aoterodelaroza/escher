@@ -1,5 +1,7 @@
 2013-09-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* all: change to /etc/alternative/octave reverted.
+
 	* src/mol_polyhedron.m: returns the molecule with the centers and
 	the molecule with the vertices. Also, fixed name and
 	continuations.

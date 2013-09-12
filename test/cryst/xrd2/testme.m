@@ -1,4 +1,4 @@
-#! /etc/alternatives/octave -q
+#! /usr/bin/octave -q
 
 cr = cr_read_espresso("pro_dl.scf.out");
 cr.qtyp = [0 0 0 0];

@@ -1,4 +1,4 @@
-#! /etc/alternatives/octave -q
+#! /usr/bin/octave -q
 
 addpath("../../../src");
 

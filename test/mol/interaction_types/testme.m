@@ -1,4 +1,4 @@
-#! /etc/alternatives/octave -q
+#! /usr/bin/octave -q
 
 list = {"c6h6_c6h6_stack","ch4_ch4","ch4_hf",...
         "h2co_h2co","h2o_h2o","phenol_phenol"};
