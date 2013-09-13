@@ -45,7 +45,7 @@ function cr_write_vasp(cr,file="",LOG=0)
     r = cr.r';
   endif
   r = r * bohrtoans;
-  fprintf(lu,"%.12f %.12f %.12f\n %.12f %.12f %.12f\n %.12f %.12f %.12f\n",r);
+  fprintf(lu,"%.12f %.12f %.12f\n %.12f %.12f %.12f\n %.12f %.12f %.12f\n",r');
   
   for i = 1:cr.ntyp
     fprintf(lu,"%d ",sum(cr.typ == i));

@@ -1,3 +1,7 @@
+2013-09-12  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/cr_write_vasp.m: r -> r' bug.
+
 2013-09-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* all: change to /etc/alternative/octave reverted.
