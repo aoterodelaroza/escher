@@ -1,3 +1,7 @@
+2013-09-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* escher_data/002_kb65: added test 2.
+
 2013-09-12  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/cr_write_vasp.m: r -> r' bug.
