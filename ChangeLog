@@ -1,5 +1,13 @@
 2013-09-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/rep_write_pov.m: added perspective setting.
+
+	* src/rep_addcamera_modelview.m, src/rep_addcamera.m: added angle
+	and perspective.
+
+	* src/rep_setdefaultscene.m: pass angle and perspective to
+	underlying routines.
+
 	* escher_data/002_kb65: added test 2.
 
 2013-09-12  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
