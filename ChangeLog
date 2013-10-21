@@ -1,3 +1,10 @@
+2013-10-21  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* todo: added a couple entries.
+
+	* src/grid_isosurface.m: changed '\' to '...' because the new
+	octave keeps complaining about it.
+
 2013-09-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/rep_write_pov.m: added perspective setting.

@@ -1,3 +1,5 @@
+* BUG: orthographic camera does not play well with the moldelview matrix distance parameter.
+* Improve the file readers to make escher go faster.
 * routine to build crystal from scratch. Clean up r/g/a,b descriptions.
 * adapt shmueli symmetry builder.
 * camera from meshlab copy shot!!

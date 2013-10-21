@@ -10,9 +10,9 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 128],ergb=[0 128 0],\
+function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 128],ergb=[0 128 0],...
                                ftex="opaque_triangle_default",etex="stick_default",erad=0.005)
-% function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0],ergb=[0 0 0],\
+% function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0],ergb=[0 0 0],...
 %                                ftex="opaque_triangle_default",etex="stick_default",erad=0.005)
 %
 % grid_isosurface - plot an isosurface into a representation
@@ -74,8 +74,8 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 128],ergb=[0 128 0
     rep.ntriangle += size(f,1);
     for i = n+1:rep.ntriangle
       rep.triangle{i}.idx = nv + f(i-n,:);
-      rep.triangle{i}.rgb = (rep.vertex{rep.triangle{i}.idx(1)}.rgb + \
-                             rep.vertex{rep.triangle{i}.idx(2)}.rgb + \
+      rep.triangle{i}.rgb = (rep.vertex{rep.triangle{i}.idx(1)}.rgb +...
+                             rep.vertex{rep.triangle{i}.idx(2)}.rgb +...
                              rep.vertex{rep.triangle{i}.idx(3)}.rgb) /3;
       rep.triangle{i}.tex = ftex;
     endfor
