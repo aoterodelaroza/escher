@@ -29,7 +29,7 @@ function [xx, yy, zz] = grid_mesh(g)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: Jan 2012
 
-  if (abs(g.a(1,2))+abs(g.a(1,3))+abs(g.a(2,3)) < 1e-14)
+  if (abs(g.a(1,2))+abs(g.a(1,3))+abs(g.a(2,3)+abs(g.a(2,1))+abs(g.a(3,1))+abs(g.a(3,2))) < 1e-14)
     x = g.x0(1) + g.dx(1,1) * (0:g.n(1)-1);
     y = g.x0(2) + g.dx(2,2) * (0:g.n(2)-1);
     z = g.x0(3) + g.dx(3,3) * (0:g.n(3)-1);

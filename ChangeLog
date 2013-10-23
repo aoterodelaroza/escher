@@ -1,3 +1,11 @@
+2013-10-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/grid_isosurface.m: changed the defaults to opaque blue faces
+	and black edges.
+
+	* src/grid_mesh.m: fixed bug in the coordinate generation of
+	non-orthogonal grids.
+
 2013-10-22  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/grid_isosurface.m: improved the performance of this routine
