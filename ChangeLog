@@ -1,3 +1,16 @@
+2013-10-22  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/grid_isosurface.m: improved the performance of this routine
+	by a lot by preallocating the cell array and using matrix
+	operations. It turns out that the generation of the iso-surface is
+	very efficient, even for huge cubes.
+
+	* src/grid_readcube.m: made the file reading (much) more efficient
+	by using a single fscanf() to read the entire cube file.
+
+	* src/mol_stick.m: improved performance of the routine by slicing
+	the loop into chunks based on matrix-operations.
+
 2013-10-21  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* todo: added a couple entries.

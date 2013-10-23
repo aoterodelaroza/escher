@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=1, radius=0.05, rgb=[255 0 0], tex="stick_default", LOG=0)
-% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=1, radius=0.05, rgb=[255 0 0], tex="stick_default", LOG=0)
+function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[255 0 0], tex="stick_default", LOG=0)
+% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[255 0 0], tex="stick_default", LOG=0)
 %
 % mol_stick - create sticks for a pair of atomic types given by their symbol.
 % Optionally, use a distance criterion to build all the covalent bonds
@@ -32,7 +32,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 %       if the atomic distance is less than f times the sum of covalent radii.
 % strict: if false (0), then s1 and s2 are converted to atomic numbers and 
 %         sticks are represented for all atoms in mol with the same Z. Therefore,
-%         s1 and s2 in this case should be plain strings.
+%         s1 and s2 in this case should be plain strings (except for the default .+).
 %         If strict is true (1), then only atoms matching those names are used. 
 %         Octave regular expressions (compared to the atomic names using regexp)
 %         can be used in this case.
@@ -82,52 +82,63 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
     endfor
   endif
 
-  ## connectivity matrix
+  isstick = zeros(nat);
+  ## distance matrix to connectivity matrix
+  if (dist(1) < 0)
+    isstick = d <= dist(2) * (rcov' * ones(1,nat) + ones(nat,1) * rcov);
+  else
+    isstick = (d >= dist(1)) & (d <= dist(2));
+  endif
+
+  ## apply end-atom criteria
   z1 = z2 = -1;
   if (!strict)
-    z1 = mol_dbatom(s1,LOG);
-    z2 = mol_dbatom(s2,LOG);
+    if (strcmp(s1,".+"))
+      z1 = -1;
+    else
+      z1 = mol_dbatom(s1,LOG);
+    endif
+    if (strcmp(s1,".+"))
+      z2 = -1;
+    else
+      z2 = mol_dbatom(s2,LOG);
+    endif
   endif
-  for i = 1:nat
-    for j = 1:i-1
-      if (z1 > 0 && z2 > 0 || strict)
-        ## are the atoms correct?
-        if (strict == 2)
-          doit = strcmp(mol.atname{i},s1) && strcmp(mol.atname{j},s2);
-          doit = doit || (strcmp(mol.atname{i},s2) && strcmp(mol.atname{j},s1));
-        elseif (strict == 1) 
-          doit = regexp(mol.atname{i},s1) && regexp(mol.atname{j},s2);
-          doit = doit || (regexp(mol.atname{i},s2) && regexp(mol.atname{j},s1));
-        else
-          zi = mol.atnumber(i);
-          zj = mol.atnumber(j);
-          doit = (zi == z1) && (zj == z2); 
-          doit = doit || ((zi == z2) && (zj == z1)); 
-        endif
-        if (!doit) 
-          continue
-        endif
-      endif
-
-      ## and the distance?
-      if (dist(1) < 0)
-        doit = (d(i,j) <= dist(2) * (rcov(i) + rcov(j)));
-      else
-        doit = (d(i,j) >= dist(1)) && (d(i,j) <= dist(2));
-      endif
-      if (!doit) 
-        continue
-      endif
-
-      ## add the stick
-      rep.nstick = rep.nstick + 1;
-      rep.stick{rep.nstick}.name = strcat(mol.atname{i},"_",mol.atname{j});
-      rep.stick{rep.nstick}.x0 = mol.atxyz(:,i)';
-      rep.stick{rep.nstick}.x1 = mol.atxyz(:,j)';
-      rep.stick{rep.nstick}.r = radius;
-      rep.stick{rep.nstick}.rgb = rgb;
-      rep.stick{rep.nstick}.tex = tex;
+  if (strict == 2) 
+    r1 = r2 = zeros(1,nat);
+    for i = 1:nat
+      r1(i) = strcmp(mol.atname{i},s1);
+      r2(i) = strcmp(mol.atname{i},s2);
     endfor
+    isstick &= ((r1' * ones(1,nat)) & (ones(nat,1) * r2) | ...
+                (r2' * ones(1,nat)) & (ones(nat,1) * r1));
+  elseif (strict == 1)
+    r1 = r2 = zeros(1,nat);
+    for i = 1:nat
+      r1(i) = !isempty(regexp(mol.atname{i},s1));
+      r2(i) = !isempty(regexp(mol.atname{i},s2));
+    endfor
+    isstick &= ((r1' * ones(1,nat)) & (ones(nat,1) * r2) | ...
+                (r2' * ones(1,nat)) & (ones(nat,1) * r1));
+  elseif (z1 > 0 && z2 > 0)
+    isstick &= ((mol.atnumber' * ones(1,nat) == z1) & (ones(nat,1) * mol.atnumber == z2) | ...
+                (mol.atnumber' * ones(1,nat) == z2) & (ones(nat,1) * mol.atnumber == z1));
+  endif
+
+  ## add the sticks
+  [inew,jnew] = find(isstick);
+  nnew = length(inew);
+  newstick = cell(1,nnew);
+  for k = 1:nnew
+    i = inew(k); j = jnew(k);
+    newstick{k}.name = strcat(mol.atname{i},"_",mol.atname{j});
+    newstick{k}.x0 = mol.atxyz(:,i)';
+    newstick{k}.x1 = mol.atxyz(:,j)';
+    newstick{k}.r = radius;
+    newstick{k}.rgb = rgb;
+    newstick{k}.tex = tex;
   endfor
+  rep.nstick = rep.nstick + nnew;
+  rep.stick = [rep.stick, newstick];
 
 endfunction

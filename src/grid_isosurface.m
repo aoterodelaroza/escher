@@ -61,40 +61,56 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 128],ergb=[0 128 0
   if (!isempty(frgb))
     frgb = fillrgb(frgb);
 
-    ## vertices
+    ## pre-allocate vertices
     nv = rep.nvertex;
     rep.nvertex += size(v,1);
+    empty = struct("x",[0 0 0],"rgb",frgb);
+    rep.vertex(nv+1:rep.nvertex) = {empty};
+    ## fill
     for i = nv+1:rep.nvertex
       rep.vertex{i}.x = v(i-nv,:);
-      rep.vertex{i}.rgb = frgb;
     endfor
 
-    ## triangles
+    ## pre-allocate triangles
     n = rep.ntriangle;
     rep.ntriangle += size(f,1);
+    empty = struct("idx",[0 0 0],"rgb",[0 0 0 0 0],"tex",ftex);
+    rep.triangle(n+1:rep.ntriangle) = {empty};
+    ## fill triangles
     for i = n+1:rep.ntriangle
       rep.triangle{i}.idx = nv + f(i-n,:);
       rep.triangle{i}.rgb = (rep.vertex{rep.triangle{i}.idx(1)}.rgb +...
                              rep.vertex{rep.triangle{i}.idx(2)}.rgb +...
                              rep.vertex{rep.triangle{i}.idx(3)}.rgb) /3;
-      rep.triangle{i}.tex = ftex;
     endfor
   endif
 
   ## edges
   if (!isempty(ergb))
+    ## pre-determine the edge pairs 
+    nt = size(f,1);
+    ipairs = zeros(3*nt,2);
+    jaux = ((1:nt) - 1) * 3 + 1;
+    for i = 1:nt
+      aux = sort(f(i,:));
+      ipairs(jaux(i),:) = [aux(1) aux(2)];
+      ipairs(jaux(i)+1,:) = [aux(1) aux(3)];
+      ipairs(jaux(i)+2,:) = [aux(2) aux(3)];
+    endfor
+    unique(ipairs,"rows");
+
+    ne = size(ipairs,1);
     ergb = fillrgb(ergb);
-    kk = [1 2; 1 3; 2 3];
-    for i = 1:size(f,1)
-      for j = 1:size(kk,1)
-        rep.nstick += 1;
-        rep.stick{rep.nstick}.name = "";
-        rep.stick{rep.nstick}.x0 = v(f(i,kk(j,1)),:);
-        rep.stick{rep.nstick}.x1 = v(f(i,kk(j,2)),:);
-        rep.stick{rep.nstick}.r = erad;
-        rep.stick{rep.nstick}.rgb = ergb;
-        rep.stick{rep.nstick}.tex = etex;
-      endfor
+    ## pre-allocate edges
+    n = rep.nstick;
+    rep.nstick += ne;
+    empty = struct("name","","x0",[0 0 0],"x1",[0 0 0],"r",erad,...
+                   "rgb",ergb,"tex",etex);
+    rep.stick(n+1:rep.nstick) = {empty};
+    ## fill edges -> this is the hard part
+    for i = n+1:rep.nstick
+      rep.stick{i}.x0 = v(ipairs(i-n,1),:);
+      rep.stick{i}.x1 = v(ipairs(i-n,2),:);
     endfor
   endif
 
