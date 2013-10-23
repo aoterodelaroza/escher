@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_addlight(repi,pos,r="",LOG=0);
-% function rep = rep_addlight(repi,pos,r="",LOG=0);
+function rep = rep_addlight(repi,pos,r="",shadowless=0,intensity=1,LOG=0);
+% function rep = rep_addlight(repi,pos,r="",shadowless=0,intensity=1,LOG=0);
 %
 % rep_addlight - add a light to the graphical representation
 %
@@ -34,7 +34,9 @@ function rep = rep_addlight(repi,pos,r="",LOG=0);
 
   rep.nlight = rep.nlight + 1;
   rep.light{rep.nlight}.x = pos;
-  rep.light{rep.nlight}.color = "rgb<1.0,1.0,1.0>"; ## same as "rgb 1"
+  rep.light{rep.nlight}.color = [255 255 255];
+  rep.light{rep.nlight}.shadowless = shadowless;
+  rep.light{rep.nlight}.intensity = intensity;
   if (!isempty(r))
     rep.light{rep.nlight}.matrix = r;
   endif

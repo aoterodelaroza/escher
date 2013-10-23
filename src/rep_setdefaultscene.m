@@ -46,8 +46,8 @@ function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1,LOG=0);
   endif
 
   ## add the lights, default placement
-  rep = rep_addlight(rep,rep.cam.cop,r,LOG);
-  rep = rep_addlight(rep,rep.cam.sky*100,r,LOG);
+  rep = rep_addlight(rep,rep.cam.cop,r,:,:,LOG);
+  rep = rep_addlight(rep,rep.cam.sky*100,r,:,:,LOG);
 
   ## set the background color to white
   rep = rep_setbgcolor(rep,[255 255 255],LOG);

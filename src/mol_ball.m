@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
-% function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+% function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
 %
 % mol_ball - create balls for an atomic type given by its symbol.
 %
@@ -63,7 +63,11 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.6, rgb=[-1
 
   ## Create balls
   if (strict != 1 && strict != 2)
-    zz = mol_dbatom(symb,LOG);
+    if (strcmp(symb,".+"))
+      zz = -1;
+    else
+      zz = mol_dbatom(symb,LOG);
+    endif
   endif
   for i = 1:nat
     if (strict == 2)
@@ -71,7 +75,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.6, rgb=[-1
     elseif (strict == 1)
       doit = regexp(mol.atname{i},symb);
     else
-      doit = (zz == mol.atnumber(i));
+      doit = (zz < 0) || (zz == mol.atnumber(i));
     endif
     if (doit) 
       n = rep.nball = rep.nball+1;

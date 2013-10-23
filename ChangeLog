@@ -1,5 +1,10 @@
 2013-10-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/rep_addlight.m, src/rep_write_pov.m: added shadowless and
+	intensity option to rep_addlight.
+
+	* src/mol_ball.m: strict=0 is now default in mol_ball.
+
 	* src/grid_isosurface.m: changed the defaults to opaque blue faces
 	and black edges.
 

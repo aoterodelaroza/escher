@@ -205,7 +205,11 @@ function rep_write_pov(rep,file="",LOG=0)
 
   if (isfield(rep,"nlight") && !isempty(rep.nlight))
     for i = 1:rep.nlight
-      fprintf(fid,"light_source {\n  <%.5f,%.5f,%.5f>\n  color %s\n",rep.light{i}.x,rep.light{i}.color);
+      fprintf(fid,"light_source {\n  <%.5f,%.5f,%.5f>\n",rep.light{i}.x);
+      fprintf(fid,"  color rgb<%.5f,%.5f,%.5f>\n",rep.light{i}.color/255*rep.light{i}.intensity);
+      if (rep.light{i}.shadowless != 0)
+        fprintf(fid,"  shadowless\n");
+      endif
       if (isfield(rep.light{i},"matrix") && ismatrix(rep.light{i}.matrix) && !isempty(rep.light{i}.matrix))
         fprintf(fid,"  transform{\n");
         fprintf(fid,"    translate <%.10f, %.10f, %.10f>\n",rep.cam.cop);
