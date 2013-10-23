@@ -1,3 +1,18 @@
+* Include the observations made with TAGFEM_new in the code:
+  0. Make grid_isosurface even more efficient by pushing the texture
+     list as part of the representation, and using an integer
+     pointer for the objects.
+  1. Three default lights, two of them shadowless.
+  2. The modelview matrix is converted to the 3-angle format.
+     Create routines for this. Also for angle-rotation.
+  3. Re-write povray output to use povray's mesh. Use isonormals
+     to compute the normals to the isosurface and make it smooth.
+  4. Get ideas from VMD's povray format.
+  5. Change the default texture for surfaces.  
+  6. Re-write write_obj to take into account the number of edges,
+     or to write a mesh directly.
+* Kabsch algorithm?
+* Problem with cartesian coordinates not being consistent with critic2's.
 * BUG: orthographic camera does not play well with the moldelview matrix distance parameter.
 * Improve the file readers to make escher go faster.
 * routine to build crystal from scratch. Clean up r/g/a,b descriptions.
