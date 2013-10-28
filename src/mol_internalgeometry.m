@@ -10,11 +10,11 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
-% function [mol] = mol_internalgeometry (mol,bondfactor=1.15,LOG=1)
+function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
+% function void = mol_internalgeometry (mol,bondfactor=1.15,LOG=1)
 %
 % mol_internalgeometry - determines the internal geometry of the molecule
-% or molecular fragmente, i.e. the atoms bonded, bond distances, angles
+% or molecular fragment, i.e. the atoms bonded, bond distances, angles
 % and dihedral angles. The algorithm assumes two atoms to be bonded if
 % their distance is smaller or equal to the sum of the atomic radii
 % multiplied by a correction factor (the "bondfactor" parameter).
@@ -37,11 +37,8 @@ function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: July 2011
 
-   global dbdefined
-   global atdb
-
    # Create the connection matrix:
-   nat = length(mol.atnumber);
+   nat = mol.nat;
    dist = conn = zeros(nat,nat);
    for i = 1:nat
       dist(i,i) = 0.0;
@@ -51,11 +48,10 @@ function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
          x = mol.atxyz(1:3,i) - mol.atxyz(1:3,j);
          dist(i,j) = dist(j,i) = sqrt(x' * x);
          zj = mol.atnumber(j);
-         dconn = bondfactor * (atdb.rcov(zi) + atdb.rcov(zj));
+         dconn = bondfactor * (mol_rcov(zi) + mol_rcov(zj));
          conn(i,j) = conn(j,i) = (dist(i,j) <= dconn);
       endfor
    endfor
-   mol.conn = conn;
 
    # Check for unconnected fragments in the molecule:
    taken = zeros(1,nat);
@@ -88,8 +84,6 @@ function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
          until (inew == 0)
       endif
    endfor
-   mol.nfrag = nfrag;
-   mol.ifrag = frag.iat;
 
    # Determine cm of each fragment:
    for i = 1 : nfrag
@@ -98,7 +92,6 @@ function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
       cm = x * mass' / sum(mass);
       frag.cm{i} = cm;
    endfor
-   mol.cmfrag = frag.cm;
 
    if (LOG > 0)
       printf("(Coordinates in Angstrom)\n");

@@ -21,7 +21,7 @@ function err = mol_writenw (mol, filename="none", LOG=0)
 %       mol.name --> name of the molecule.
 %       mol.atname --> {1:M} cell array with the symbols of the atoms
 %                       (M is the number of atoms in the molecule).
-%       mol.xyz --> Mx3 matrix with the cartesian coordinates of the atoms.
+%       mol.atxyz --> Mx3 matrix with the cartesian coordinates of the atoms.
 %
 % Optional input variables (all have default values):
 % {filename="none"): name of the output data file. By defult, the standard
@@ -57,7 +57,7 @@ function err = mol_writenw (mol, filename="none", LOG=0)
   endif
 
   atcount = zeros(1,110);
-  for i = 1 : length(mol.atname)
+  for i = 1 : mol.nat
      [ZZ,at] = mol_dbatom(mol.atname{i});
      atcount(ZZ)++;
      atsymbol{ZZ} = mol.atname{i};
@@ -74,7 +74,7 @@ function err = mol_writenw (mol, filename="none", LOG=0)
   fprintf(fid, 'title "(VLC00) %s (mp2/6-311G**) PES exploration 2" \n', mol.name);
   fprintf(fid, "charge 0\n");
   fprintf(fid, "geometry units angstroms print xyz\n");
-  nat = length(mol.atname);
+  nat = mol.nat;
   for i = 1 : nat
      fprintf(fid,"   %-2s  ", mol.atname{i});
      fprintf(fid," %12.6f %12.6f %12.6f", mol.atxyz(1:3,i));

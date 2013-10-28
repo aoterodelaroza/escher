@@ -58,10 +58,7 @@ function [mol] = mol_readxyz (filename, LOG=0)
   endif
 
   natoms = 0;
-  mol.name = 'unknown';
-  mol.atname = {};
-  mol.atnumber = [];
-  mol.atxyz = [];
+  mol = molecule();
 
   ## Read in data file:
   columns = "axyz";
@@ -141,13 +138,13 @@ function [mol] = mol_readxyz (filename, LOG=0)
        mol.atname{natoms} = atsymbol;
        mol.atnumber(natoms) = atnumber;
        mol.atmass(natoms) = atprop.mass;
-       %%%mol.atxyz{natoms} = xyz';
        mol.atxyz(1:3,natoms) = xyz';
     else
        error("mol_readxyz: unknown order of data columns!");
     endif
     nl++;
   endwhile
+  mol.nat = natoms;
   fclose(fid);
 
   if (LOG>0)

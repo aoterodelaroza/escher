@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol_write_zmat(mol,file="")
-% function zmat = mol_write_zmat(mol, file="")
+function mol_writezmat(mol,file="")
+% function zmat = mol_writezmat(mol, file="")
 %
-% mol_write_zmat - write a zmatrix using the cartesian coordinates in mol.
+% mol_writezmat - write a zmatrix using the cartesian coordinates in mol.
 %                  The order is not changed.
 %
 % Required input variables:
@@ -32,7 +32,7 @@ function mol_write_zmat(mol,file="")
     fid = stdout();
   endif
 
-  for i = 1:length(mol.atnumber)
+  for i = 1:mol.nat
     if (i == 1) 
       fprintf(fid,"%s\n",mol.atname{i});
     elseif (i == 2)

@@ -10,21 +10,23 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rotx(angle)
-% function m = op_rotx(angle)
+function cam = camera()
+% function cam = camera()
 %
-% op_rotx - returns the matrix corresponding to a counter clockwise rotation
-% of "angle" degrees around the x axis.
+% camera - create an empty camera.
 %
-% Required input variables:
-% angle: rotation angle in degrees.
+% Output:
+% {cam}: the empty camera
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
-% Created: June 2011
 
-c = cos(angle*pi/180);
-s = sin(angle*pi/180);
-m = [1 0 0; 0 c -s; 0 s c];
-
+  cam.cop = [0 0 0];
+  cam.sky = [0 0 0];
+  cam.vuv = [0 0 0];
+  cam.rht = [0 0 0];
+  cam.drt = [0 0 0];
+  cam.vrp = [0 0 0];
+  cam.angle = 0;
+  cam.matrix = [0 0 0; 0 0 0; 0 0 0; 0 0 0];
+  cam.rot = [];
+  cam.trans = [];
 endfunction

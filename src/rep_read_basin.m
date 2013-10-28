@@ -41,26 +41,6 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
     rep.name = "basin";
   endif
 
-  ## initialize
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if (rep.nstick == 0)
-    rep.stick = cell();
-  endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-  endif
-  if (rep.ntriangle == 0)
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-  endif
-  if (rep.nvertex == 0)
-    rep.vertex = cell();
-  endif
-
   ## open the file
   if (!exist(file,"file"))
     error(sprintf("Could not find file: %s\n",file));
@@ -95,6 +75,7 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
     nv0 = rep.nvertex;
     for i = 1:nv
       rep.nvertex += 1;
+      rep.vertex{rep.nvertex} = vertex();
       rep.vertex{rep.nvertex}.x = xv(i,:);
       rep.vertex{rep.nvertex}.rgb = frgb;
     endfor
@@ -116,6 +97,7 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
       endif
       for j = 1:size(kk,1)
         rep.nstick++;
+        rep.stick{rep.nstick} = stick();
         rep.stick{rep.nstick}.name = "";
         rep.stick{rep.nstick}.x0 = xv(idx(kk(j,1)),:);
         rep.stick{rep.nstick}.x1 = xv(idx(kk(j,2)),:);
@@ -128,15 +110,18 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
     if (!isempty(frgb))
       if (length(idx) == 3)
         rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(2) idx(3)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
         rep.triangle{rep.ntriangle}.tex = ftex;
       elseif (length(idx) == 4)
         rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(2) idx(3)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
         rep.triangle{rep.ntriangle}.tex = ftex;
         rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(3) idx(4)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
         rep.triangle{rep.ntriangle}.tex = ftex;

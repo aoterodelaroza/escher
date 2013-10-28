@@ -31,21 +31,9 @@ function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2011
 
-# Fill the atmass array 
-if (!isfield(mol,"atmass") || isempty(mol.atmass))
-  if (!isfield(mol,"atnumber") || isempty(mol.atnumber))
-    mol = mol_fillatnumber(mol);
-  endif
-  mol = mol_fillatmass(mol);
-endif
-
 # Check input data, particularly iat1 and iat2.
 if (isempty(iat))
-   n = length(mol.atmass);
    iat = 1:n;
-endif
-if (length(iat) < 1)
-   error('mol_cmass: the molecular fragment is empty!');
 endif
 
 # Get the center of mass:

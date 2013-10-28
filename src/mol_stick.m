@@ -49,11 +49,8 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 % {LOG}: verbose level (0=silent,1=verbose).
 %
 
-  ## number of atoms
-  nat = length(mol.atname);
-
   ## distance matrix
-  nat = length(mol.atnumber);
+  nat = mol.nat;
   d = mol_distmatrix(mol);
 
   ## initial representation 
@@ -65,15 +62,9 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
       rep.name = mol.name;
     endif
   endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if ((!isfield(rep,"stick")) || rep.nstick == 0)
-    rep.stick = cell();
-  endif
 
   ## covalent radii
-  nat = length(mol.atnumber);
+  nat = mol.nat;
   if (dist(1) < 0)
     rcov = zeros(1,nat);
     for i = 1:nat
@@ -131,6 +122,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
   newstick = cell(1,nnew);
   for k = 1:nnew
     i = inew(k); j = jnew(k);
+    newstick{k} = stick();
     newstick{k}.name = strcat(mol.atname{i},"_",mol.atname{j});
     newstick{k}.x0 = mol.atxyz(:,i)';
     newstick{k}.x1 = mol.atxyz(:,j)';

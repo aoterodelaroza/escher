@@ -44,63 +44,45 @@ function [rep] = rep_merge(varargin);
       endif
 
       ## balls
-      if (isfield(rep1,"nball"))
-        n1 = rep1.nball; 
-        for j = 1:n1
-          rep.nball += 1;
-          rep.ball{rep.nball} = rep1.ball{j};
-        endfor
-      endif
+      n1 = rep1.nball; 
+      for j = 1:n1
+        rep.nball += 1;
+        rep.ball{rep.nball} = rep1.ball{j};
+      endfor
 
       ## sticks
-      if (isfield(rep1,"nstick"))
-        n1 = rep1.nstick; 
-        for j = 1:n1
-          rep.nstick += 1;
-          rep.stick{rep.nstick} = rep1.stick{j};
-        endfor
-      endif
+      n1 = rep1.nstick; 
+      for j = 1:n1
+        rep.nstick += 1;
+        rep.stick{rep.nstick} = rep1.stick{j};
+      endfor
 
       ## vertices
-      if (isfield(rep1,"nvertex"))
-        if (isfield(rep,"nvertex"))
-          nv0 = rep.nvertex;
-        else
-          nv0 = 0;
-        endif
-        n1 = rep1.nvertex; 
-        for j = 1:n1
-          rep.nvertex += 1;
-          rep.vertex{rep.nvertex} = rep1.vertex{j};
-        endfor
-      endif
+      nv0 = rep.nvertex;
+      n1 = rep1.nvertex; 
+      for j = 1:n1
+        rep.nvertex += 1;
+        rep.vertex{rep.nvertex} = rep1.vertex{j};
+      endfor
 
       ## triangles
-      if (isfield(rep1,"ntriangle"))
-        n1 = rep1.ntriangle; 
-        for j = 1:n1
-          rep.ntriangle += 1;
-          rep.triangle{rep.ntriangle} = rep1.triangle{j};
-          rep.triangle{rep.ntriangle}.idx += nv0;
-        endfor
-      endif
+      n1 = rep1.ntriangle; 
+      for j = 1:n1
+        rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = rep1.triangle{j};
+        rep.triangle{rep.ntriangle}.idx += nv0;
+      endfor
 
       ## lights
-      if (isfield(rep1,"nlight"))
-        n1 = rep1.nlight; 
-        for j = 1:n1
-          rep.nlight += 1;
-          rep.light{rep.nlight} = rep1.light{j};
-        endfor
-      endif
+      n1 = rep1.nlight; 
+      for j = 1:n1
+        rep.nlight += 1;
+        rep.light{rep.nlight} = rep1.light{j};
+      endfor
 
       ## camera and background color
-      if (isfield(rep1,"cam"))
-        rep.cam = rep1.cam;
-      endif
-      if (isfield(rep1,"bgcolor"))
-        rep.bgcolor = rep1.bgcolor;
-      endif
+      rep.cam = rep1.cam;
+      rep.bgcolor = rep1.bgcolor;
     endfor
   endfor
 

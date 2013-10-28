@@ -41,21 +41,8 @@ function cr = cr_insertvacuum(cr0, ix, r0, chop="",center="");
   endif
 
   ## crystal to cartesian
-  if (isfield(cr0,"r"))
-    r = cr0.r;
-    g = r * r';
-  else
-    if (isfield(cr0,"g"))
-      g = cr0.g;
-    else
-      cc = cos(cr0.b);
-      g = cr0.a' * cr0.a;
-      g(1,2) = g(2,1) = g(1,2) * cc(3);
-      g(1,3) = g(3,1) = g(1,3) * cc(2);
-      g(2,3) = g(3,2) = g(2,3) * cc(1);
-    endif
-    r = chol(g)';
-  endif
+  r = cr0.r;
+  g = cr0.g;
 
   ## insert the vacuum 
   aa0 = norm(r(ix,:));

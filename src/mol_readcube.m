@@ -57,6 +57,7 @@ function mol = mol_readcube (cubefile, LOG=0)
     [tok,line] = strtok(line); 
     mol.atxyz(1:3,i) = str2num(line) * bohrtoans;
   endfor
+  mol = mol_fillatmass(mol);
 
   fclose(fqub);
 

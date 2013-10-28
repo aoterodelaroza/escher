@@ -10,21 +10,17 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rotx(angle)
-% function m = op_rotx(angle)
+function vr = vertex()
+% function vr = vertex()
 %
-% op_rotx - returns the matrix corresponding to a counter clockwise rotation
-% of "angle" degrees around the x axis.
+% vertex - create an empty vertex.
 %
-% Required input variables:
-% angle: rotation angle in degrees.
+% Output:
+% {vr}: the empty vertex.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
-% Created: June 2011
 
-c = cos(angle*pi/180);
-s = sin(angle*pi/180);
-m = [1 0 0; 0 c -s; 0 s c];
+  vr = vertex();
+  vr.rgb = [0 0 0];
+  vr.x = [0 0 0];
 
 endfunction

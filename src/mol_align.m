@@ -45,8 +45,8 @@ function [mol2new,R] = mol_align(mol1, iat1, mol2, iat2, LOG=1)
 
 # Check input data, particularly iat1 and iat2.
 if (isempty(iat1) && isempty(iat2))
-   n1 = length(mol1.atmass);
-   n2 = length(mol2.atmass);
+   n1 = mol1.nat;
+   n2 = mol2.nat;
    if (n1 == n2)
       iat1 = 1:n1; iat2 = iat1;
    else
@@ -137,15 +137,15 @@ R(3,3) = q(1)^2 + q(4)^2 - q(2)^2 - q(3)^2;
 
 # Transform the whole mol2:
 mol2new = mol2;
-m2 = length(mol2.atmass);
+m2 = mol2.nat;
 mol2new.atxyz = R * (mol2.atxyz - cm2 * ones(1,m2)) + cm1 * ones(1,m2);
 
 if (LOG > 0)
    printf('mol_align: alignment of fragments of two molecules\n');
-   printf('Fragment %d (%d):', 1, length(mol1.atmass));
+   printf('Fragment %d (%d):', 1, mol1.nat);
    printf(' %d', iat1);
    printf('\n');
-   printf('Fragment %d (%d):', 2, length(mol2.atmass));
+   printf('Fragment %d (%d):', 2, mol2.nat);
    printf(' %d', iat2);
    printf('\n');
    printf('Quaternion: %.9f %.9f %.9f %.9f\n', q);

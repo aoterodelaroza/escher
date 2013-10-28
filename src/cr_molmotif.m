@@ -35,28 +35,7 @@ function [mol mask] = cr_molmotif(cr, allinmaincell=1, ilist=[], bondfactor=1.20
 
 bohr2angstrom = 0.52917720859;
 
-crys2car = zeros(3,3);
-ared = cr.a(1); bred = cr.a(2); cred = cr.a(3);
-calph = cos(cr.b(1)); cbeta = cos(cr.b(2)); cgamm = cos(cr.b(3));
-HH1 = sqrt(1d0-cgamm*cgamm);
-HH2 = (calph-cbeta*cgamm) / sqrt(1d0-cgamm*cgamm);
-HH3 = sqrt(1d0 - cbeta*cbeta - HH2*HH2);
-crys2car(1,1) = ared;
-crys2car(1,2) = bred * cgamm;
-crys2car(1,3) = cred * cbeta;
-crys2car(2,2) = bred * HH1;
-crys2car(2,3) = cred * HH2;
-crys2car(3,3) = cred * HH3;
-crys2car = crys2car * bohr2angstrom;
-if (LOG>0)
-   printf("Crys2Cart matrix:\n");
-   for i = 1 : 3
-      for j = 1 : 3
-         printf(" %15.9f", crys2car(i,j));
-      endfor
-      printf("\n");
-   endfor
-endif
+crys2car = cr.r' * bohr2angstrom;
 
 # Cell lengths are in bohr, cartesians should be in angstrom
 
@@ -137,7 +116,7 @@ else
       endfor
    endfor
 endif
-xyz(1:3,1:nall) = crys2car(1:3,1:3) * xyz(1:3,1:nall);
+xyz(1:3,1:nall) = crys2car * xyz(1:3,1:nall);
 printf("DBG: nall %d [%d,%d]\n", nall, size(xyz));
 
 for i = 1:nall
@@ -208,6 +187,7 @@ for i = listin
    mol.atmass(n) = atom.mass;
    mol.atxyz(1:3,n) = xyz(1:3,i);
 endfor
+mol.nat = length(listin);
 mask.nat = length(listin);
 mask.l = lxyz;
 mask.i = ixyz;

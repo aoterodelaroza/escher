@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [mol] = mol_read_fchk(rootfile, LOG=1)
-%function [mol] = mol_read_fchk(rootfile, LOG=1)
+function [mol] = mol_readfchk(rootfile, LOG=1)
+%function [mol] = mol_readfchk(rootfile, LOG=1)
 %
-% mol_read_fchk - read in a mol description from a gaussian g09
+% mol_readfchk - read in a mol description from a gaussian g09
 % fchk file.
 %
 % Required input variables:

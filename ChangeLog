@@ -1,3 +1,92 @@
+2013-10-28  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* doc/devs.org: fully-written now. Check for reference on
+	functions and objects. A major overhaul of the code
+	happened. Check today and yesterday for a list of changes.
+
+	* src/mol_unitconvert.m: moved to the attic. This can only end up
+	in weeping and gnashing of teeth.
+
+	* src/mol_opt_align.m: moved to the attic. mol_align does the same
+	thing (?).
+
+	* src/mol_groupgeometry.m: moved to the attic. The same can be
+	achieved by combining existing routines.
+
+	* src/mol_adduct.m: moved to the attic. Too specific. The same can
+	be achieved by combining existing routines.
+
+	* src/mol_cr2topo.m, src/mol_fchk2topo.m, src/mol_smiles2topo.m:
+	moved to the attic. Too specific.
+
+	* src/mol_limits.m: moved to the attic. The same can be achieved
+	using simple octave routines.
+
+	* src/mol_cuberange.m: moved to the attic. Too specific.
+
+	* src/mol_hemap.m: moved to the attic. Too specific.
+
+	* src/mol_permute.m: moved from mol_reorder.m (because we already
+	have mol_order and it's confusing).
+
+	* src/atom.m: added constructor for the atom object.
+
+2013-10-27  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* all: I have moved a lot of code around to i) use constructors
+	and objects that have all their fields defined (if empty), ii)
+	modify molecule to always use mol.nat. Also I'm not saving any
+	properties except those you can't get by using other routines. For
+	instance, no conn or frag, which you can get by defining smaller
+	mols.
+
+	* src/mol_rcov.m: added to avoid having global atdb all over the
+	place.
+
+	* src/mol_dist.m: moved to the attic. This can be done with octave
+	routines.
+
+	* src/mol_dist2.m: moved to the attic. This can be done by using a
+	combination of mol_distmatrix and mol_getfragment.
+
+	* src/stick.m: added constructor.
+
+	* src/rep_getcm.m, src/rep_merge.m: removed check of nballs, nsticks, etc.
+
+	* src/mplot_molplot.m, mplot_reset.m, mplot_writepov.m: moved to
+	the attic. Superseded by recent routines.
+
+	* src/mol_adduct.m, src/op_rotx.m, src/op_roty.m, src/op_rotz.m:
+	op -> 3x3 matrix. Easier to use than the 4x4 variety, which can
+	always be regenerated on the fly with standard octave operations.
+
+	* src/get_xyz_geom_c6x6_yz3.m, src/n3p3cl6.m, src/pnx2_n.m,
+	src/op_prod.m: moved to the attic.
+
+	* src/get_geom_xyz.m: moved to the attic. Superseded by
+	mol_readxyz.
+
+	* todo: added todo entry about constructors.
+
+	* src/cr_pw2cell.m: moved to the attic. Superseded by
+	cr_read_espresso.
+
+	* src/cr_molmotif.m: use cr.r instead of regenerating it from cr.a
+	and cr.b.
+
+	* src/cr_applymask.m, src/cr_c2x.m, cr_crystalbox.m,
+        src/cr_insertvacuum.m, src/cr_newcell.m, src/cr_spherebox.m,
+        src/cr_unitcell.m, cr_write_vasp, cr_x2c: removed regeneration
+	of r. cr.r is required now.
+
+	* src/crystal.m: saved the code to generate r and g from a and b
+	here.
+
+	* src/color.m: converted dbcolor to a struct, eliminated the
+	spaces.
+
+	* src/c6h6_scme2.m: moved to the attic.
+
 2013-10-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/rep_addlight.m, src/rep_write_pov.m: added shadowless and

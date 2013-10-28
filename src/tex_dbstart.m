@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep_texdbstart();
-% function rep_texdbstart();
+function tex_dbstart();
+% function tex_dbstart();
 %
-% rep_texdbstart - start the internal texture database.
+% tex_dbstart - start the internal texture database.
 
   global texdb
   
@@ -22,6 +22,7 @@ function rep_texdbstart();
   #### povray textures ####
   ## a simple default
   n = 1;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "tdefault";
   texdb{n}.string = "finish {phong 0.2 diffuse 0.5 ambient 0.3 reflection 0.03 brilliance 1.0}";
@@ -40,48 +41,56 @@ function rep_texdbstart();
 
   ## povray textures, other
   n = 5;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "old_default";
   texdb{n}.string = "finish{specular 0.2 roughness 0.1 reflection 0.02}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   n = 6;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "fglass5";
   texdb{n}.string = "finish { specular 0.7 roughness 0.001 ambient 0 diffuse 0 reflection {0.2, 1.0 fresnel on } conserve_energy }";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,0.8,0.0>}";
 
   n = 7;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "fglass10";
   texdb{n}.string = "finish { specular 0.6 roughness 0.002 ambient 0 diffuse 0.1 reflection {0.05, 1.0} conserve_energy }";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,0.8,0.0>}";
 
   n = 8;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "metal1";
   texdb{n}.string = "finish { brilliance 2 diffuse 0.391 ambient rgb <0.22000,0.18100,0.12100> reflection rgb <0.55000,0.45250,0.30250> metallic 1 specular 0.20 roughness 1/20}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   n = 9;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "metal2";
   texdb{n}.string = "finish { ambient 0.35 brilliance 2 diffuse 0.3 metallic specular 0.80 roughness 1/20 reflection 0.1}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   n = 10;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "metal3";
   texdb{n}.string = "finish { ambient 0.15 brilliance 5 diffuse 0.6 metallic specular 0.80 roughness 1/100 reflection 0.65}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   n = 11;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "starfield";
   texdb{n}.string = "finish { diffuse 0 ambient 1 }";
   texdb{n}.pigment = "pigment { granite color_map { [ 0.000  0.260 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.260  0.300 color rgb <.5,.5,.4> color rgb <.8,.8,.4> ] [ 0.300  0.460 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.460  0.500 color rgb <.4,.4,.5> color rgb <.4,.4,.8> ] [ 0.500  0.660 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.660  0.700 color rgb <.5,.4,.4> color rgb <.8,.4,.4> ] [ 0.700  0.860 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.860  0.900 color rgb <.5,.5,.5> color rgb < 1, 1, 1> ] [ 0.900  1.000 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ]} turbulence 1 sine_wave scale .5 }";
 
   n = 12;
+  texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "chrome";
   texdb{n}.string = "finish {ambient 0.3 diffuse 0.7 reflection 0.15 brilliance 8 specular 0.8 roughness 0.1}";
@@ -91,6 +100,7 @@ function rep_texdbstart();
   ## a simple default
   nstart = n;
   n = nstart + 1;
+  texdb{n} = texture();
   texdb{n}.typ = "obj";
   texdb{n}.name = "tdefault";
   texdb{n}.Ns = 96.078;

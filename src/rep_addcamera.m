@@ -40,7 +40,7 @@ function rep = rep_addcamera(repi,camangle=[80 75 45],angle=45,persp=1,LOG=0)
 
   ## set the camera using camangle
   rep = repi;
-  rep.cam = struct();
+  rep.cam = camera();
   camangle = camangle * pi / 180;
   visdis = max(xdel) / tan(camangle(3)/2);
   ss = sin(camangle(1));

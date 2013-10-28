@@ -41,7 +41,7 @@ function [mol] = mol_adduct(mol1, mol2, iat1=-1, iat2=-1, rtp1=[0,0,0], iang1=[0
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2011
 
-n1 = length(mol1.atmass);
+n1 = mol1.nat;
 if (iat1 == 0)
    # Center of mass of mol1:
    cm1 = mol1.atxyz * mol1.atmass' / sum(mol1.atmass);
@@ -58,7 +58,7 @@ elseif (iat1 < 0)
    x1 = mol1.atxyz;
 endif
 
-n2 = length(mol2.atmass);
+n2 = mol2.nat;
 if (iat2 == 0)
    # Center of mass of mol2:
    cm2 = mol2.atxyz * mol2.atmass' / sum(mol2.atmass);
@@ -91,7 +91,7 @@ elseif (isequal(order1,'zyx'))
 else
    error('mol_adduct: internal rotation order1 not defined!');
 endif
-x1 = op(1:3,1:3)*x1;
+x1 = op*x1;
 
 # Move reference point in mol1 to its final position:
 r = rtp1(1); theta = rtp1(2); phi = rtp1(3);
@@ -114,7 +114,7 @@ elseif (isequal(order2,'zyx'))
 else
    error('mol_adduct: internal rotation order2 not defined!');
 endif
-x2 = op(1:3,1:3)*x2;
+x2 = op*x2;
 
 # Move reference point in mol2 to its final position:
 r = rtp2(1); theta = rtp2(2); phi = rtp2(3);

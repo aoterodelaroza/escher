@@ -31,7 +31,7 @@ function mol = mol_getfragment (moli, iat, LOG=0)
 
 if (length(iat) < 1)
    error('mol_getfragment: iat list empty!');
-elseif (min(iat)<1 || max(iat)>length(moli.atnumber))
+elseif (min(iat)<1 || max(iat)>moli.nat)
    error('mol_getfragment: wrong iat list!');
 endif
 
@@ -39,12 +39,11 @@ nm = sprintf(' %d', iat);
 if (isfield(moli,"name") && !isempty(moli.name))
    mol.name = sprintf('Fragment[%s] of %s', nm, moli.name);
 endif
+mol.nat = length(iat);
 mol.atname = moli.atname(iat);
 mol.atnumber = moli.atnumber(iat);
 mol.atxyz = moli.atxyz(:,iat);
-if (isfield(moli,"atmass"))
-   mol.atmass = moli.atmass(iat);
-endif
+mol.atmass = moli.atmass(iat);
 
 if (LOG>0)
    printf('moli_getfragment:\n');

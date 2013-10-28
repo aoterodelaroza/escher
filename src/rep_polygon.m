@@ -43,26 +43,6 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
     endif
   endif
 
-  ## initialize
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if (rep.nstick == 0)
-    rep.stick = cell();
-  endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-  endif
-  if (rep.ntriangle == 0)
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-  endif
-  if (rep.nvertex == 0)
-    rep.vertex = cell();
-  endif
-
   ## center of mass
   xcm = sum(x0,1) / size(x0,1);
 
@@ -70,10 +50,12 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
     ## add vertices -> right now not checking a thing
     nv0 = rep.nvertex + 1;
     rep.nvertex += 1; 
+    rep.vertex{rep.nvertex} = vertex();
     rep.vertex{rep.nvertex}.x = xcm;
     rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
     for i = 1:size(x0,1)
       rep.nvertex += 1; 
+      rep.vertex{rep.nvertex} = vertex();
       rep.vertex{rep.nvertex}.x = x0(i,:);
       rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
     endfor
@@ -81,6 +63,7 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
     ## add triangles -> not checking either
     for i = 1:size(x0,1)
       rep.ntriangle += 1;
+      rep.triangle{rep.ntriangle} = triangle();
       rep.triangle{rep.ntriangle}.idx = [nv0, nv0+i, nv0+mod(i,size(x0,1))+1];
       rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
       rep.triangle{rep.ntriangle}.tex = ftex;
@@ -88,8 +71,8 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
   endif  
 
 #  ## covalent radii
-#  nc = length(molc.atnumber);
-#  nv = length(molv.atnumber);
+#  nc = molc.nat;
+#  nv = molv.nat;
 #  if (dist(1) < 0)
 #    rcovc = zeros(1,nc);
 #    for i = 1:nc

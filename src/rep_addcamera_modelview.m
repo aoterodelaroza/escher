@@ -30,7 +30,7 @@ function rep = rep_addcamera_modelview(repi,r=[eye(3); 0 0 -20],angle=45,persp=1
 
   ## set the camera using euler angles
   rep = repi;
-  rep.cam = struct();
+  rep.cam = camera();
   if (size(r,2) > 3)
     rep.cam.cop = r(1:3,4)'; ## use the cop in the modelview matrix
   else

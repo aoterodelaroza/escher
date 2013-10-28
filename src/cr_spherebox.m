@@ -44,21 +44,8 @@ endif
 x0 = x0 - floor(x0);
 
 ## crystal to cartesian
-if (isfield(cr,"r"))
-  r = cr.r;
-  g = r * r';
-else
-  if (isfield(cr,"g"))
-    g = cr.g;
-  else
-    cc = cos(cr.b);
-    g = cr.a' * cr.a;
-    g(1,2) = g(2,1) = g(1,2) * cc(3);
-    g(1,3) = g(3,1) = g(1,3) * cc(2);
-    g(2,3) = g(3,2) = g(2,3) * cc(1);
-  endif
-  r = chol(g)';
-endif
+r = cr.r;
+g = cr.g;
 rinv = inv(r);
 
 ## find the relevant lattice vectors
@@ -83,7 +70,7 @@ nvecs = size(lvecs,1);
 
 ## build the molecule, assume that cells on the border contribute 1/4
 ## of the atoms in the unit cell to save memory.
-mol = struct();
+mol = molecule();
 mol.atname = cell();
 mol.atnumber = zeros(1,nvecs*cr.nat+nvecs*cr.nat/4);
 mol.atxyz = zeros(3,nvecs*cr.nat+nvecs*cr.nat/4);
@@ -102,6 +89,7 @@ for i = 1:cr.nat
     endif
   endfor
 endfor
+mol.nat = n
 if (n > 0)
   mol.atnumber = mol.atnumber(1:n);
   mol.atxyz = mol.atxyz(:,1:n) * bohr2angstrom;
@@ -111,5 +99,6 @@ endif
 if (isfield(cr,"name") && !isempty(cr.name))
   mol.name = cr.name;
 endif
+mol = mol_fillatmass(mol);
 
 endfunction

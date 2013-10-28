@@ -50,13 +50,10 @@ function [mol2new,R] = mol_opt_align(mol1, iat1, mol2, iat2, bondfactor=1.2, LOG
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2012
 
-   global dbdefined
-   global atdb
-
 # Check input data, particularly iat1 and iat2.
 if (isempty(iat1) && isempty(iat2))
-   n1 = length(mol1.atnumber);
-   n2 = length(mol2.atnumber);
+   n1 = mol1.nat;
+   n2 = mol2.nat;
    if (n1 == n2)
       iat1 = 1:n1; iat2 = iat1;
    else
@@ -105,7 +102,7 @@ for i = 1:n1
       x = mol1.atxyz(1:3,i) - mol1.atxyz(1:3,j);
       dist(i,j) = dist(j,i) = sqrt(x' * x);
       zj = mol1.atnumber(j);
-      dconn = bondfactor * (atdb.rcov(zi) + atdb.rcov(zj));
+      dconn = bondfactor * (mol_rcov(zi) + mol_rcov(zj));
       conn(i,j) = conn(j,i) = (dist(i,j) <= dconn);
    endfor
 endfor
@@ -142,7 +139,7 @@ for i = 1:n2
       x = mol2.atxyz(1:3,i) - mol2.atxyz(1:3,j);
       dist(i,j) = dist(j,i) = sqrt(x' * x);
       zj = mol2.atnumber(j);
-      dconn = bondfactor * (atdb.rcov(zi) + atdb.rcov(zj));
+      dconn = bondfactor * (mol_rcov(zi) + mol_rcov(zj));
       conn(i,j) = conn(j,i) = (dist(i,j) <= dconn);
    endfor
 endfor

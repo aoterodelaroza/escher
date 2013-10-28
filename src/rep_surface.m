@@ -42,18 +42,6 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
   else
     rep = representation();
   endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-    rep.vertex = cell();
-  endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-    rep.stick = cell();
-  endif
 
   ## calculate function values
   u = zeros(nuv(1)*nuv(2),2);
@@ -90,6 +78,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
     for j = 1:nuv(2)
       ## Coordinates
       n++;
+      rep.vertex{n} = vertex();
       rep.vertex{n}.x = fval(n,:);
       rep.vertex{n}.rgb = rgb(n,:);
     endfor
@@ -107,12 +96,14 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
       idx = [(i-1)*nuv(2)+j, (i1-1)*nuv(2)+j, (i1-1)*nuv(2)+j1, (i-1)*nuv(2)+j1];
 
       n++;
+      rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(1) idx(2) idx(4)];
       rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
       rep.triangle{n}.tex = tex;
       n++;
+      rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(4) idx(2) idx(3)];
       rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
@@ -121,6 +112,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
 
       if (grid > 0)
         m++;
+        rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
         rep.stick{m}.x0 = fval(idx(1),:);
         rep.stick{m}.x1 = fval(idx(2),:);
@@ -128,6 +120,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
         rep.stick{m}.rgb = grrgb;
         rep.stick{m}.tex = grtex;
         m++;
+        rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
         rep.stick{m}.x0 = fval(idx(1),:);
         rep.stick{m}.x1 = fval(idx(4),:);
@@ -135,6 +128,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
         rep.stick{m}.rgb = grrgb;
         rep.stick{m}.tex = grtex;
         m++;
+        rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
         rep.stick{m}.x0 = fval(idx(2),:);
         rep.stick{m}.x1 = fval(idx(4),:);

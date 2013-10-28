@@ -46,29 +46,10 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
       rep.name = cr.name;
     endif
   endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if ((!isfield(rep,"stick")) || rep.nstick == 0)
-    rep.stick = cell();
-  endif
 
   ## crystal to cartesian
-  if (isfield(cr,"r"))
-    r = cr.r;
-    g = r * r';
-  else
-    if (isfield(cr,"g"))
-      g = cr.g;
-    else
-      cc = cos(cr.b);
-      g = cr.a' * cr.a;
-      g(1,2) = g(2,1) = g(1,2) * cc(3);
-      g(1,3) = g(3,1) = g(1,3) * cc(2);
-      g(2,3) = g(3,2) = g(2,3) * cc(1);
-    endif
-    r = chol(g)';
-  endif
+  r = cr.r;
+  g = cr.g;
   r *= bohr2ang;
 
   x0 = [
@@ -98,6 +79,7 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
         for i = 1:size(x0,1)
           ## add the stick
           rep.nstick = rep.nstick + 1;
+          rep.stick{rep.nstick} = stick();
           rep.stick{rep.nstick}.name = name;
           rep.stick{rep.nstick}.x0 = ([ix iy iz] + x0(i,1:3)) * r;
           rep.stick{rep.nstick}.x1 = ([ix iy iz] + x0(i,4:6)) * r;

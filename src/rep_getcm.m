@@ -28,34 +28,25 @@ function [xct xmin xmax xdel] = rep_getcm(rep)
   ## calculate molecular limits
   xmax = zeros(1,3) - Inf;
   xmin = zeros(1,3) + Inf;
-  do1 = 0;
-  if (isfield(rep,"nball") && rep.nball > 0)
-    do1 = 1;
-    for i = 1:rep.nball
-      xmax = max(xmax,rep.ball{i}.x);
-      xmin = min(xmin,rep.ball{i}.x);
-    endfor
-  endif
-  if (isfield(rep,"nstick") && rep.nstick > 0)
-    do1 = 1;
-    for i = 1:rep.nstick
-      xmax = max(xmax,rep.stick{i}.x0);
-      xmin = min(xmin,rep.stick{i}.x0);
-      xmax = max(xmax,rep.stick{i}.x1);
-      xmin = min(xmin,rep.stick{i}.x1);
-    endfor
-  endif
-  if (isfield(rep,"nvertex") && rep.nvertex > 0)
-    do1 = 1;
-    for i = 1:rep.nvertex
-      xmax = max(xmax,rep.vertex{i}.x);
-      xmin = min(xmin,rep.vertex{i}.x);
-    endfor
-  endif
-  xct = 0.5 * (xmax+xmin);
-  xdel = xmax - xmin + 1d-15;
-  if (do1 == 0)
+  for i = 1:rep.nball
+    xmax = max(xmax,rep.ball{i}.x);
+    xmin = min(xmin,rep.ball{i}.x);
+  endfor
+  for i = 1:rep.nstick
+    xmax = max(xmax,rep.stick{i}.x0);
+    xmin = min(xmin,rep.stick{i}.x0);
+    xmax = max(xmax,rep.stick{i}.x1);
+    xmin = min(xmin,rep.stick{i}.x1);
+  endfor
+  for i = 1:rep.nvertex
+    xmax = max(xmax,rep.vertex{i}.x);
+    xmin = min(xmin,rep.vertex{i}.x);
+  endfor
+  if (any(isinf(xmax)) || any(isinf(xmin)))
     xmin = xmax = xct = xdel = [0 0 0];
+  else
+    xct = 0.5 * (xmax+xmin);
+    xdel = xmax - xmin + 1d-15;
   endif
 
 endfunction

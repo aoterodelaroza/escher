@@ -10,24 +10,17 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep_addpovtexture(name,string);
-% function rep_addpovtexture(name,string)
+function tri = triangle()
+% function tri = triangle()
 %
-% rep_addpovtexture - add a povray texture to the database.
+% triangle - create an empty triangle.
 %
-% Required input variables:
-% name: name of the new texture.
-% string: povray texture definition.
+% Output:
+% {tri}: the empty triangle.
+%
 
-  global texdb
+  tri = struct();
+  tri.tex = ""
+  tri.idx = [0 0 0];
   
-  if (!exist("texdb","var") || isempty(texdb))
-    rep_texdbstart();
-  endif
-  
-  n = length(texdb);
-  texdb{n+1}.typ = "pov";
-  texdb{n+1}.name = name;
-  texdb{n+1}.string = string;
-
 endfunction

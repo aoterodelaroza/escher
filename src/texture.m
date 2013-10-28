@@ -10,22 +10,23 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function tex = rep_texture(typ,name);
-% function tex = rep_texture(typ,name);
+function tex = texture(typ="",name);
+% function tex = texture(typ,name);
 %
-% rep_texture - return one of the textures in the internal texture
-% database, for using in povray or obj files.
+% texture - return one of the textures in the internal texture
+% database, for using in povray or obj files. If no typ is given, then
+% return an empty texture.
 %
 % Required input variables:
 % typ: type of texture, "pov" or "povray" for povray and
-%      "obj" for obj.
+%      "obj" for obj. "" returns an empty texture.
 % name: internal database handle of the texture. It has to be either
-%       one of the default textures or one added using rep_addtexture.
+%       one of the default textures or one added using tex_add*texture.
 
   global texdb
   
   if (!exist("texdb","var") || isempty(texdb))
-    rep_texdbstart();
+    tex_dbstart();
   endif
   
   if (strcmp(lower(typ),"povray") || strcmp(lower(typ),"pov"))
@@ -33,7 +34,17 @@ function tex = rep_texture(typ,name);
   elseif (strcmp(lower(typ),"obj"))
     typ = "obj";
   else
-    error("unrecognized texture format")
+    tex = struct();
+    tex.typ = "";
+    tex.name = "";
+    tex.string = "";
+    tex.pigment = "";
+    tex.Ns = 0;
+    tex.Ka = [0 0 0];
+    tex.Ks = [0 0 0];
+    tex.Ni = 0;
+    tex.illum = 0;
+    return
   endif
 
   ## search for the texture in the database
@@ -46,7 +57,7 @@ function tex = rep_texture(typ,name);
   endfor
   if (!found)
     printf("Warning: texture %s not found. Falling back to tdefault.\n",name);
-    tex = rep_texture(typ,"tdefault");
+    tex = texture(typ,"tdefault");
   endif
 
 endfunction

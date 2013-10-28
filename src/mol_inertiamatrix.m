@@ -35,7 +35,7 @@ function [ivect,ival] = mol_inertiamatrix (mol, LOG=0)
 % Created: January 2012
 
 imat = zeros(3,3);
-for k = 1:length(mol.atmass)
+for k = 1:mol.nat
    rr = mol.atxyz(1:3,k) * mol.atxyz(1:3,k)';
    for i = 1:3
       imat(i,i) += mol.atmass(k) * (trace(rr) - rr(i,i));

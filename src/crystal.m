@@ -29,4 +29,20 @@ function cr = crystal()
   cr.a = cr.b = zeros(1,3);
   cr.omega = 0;
 
+## ## crystal to cartesian
+## if (isfield(cr,"r"))
+##   r = cr.r;
+## else
+##   if (isfield(cr,"g"))
+##     g = cr.g;
+##   else
+##     cc = cos(cr.b);
+##     g = cr.a' * cr.a;
+##     g(1,2) = g(2,1) = g(1,2) * cc(3);
+##     g(1,3) = g(3,1) = g(1,3) * cc(2);
+##     g(2,3) = g(3,2) = g(2,3) * cc(1);
+##   endif
+##   r = chol(g)';
+## endif
+
 endfunction

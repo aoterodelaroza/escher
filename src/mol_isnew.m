@@ -33,7 +33,7 @@ function isnew = mol_isnew(mol, xyz, eps=1e-8, LOG=1)
 
 j = 1;
 isnew = true;
-while (j<=length(mol.atnumber) && isnew)
+while (j<=mol.nat && isnew)
    if (size(xyz)==[3,1])
       x = xyz - mol.atxyz(1:3,j);
    elseif (size(xyz)==[3,1])

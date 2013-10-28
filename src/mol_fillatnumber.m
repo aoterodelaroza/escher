@@ -27,7 +27,7 @@ function [mol] = mol_fillatnumber(moli)
 % Created: June 2011
 
   mol = moli;
-  for i = 1:length(moli.atnumber)
+  for i = 1:moli.nat
     [Z,atprop] = mol_dbatom(moli.atname{i});
     mol.atnumber(i) = Z;
   endfor

@@ -19,7 +19,6 @@ function geom = mol_groupgeometry (mol, g1, g2, LOG=1)
 %
 % Required input variables:
 % mol: molecular database, containing, at least:
-%      mol.names{1:nat} ... cell array of strings with the atom names.
 %      mol.atxyz[1:3,1:nat] ...array of cartesian coordinates.
 % g1[:],g2[:]: index of the atoms in mol that belong to g1 and g2.
 %
@@ -39,15 +38,15 @@ for i = 1 : length(g1)
    endfor
    dist1 = dist(i,:);
    [dm,im] = min(dist1);
-   printf('Closest to g1(%d,%s) in g2: (%d,%s) --> %.6f\n', \
-         g1(i), mol.names{g1(i)}, g2(im), mol.names{g2(im)}, dm);
+   printf('Closest to g1(%d) in g2: (%d) --> %.6f\n', \
+         g1(i), g2(im), dm);
 endfor
 printf('\n');
 for j = 1:length(g2)
    dist1 = dist(:,j);
    [dm,im] = min(dist1);
-   printf('Closest to g2(%d,%s) in g1: (%d,%s) --> %.6f\n', \
-         g2(j), mol.names{g2(j)}, g1(im), mol.names{g1(im)}, dm);
+   printf('Closest to g2(%d) in g1: (%d) --> %.6f\n', \
+         g2(j), g1(im), dm);
 endfor
 
 

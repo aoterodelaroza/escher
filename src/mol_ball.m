@@ -43,7 +43,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
 %
 
   ## number of atoms
-  nat = length(mol.atname);
+  nat = mol.nat;
 
   ## initial representation 
   if (!isempty(addto) && isstruct(addto))
@@ -53,12 +53,6 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
     if (isfield(mol,"name") && !isempty(mol.name))
       rep.name = mol.name;
     endif
-  endif
-  if (!isfield(rep,"nball"))
-    rep.nball = 0;
-  endif
-  if (rep.nball == 0)
-    rep.ball = cell();
   endif
 
   ## Create balls
@@ -79,7 +73,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
     endif
     if (doit) 
       n = rep.nball = rep.nball+1;
-      rep.ball{n} = struct();
+      rep.ball{n} = ball();
       rep.ball{n}.x = mol.atxyz(:,i)';
       rep.ball{n}.name = mol.atname{i};
       [dum, atom] = mol_dbsymbol(mol.atnumber(i),LOG);

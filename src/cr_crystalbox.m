@@ -35,20 +35,7 @@ function [mol mask] = cr_crystalbox(cr, x0=[-0.05 -0.05 -0.05], x1=[1.05 1.05 1.
 bohr2angstrom = 0.52917720859;
 
 ## crystal to cartesian
-if (isfield(cr,"r"))
-  r = cr.r;
-else
-  if (isfield(cr,"g"))
-    g = cr.g;
-  else
-    cc = cos(cr.b);
-    g = cr.a' * cr.a;
-    g(1,2) = g(2,1) = g(1,2) * cc(3);
-    g(1,3) = g(3,1) = g(1,3) * cc(2);
-    g(2,3) = g(3,2) = g(2,3) * cc(1);
-  endif
-  r = chol(g)';
-endif
+r = cr.r;
 
 if (LOG>0)
    printf("Crys2Cart matrix:\n");
@@ -76,7 +63,7 @@ endfor
 
 ## build the molecule, assume that cells on the border contribute 1/4
 ## of the atoms in the unit cell to save memory.
-mol = struct();
+mol = molecule();
 mol.atname = cell();
 mol.atnumber = zeros(1,nvecsm1*cr.nat+nvecs*cr.nat/4);
 mol.atxyz = zeros(3,nvecsm1*cr.nat+nvecs*cr.nat/4);
@@ -102,6 +89,8 @@ if (n > 0)
 else
   mol.atnumber = mol.atxyz = [];
 endif
+mol.nat = n;
+mol = mol_fillatmass(mol);
 
 if (nmol > 0)
   [smol idxmol] = mol_burst(mol);

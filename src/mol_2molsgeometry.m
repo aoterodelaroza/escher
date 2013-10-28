@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function geom = mol_2molsgeometry (mol1, mol2, LOG=1)
-% function geom = mol_2molsgeometry (mol1, mol2, LOG=1)
+function void = mol_2molsgeometry (mol1, mol2, LOG=1)
+% function void = mol_2molsgeometry (mol1, mol2, LOG=1)
 %
 % mol_2molsgeometry - Given a couple of molecular databases, mol1 and
 % mol2, this routine calculates and prints the distances between the atoms
@@ -31,8 +31,8 @@ function geom = mol_2molsgeometry (mol1, mol2, LOG=1)
 % Created: October 2012
 
 if (LOG>0)
-   n1 = length(mol1.atname);
-   n2 = length(mol2.atname);
+   n1 = mol1.nat;
+   n2 = mol2.nat;
    printf('mol_2molsgeometry:\n');
    printf('Atom(mol1)  Atom(mol2) dist Coords.\n');
    for i = 1 : n1

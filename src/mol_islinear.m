@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [check,vector] = mol_islinear(mol, eps=1e-6, LOG=1)
-%function [check,vector] = mol_islinear(mol, eps=1e-6, LOG=1)
+function [check,vector] = mol_islinear(mol, eps=1e-6, LOG=0)
+%function [check,vector] = mol_islinear(mol, eps=1e-6, LOG=0)
 %
 % mol_islinear - check if the molecule is linear (within a given eps
 %    threshold) and, if it is, determines the vector line.
@@ -35,7 +35,7 @@ function [check,vector] = mol_islinear(mol, eps=1e-6, LOG=1)
 % Created: January 2012
 
 # Center of mass:
-n = length(mol.atmass);
+n = mol.nat;
 cm = mol.atxyz * mol.atmass' / sum(mol.atmass);
 # Place cm at the origin:
 x = mol.atxyz - cm * ones(1,n);

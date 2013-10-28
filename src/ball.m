@@ -10,21 +10,20 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rotx(angle)
-% function m = op_rotx(angle)
+function ba = ball()
+% function ba = ball()
 %
-% op_rotx - returns the matrix corresponding to a counter clockwise rotation
-% of "angle" degrees around the x axis.
+% ball - create an empty ball
 %
-% Required input variables:
-% angle: rotation angle in degrees.
+% Output:
+% {st}: the empty stick.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
-% Created: June 2011
 
-c = cos(angle*pi/180);
-s = sin(angle*pi/180);
-m = [1 0 0; 0 c -s; 0 s c];
+  st.name = "";
+  st.x0 = [0 0 0];
+  st.x1 = [0 0 0];
+  st.r = 0;
+  st.rgb = [0 0 0 0 0];
+  st.tex = "";
 
 endfunction

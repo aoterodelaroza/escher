@@ -62,39 +62,17 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
     endif
   endif
 
-  ## initialize
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if (rep.nstick == 0)
-    rep.stick = cell();
-  endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-  endif
-  if (rep.ntriangle == 0)
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-  endif
-  if (rep.nvertex == 0)
-    rep.vertex = cell();
-  endif
-
   ## covalent radii
-  nc = length(molc.atnumber);
-  nv = length(molv.atnumber);
+  nc = molc.nat;
+  nv = molv.nat;
   if (dist(1) < 0)
     rcovc = zeros(1,nc);
     for i = 1:nc
-      [sym atom] = mol_dbsymbol(molc.atnumber(i));
-      rcovc(i) = atom.rcov;
+      rcovc(i) = mol_rcov(molc.atnumber(i));
     endfor
     rcovv = zeros(1,nv);
     for i = 1:nv
-      [sym atom] = mol_dbsymbol(molv.atnumber(i));
-      rcovv(i) = atom.rcov;
+      rcovv(i) = mol_rcov(molv.atnumber(i));
     endfor
   endif
 
@@ -151,11 +129,13 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         nv0 = rep.nvertex;
         for i = 1:length(idx)
           rep.nvertex += 1;
+          rep.vertex{rep.nvertex} = vertex();
           rep.vertex{rep.nvertex}.x = molv.atxyz(:,idx(i))';
           rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
         endfor
         for i = 1:size(h,1)
           rep.ntriangle += 1;
+          rep.triangle{rep.ntriangle} = triangle();
           rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
           rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
           rep.triangle{rep.ntriangle}.tex = ftex;
@@ -167,6 +147,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         for i = 1:size(h,1)
           for j = 1:3
             rep.nstick = rep.nstick + 1;
+            rep.stick{rep.nstick} = stick();
             rep.stick{rep.nstick}.name = "";
             rep.stick{rep.nstick}.x0 = v(h(i,kk(j,1)),:);
             rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);

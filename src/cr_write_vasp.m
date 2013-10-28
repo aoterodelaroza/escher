@@ -39,11 +39,7 @@ function cr_write_vasp(cr,file="",LOG=0)
   fprintf(lu,"%s ",cr.attyp{1:cr.ntyp});
   fprintf(lu,")\n");
   fprintf(lu,"%.5f\n",1);
-  if (!isstruct(cr) || !isfield(cr,"r"))
-    r = chol(cr.g);
-  else
-    r = cr.r';
-  endif
+  r = cr.r';
   r = r * bohrtoans;
   fprintf(lu,"%.12f %.12f %.12f\n %.12f %.12f %.12f\n %.12f %.12f %.12f\n",r');
   

@@ -28,7 +28,6 @@ function [symbol,atom] = mol_dbsymbol (Z,LOG=0)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: June 2011
 
-   global dbdefined
    global atdb
 
 %  Check if the database has been initialized:
@@ -41,6 +40,7 @@ function [symbol,atom] = mol_dbsymbol (Z,LOG=0)
      endif
    endif
 
+   atom = atom();
 %  Now get the atom and its properties:
    if (Z == 0)
      symbol = "Bq";

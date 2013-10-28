@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rot3D (a1,a2,a3, t = [0,0,0]', mode="euler_yxz", LOG=0)
-% function m = op_rot3D (a1,a2,a3, t = [0,0,0]', mode="euler_yxz", LOG=0)
+function m = op_rot3D (a1,a2,a3, mode="euler_yxz")
+% function m = op_rot3D (a1,a2,a3, mode="euler_yxz")
 %
 % op_rot3D - returns the matrix corresponding to a rotation in 3D defined
 % in terms of three angles plus the translation contained in t.
@@ -20,7 +20,6 @@ function m = op_rot3D (a1,a2,a3, t = [0,0,0]', mode="euler_yxz", LOG=0)
 % a1,a2,a3: the three rotation angles in degrees.
 %
 % Optional input variables (all have default values):
-% {t = [0,0,0]'}: optional traslation to be done after the rotation.
 % {mode = "euler_yxz"}: convention used to define the three rotation axes.
 %       It can be any of:
 %       * "euler_ABC" where ABC is a permutation of "xyz". It corresponds to
@@ -79,15 +78,6 @@ else
    error('op_rot3D: Unknown 3 angles rotation mode!');
 endif
 
-[r,c] = size(t);
-if (r==3 & c==1)
-   m(:,4) = t;
-elseif (r==1 & c==3)
-   m(:,4) = t';
-else
-   error('op_rot3D: wrong translation component!');
-endif
-
 if (LOG > 0)
    printf("op_rot3D: %s rotation\n", mode);
    if (strcmpi(mode,"axis"))
@@ -96,7 +86,6 @@ if (LOG > 0)
    else
       printf("Angles (deg) :", %.3f %.3f %.3f\n", a1, a2, a3);
    endif
-   printf("Traslation vector   :", %.3f %.3f %.3f\n", t);
    printf("Rotation matrix (Op * column_vector):\n");
    printf("%12.5e %12.5e %12.5e %12.5e\n", m);
 endif

@@ -10,15 +10,15 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [err] = mol_dbstart (LOG=1)
-% function [err] = mol_dbstart (LOG=1)
+function [err] = mol_dbstart (LOG=0)
+% function [err] = mol_dbstart (LOG=0)
 %
 % mol_dbstart - initialize the database of atomic properties.
 %
 % Required input variables:
 %
 % Optional input variables (all have default values):
-% {LOG = 1}: print information about the data read in if LOG>0.
+% {LOG = 0}: print information about the data read in if LOG>0.
 %            LOG = 0  no output.
 %            LOG = 1  debug information.
 %
@@ -32,11 +32,8 @@ function [err] = mol_dbstart (LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: June 2011
 
-   global dbdefined
    global atdb
 
-   dbdefined = true;
-   atdb.bondmax = 1.15;
    atdb.symbols = {...
       "H" , "HE", "LI", "BE", "B" , "C" , "N" , "O" , "F" , "NE", ...
       "NA", "MG", "AL", "SI", "P" , "S" , "CL", "AR", "K" , "CA", ...

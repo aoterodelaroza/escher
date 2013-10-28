@@ -25,7 +25,7 @@ function d = mol_distmatrix(mol)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: Jan 2012
 
-M = length(mol.atnumber);
+M = mol.nat;
 d = zeros(M);
 for i = 1:M
   d(i,:) = norm(mol.atxyz - mol.atxyz(:,i) * ones(1,M),2,"columns");

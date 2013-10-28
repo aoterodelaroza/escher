@@ -79,7 +79,7 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
    tic;
 
 % Read the fchk y determine the size of the cube grid
-   mol = mol_read_fchk(name,0);
+   mol = mol_readfchk(name,0);
    mol.atxyz = mol.atxyz * bohrtoans;
    [x0,nx,dx] = mol_cuberange(mol, cdn.qal, cdn.mrg, cdn.cube, 0);
 

@@ -10,21 +10,20 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rotx(angle)
-% function m = op_rotx(angle)
+function li = light()
+% function li = light()
 %
-% op_rotx - returns the matrix corresponding to a counter clockwise rotation
-% of "angle" degrees around the x axis.
+% light - create a light.
 %
-% Required input variables:
-% angle: rotation angle in degrees.
+% Output:
+% {li}: the empty light
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
-% Created: June 2011
 
-c = cos(angle*pi/180);
-s = sin(angle*pi/180);
-m = [1 0 0; 0 c -s; 0 s c];
+  li = struct();
+  li.x = [0 0 0];
+  li.color = [0 0 0];
+  li.intensity = 1;
+  li.shadowless = 0;
+  li.matrix = [];
 
 endfunction

@@ -30,10 +30,6 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
   else
     rep = representation();
   endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-    rep.stick = cell();
-  endif
 
   ## center of mass
   [xct xmin xmax xdel] = rep_getcm(rep);
@@ -43,6 +39,7 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
 
   ## x axis
   n++;
+  rep.stick{n} = stick();
   rep.stick{n}.name = "x-axis";
   rep.stick{n}.x0 = xct + [0 0 0];
   rep.stick{n}.x1 = xct + [1 0 0] * scale;
@@ -50,6 +47,7 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
   rep.stick{n}.rgb = [255 0 0 0 0];
   rep.stick{n}.tex = "stick_default";
   # n++;
+  # rep.stick{n} = stick();
   # rep.stick{n}.name = "x-axis (negative)";
   # rep.stick{n}.x0 = xct + [0 0 0];
   # rep.stick{n}.x1 = xct - [1 0 0] * scale;
@@ -58,6 +56,7 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
   # rep.stick{n}.tex = "stick_default";
   ## y axis
   n++;
+  rep.stick{n} = stick();
   rep.stick{n}.name = "y-axis";
   rep.stick{n}.x0 = xct + [0 0 0];
   rep.stick{n}.x1 = xct + [0 1 0] * scale;
@@ -65,6 +64,7 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
   rep.stick{n}.rgb = [0 255 0 0 0];
   rep.stick{n}.tex = "stick_default";
   # n++;
+  # rep.stick{n} = stick();
   # rep.stick{n}.name = "y-axis (negative)";
   # rep.stick{n}.x0 = xct + [0 0 0];
   # rep.stick{n}.x1 = xct - [0 1 0] * scale;
@@ -73,6 +73,7 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
   # rep.stick{n}.tex = "stick_default";
   ## z axis
   n++;
+  rep.stick{n} = stick();
   rep.stick{n}.name = "z-axis";
   rep.stick{n}.x0 = xct + [0 0 0];
   rep.stick{n}.x1 = xct + [0 0 1] * scale;
@@ -80,6 +81,7 @@ function rep = rep_refaxes(addto="",scale=1,rad=0.03)
   rep.stick{n}.rgb = [0 0 255 0 0];
   rep.stick{n}.tex = "stick_default";
   # n++;
+  # rep.stick{n} = stick();
   # rep.stick{n}.name = "z-axis (negative)";
   # rep.stick{n}.x0 = xct + [0 0 0];
   # rep.stick{n}.x1 = xct - [0 0 1] * scale;

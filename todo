@@ -1,3 +1,7 @@
+* texdb a struct instead of a cell
+* Routine for adaptively set the cylinder and sphere based on the number
+  of balls and sticks.
+* Modify constructors to accept basic parameters.
 * Include the observations made with TAGFEM_new in the code:
   0. Make grid_isosurface even more efficient by pushing the texture
      list as part of the representation, and using an integer
