@@ -19,10 +19,10 @@ function at = atom()
 % {at}: the empty atom.
 %
 
-  atom.number = 0;
-  atom.symbol = "";
-  atom.mass   = 0;
-  atom.rcov   = 0;
-  atom.color  = [0 0 0];
+  at.number = 0;
+  at.symbol = "";
+  at.mass   = 0;
+  at.rcov   = 0;
+  at.color  = [0 0 0];
 
 endfunction

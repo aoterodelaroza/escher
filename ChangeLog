@@ -1,3 +1,7 @@
+2013-11-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/atom.m: fixed bug.
+
 2013-10-28  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* doc/devs.org: fully-written now. Check for reference on
