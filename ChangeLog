@@ -1,3 +1,11 @@
+2013-11-19  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/tex_dbstart.m: added metal4 texture.
+
+	* src/texture.m: texdb_start moved to avoid infinite recursion.
+
+	* src/ball.m: fixed bug.
+
 2013-11-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/atom.m: fixed bug.

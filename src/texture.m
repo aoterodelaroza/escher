@@ -25,10 +25,6 @@ function tex = texture(typ="",name);
 
   global texdb
   
-  if (!exist("texdb","var") || isempty(texdb))
-    tex_dbstart();
-  endif
-  
   if (strcmp(lower(typ),"povray") || strcmp(lower(typ),"pov"))
     typ = "pov";
   elseif (strcmp(lower(typ),"obj"))
@@ -47,6 +43,10 @@ function tex = texture(typ="",name);
     return
   endif
 
+  if (!exist("texdb","var") || isempty(texdb))
+    tex_dbstart();
+  endif
+  
   ## search for the texture in the database
   found = 0;
   for i = 1:length(texdb)

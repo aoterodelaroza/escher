@@ -19,11 +19,11 @@ function ba = ball()
 % {st}: the empty stick.
 %
 
-  st.name = "";
-  st.x0 = [0 0 0];
-  st.x1 = [0 0 0];
-  st.r = 0;
-  st.rgb = [0 0 0 0 0];
-  st.tex = "";
+  ba.name = "";
+  ba.x0 = [0 0 0];
+  ba.x1 = [0 0 0];
+  ba.r = 0;
+  ba.rgb = [0 0 0 0 0];
+  ba.tex = "";
 
 endfunction

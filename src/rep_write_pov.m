@@ -145,13 +145,13 @@ function rep_write_pov(rep,file="",LOG=0)
     error("empty camera: missing rep_setdefaultscene?");
   endif
   fprintf(fid,"camera {\n");
-                                # if (isfield(rep.cam,"persp"))
-                                #   if (rep.cam.persp == 1)
-                                #     fprintf(fid,"  perspective\n");
-                                #   else
-                                #     fprintf(fid,"  orthographic\n");
-                                #   endif
-                                # endif
+  ## if (isfield(rep.cam,"persp"))
+  ##   if (rep.cam.persp == 1)
+  ##     fprintf(fid,"  perspective\n");
+  ##   else
+  ##     fprintf(fid,"  orthographic\n");
+  ##   endif
+  ## endif
   fprintf(fid,"  location  <%.5f,%.5f,%.5f>\n",rep.cam.cop);
   fprintf(fid,"  sky       <%.5f,%.5f,%.5f>\n",rep.cam.sky);
   fprintf(fid,"  up        <%.5f,%.5f,%.5f>\n",rep.cam.vuv);
