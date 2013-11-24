@@ -36,5 +36,6 @@ function rep = representation()
   rep.nlight = 0;
   rep.light = cell();
   rep.bgcolor = zeros(1,3);
+  rep.texlib = {};
 
 endfunction

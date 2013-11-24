@@ -19,7 +19,6 @@ function vr = vertex()
 % {vr}: the empty vertex.
 %
 
-  vr = vertex();
   vr.rgb = [0 0 0];
   vr.x = [0 0 0];
 

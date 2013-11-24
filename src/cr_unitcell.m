@@ -73,6 +73,7 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
     name = "cell";
   endif
 
+  [rep itex] = rep_registertexture(rep,tex);
   for ix = i0(1):i1(1)
     for iy = i0(2):i1(2)
       for iz = i0(3):i1(3)
@@ -85,7 +86,7 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
           rep.stick{rep.nstick}.x1 = ([ix iy iz] + x0(i,4:6)) * r;
           rep.stick{rep.nstick}.r = radius;
           rep.stick{rep.nstick}.rgb = rgb;
-          rep.stick{rep.nstick}.tex = tex;
+          rep.stick{rep.nstick}.tex = itex;
         end
       end
     end

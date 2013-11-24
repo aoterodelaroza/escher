@@ -77,6 +77,12 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
   endif
 
   ## build the polyhedra
+  if (!isempty(frgb))
+    [rep iftex] = rep_registertexture(rep,ftex);
+  endif
+  if (!isempty(ergb))
+    [rep ietex] = rep_registertexture(rep,etex);
+  endif
   ic1 = [];
   iv1 = [];
   for ic = 1:nc
@@ -138,7 +144,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
           rep.triangle{rep.ntriangle} = triangle();
           rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
           rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
-          rep.triangle{rep.ntriangle}.tex = ftex;
+          rep.triangle{rep.ntriangle}.tex = iftex;
         endfor
       endif
       if (!isempty(ergb))
@@ -153,7 +159,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
             rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);
             rep.stick{rep.nstick}.r = erad;
             rep.stick{rep.nstick}.rgb = ergb;
-            rep.stick{rep.nstick}.tex = etex;
+            rep.stick{rep.nstick}.tex = ietex;
           endfor
         endfor
       endif

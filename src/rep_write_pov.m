@@ -48,49 +48,25 @@ function rep_write_pov(rep,file="",LOG=0)
   fprintf(fid,"// \n\n");
 
   ## textures
-  ntex = 0;
-  itex = struct();
-
-  for i = 1:rep.nball
-    if (!isfield(itex,rep.ball{i}.tex))
-      ntex++; 
-      tex = texture("pov",rep.ball{i}.tex);
-      itex = setfield(itex,rep.ball{i}.tex,tex);
-      fprintf(fid,"#declare %s = texture {%s}\n",rep.ball{i}.tex,tex.string);
-    endif
+  pigment = {};
+  for i = 1:length(rep.texlib)
+    tex = texture("pov",rep.texlib{i});
+    pigment{i} = tex.pigment;
+    fprintf(fid,"#declare %s = texture {%s}\n",rep.texlib{i},tex.string);
   endfor
-
-  for i = 1:rep.nstick
-    if (!isfield(itex,rep.stick{i}.tex))
-      ntex++; 
-      tex = texture("pov",rep.stick{i}.tex);
-      itex = setfield(itex,rep.stick{i}.tex,tex);
-      fprintf(fid,"#declare %s = texture {%s}\n",rep.stick{i}.tex,tex.string);
-    endif
-  endfor
-
-  for i = 1:rep.ntriangle
-    if (!isfield(itex,rep.triangle{i}.tex))
-      ntex++; 
-      tex = texture("pov",rep.triangle{i}.tex);
-      itex = setfield(itex,rep.triangle{i}.tex,tex);
-      fprintf(fid,"#declare %s = texture {%s}\n",rep.triangle{i}.tex,tex.string);
-    endif
-  endfor
-  fprintf(fid,"\n");
 
   ## write balls to the pov file
   fprintf(fid,"#declare Mol1 = union {\n")
   for i = 1:rep.nball
-    str = getfield(itex,rep.ball{i}.tex).pigment;
+    str = pigment{rep.ball{i}.tex};
     s = sprintf("%s %s %s","  sphere{<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
     n = sum(str == "%");
     rgb = fillrgb(rep.ball{i}.rgb) / 255;
     rgb = rgb(1:n);
     if (!isempty(rgb))
-      fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.ball{i}.tex,rgb);
+      fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex},rgb);
     else
-      fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.ball{i}.tex);
+      fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex});
     endif
   endfor
 
@@ -99,20 +75,20 @@ function rep_write_pov(rep,file="",LOG=0)
     if (norm(rep.stick{i}.x1 - rep.stick{i}.x0) < eps)
       continue
     endif
-    str = getfield(itex,rep.stick{i}.tex).pigment;
+    str = pigment{rep.stick{i}.tex};
     s = sprintf("%s %s %s","   cylinder{<%.9f,%.9f,%.9f>,<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
     n = sum(str == "%");
     rgb = fillrgb(rep.stick{i}.rgb) / 255;
     rgb = rgb(1:n);
     if (!isempty(rgb))
-      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.stick{i}.tex,rgb);
+      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.texlib{rep.stick{i}.tex},rgb);
     else
-      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.stick{i}.tex);
+      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.texlib{rep.stick{i}.tex});
     endif
   endfor
 
   for i = 1:rep.ntriangle
-    str = getfield(itex,rep.triangle{i}.tex).pigment;
+    str = pigment{rep.triangle{i}.tex};
     s = sprintf("%s %s %s","   triangle{<%.9f,%.9f,%.9f> <%.9f,%.9f,%.9f> <%.9f,%.9f,%.9f> texture {%s",str,"}}\n");
     n = sum(str == "%");
     rgb = fillrgb((rep.vertex{rep.triangle{i}.idx(1)}.rgb+...
@@ -124,13 +100,13 @@ function rep_write_pov(rep,file="",LOG=0)
               rep.vertex{rep.triangle{i}.idx(1)}.x,...
               rep.vertex{rep.triangle{i}.idx(2)}.x,...
               rep.vertex{rep.triangle{i}.idx(3)}.x,...
-              rep.triangle{i}.tex,rgb);
+              rep.texlib{rep.triangle{i}.tex},rgb);
     else
       fprintf(fid,s,
               rep.vertex{rep.triangle{i}.idx(1)}.x,...
               rep.vertex{rep.triangle{i}.idx(2)}.x,...
               rep.vertex{rep.triangle{i}.idx(3)}.x,...
-              rep.triangle{i}.tex);
+              rep.texlib{rep.triangle{i}.tex});
     end
   endfor
 
@@ -157,13 +133,12 @@ function rep_write_pov(rep,file="",LOG=0)
   fprintf(fid,"  up        <%.5f,%.5f,%.5f>\n",rep.cam.vuv);
   fprintf(fid,"  right     <%.5f,%.5f,%.5f>\n",rep.cam.rht);
   fprintf(fid,"  direction <%.5f,%.5f,%.5f>\n",rep.cam.drt);
-  if (isfield(rep.cam,"vrp"))
-    fprintf(fid,"  look_at   <%.5f,%.5f,%.5f>\n",rep.cam.vrp);
-  endif
   if (isfield(rep.cam,"angle"))
     fprintf(fid,"  angle   %.5f\n",rep.cam.angle);
   endif
-  if (!isempty(rep.cam.matrix))
+  if (isfield(rep.cam,"vrp"))
+    fprintf(fid,"  look_at   <%.5f,%.5f,%.5f>\n",rep.cam.vrp);
+  elseif (!isempty(rep.cam.matrix))
     ## I use the COP as the initial position of the camera, then translate
     ## away using the modelview matrix. But for this to work I need to translate the
     ## COP to the origin before applying the translation.
