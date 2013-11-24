@@ -82,6 +82,12 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
   endif
   
   ## read the faces
+  if (!isempty(ergb))
+    [rep ietex] = rep_registertexture(rep,etex);
+  endif
+  if (!isempty(frgb))
+    [rep iftex] = rep_registertexture(rep,ftex);
+  endif
   for i = 1:nf
     line = fgetl(fid);
     idx = sscanf(line,"%d",5);
@@ -103,7 +109,7 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
         rep.stick{rep.nstick}.x1 = xv(idx(kk(j,2)),:);
         rep.stick{rep.nstick}.r = erad;
         rep.stick{rep.nstick}.rgb = ergb;
-        rep.stick{rep.nstick}.tex = etex;
+        rep.stick{rep.nstick}.tex = ietex;
       endfor
     endif
     ## edges
@@ -113,18 +119,18 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
         rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(2) idx(3)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
-        rep.triangle{rep.ntriangle}.tex = ftex;
+        rep.triangle{rep.ntriangle}.tex = iftex;
       elseif (length(idx) == 4)
         rep.ntriangle += 1;
         rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(2) idx(3)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
-        rep.triangle{rep.ntriangle}.tex = ftex;
+        rep.triangle{rep.ntriangle}.tex = iftex;
         rep.ntriangle += 1;
         rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(3) idx(4)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
-        rep.triangle{rep.ntriangle}.tex = ftex;
+        rep.triangle{rep.ntriangle}.tex = iftex;
       else
         error("don't know how to handle these polygons");
       endif

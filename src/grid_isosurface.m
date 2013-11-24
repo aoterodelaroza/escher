@@ -74,7 +74,8 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 0],ergb=[0 0 0],..
     ## pre-allocate triangles
     n = rep.ntriangle;
     rep.ntriangle += size(f,1);
-    empty = struct("idx",[0 0 0],"rgb",[0 0 0 0 0],"tex",ftex);
+    [rep iftex] = rep_registertexture(rep,ftex);
+    empty = struct("idx",[0 0 0],"rgb",[0 0 0 0 0],"tex",iftex);
     rep.triangle(n+1:rep.ntriangle) = {empty};
     ## fill triangles
     for i = n+1:rep.ntriangle
@@ -104,8 +105,9 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 0],ergb=[0 0 0],..
     ## pre-allocate edges
     n = rep.nstick;
     rep.nstick += ne;
+    [rep ietex] = rep_registertexture(rep,etex);
     empty = struct("name","","x0",[0 0 0],"x1",[0 0 0],"r",erad,...
-                   "rgb",ergb,"tex",etex);
+                   "rgb",ergb,"tex",ietex);
     rep.stick(n+1:rep.nstick) = {empty};
     ## fill edges -> this is the hard part
     for i = n+1:rep.nstick

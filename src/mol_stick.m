@@ -120,6 +120,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
   [inew,jnew] = find(isstick);
   nnew = length(inew);
   newstick = cell(1,nnew);
+  [rep itex] = rep_registertexture(rep,tex);
   for k = 1:nnew
     i = inew(k); j = jnew(k);
     newstick{k} = stick();
@@ -128,7 +129,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
     newstick{k}.x1 = mol.atxyz(:,j)';
     newstick{k}.r = radius;
     newstick{k}.rgb = rgb;
-    newstick{k}.tex = tex;
+    newstick{k}.tex = itex;
   endfor
   rep.nstick = rep.nstick + nnew;
   rep.stick = [rep.stick, newstick];

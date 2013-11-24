@@ -97,7 +97,7 @@ if (nmol > 0)
   mol = molecule();
   amask = crmask();
   for i = 1:length(smol)
-    if (length(smol{i}.atnumber) >= nmol)
+    if (smol{i}.nat >= nmol)
       mol = mol_merge(mol,smol{i});
       n = amask.nat;
       amask.nat = amask.nat + length(idxmol{i});

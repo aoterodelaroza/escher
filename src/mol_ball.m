@@ -63,6 +63,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
       zz = mol_dbatom(symb,LOG);
     endif
   endif
+  [rep itex] = rep_registertexture(rep,tex);
   for i = 1:nat
     if (strict == 2)
       doit = strcmp(mol.atname{i},symb);
@@ -87,7 +88,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
       else
         rep.ball{n}.rgb = [atom.color 0 0];
       endif
-      rep.ball{n}.tex = tex;
+      rep.ball{n}.tex = itex;
     endif
   endfor
 

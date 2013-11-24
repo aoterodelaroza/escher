@@ -43,7 +43,7 @@ cm = xi * mol.atmass(iat)' / mass;
 
 if (LOG > 0)
    printf('mol_cmass: center of mass of (part of?) a molecule\n');
-   printf('Fragment (%d):', length(mol.atmass));
+   printf('Fragment (%d):', mol.nat);
    printf(' %d', iat);
    printf('\n');
    for i = 1 : length(iat)

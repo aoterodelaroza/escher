@@ -10,20 +10,30 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function st = stick()
-% function st = stick()
+function [rep itex] = rep_registertexture(rep0,tex)
+% function [rep itex] = rep_registertexture(rep,tex)
 %
-% stick - create an empty stick.
+% rep_registertexture - register the texture tex (a string, corresponding
+% to an entry in the texdb) in the representation. 
+%
+% Input:
+% rep: the input representation.
+% tex: string for the texture.
 %
 % Output:
-% {st}: the empty stick.
+% rep: the representation containing the new texture.
+% itex: integer index for the new texture.
 %
 
-  st.name = "";
-  st.x0 = [0 0 0];
-  st.x1 = [0 0 0];
-  st.r = 0;
-  st.rgb = [0 0 0 0 0];
-  st.tex = 0;
+  rep = rep0;
+  n = length(rep.texlib);
+  for i = 1:n
+    if (strcmp(tex,rep.texlib{i}))
+      itex = i;
+      return
+    endif
+  endfor
+  itex = n+1;
+  rep.texlib{n+1} = tex;
 
 endfunction

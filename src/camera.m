@@ -24,9 +24,7 @@ function cam = camera()
   cam.vuv = [0 0 0];
   cam.rht = [0 0 0];
   cam.drt = [0 0 0];
-  cam.vrp = [];
-  cam.angle = [];
-  cam.matrix = [];
+  cam.angle = 0;
   cam.rot = [];
   cam.trans = [];
 endfunction

@@ -61,12 +61,13 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
     endfor
 
     ## add triangles -> not checking either
+    [rep iftex] = rep_registertexture(rep,ftex);
     for i = 1:size(x0,1)
       rep.ntriangle += 1;
       rep.triangle{rep.ntriangle} = triangle();
       rep.triangle{rep.ntriangle}.idx = [nv0, nv0+i, nv0+mod(i,size(x0,1))+1];
       rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
-      rep.triangle{rep.ntriangle}.tex = ftex;
+      rep.triangle{rep.ntriangle}.tex = iftex;
     endfor
   endif  
 
@@ -132,16 +133,18 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
 #          rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
 #        endfor
 #        nv0 = rep.ntriangle;
+#        [rep iftex] = rep_registertexture(rep,ftex);
 #        for i = 1:size(h,1)
 #          rep.ntriangle += 1;
 #          rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
 #          rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
-#          rep.triangle{rep.ntriangle}.tex = ftex;
+#          rep.triangle{rep.ntriangle}.tex = iftex;
 #        endfor
 #      endif
 #      if (!isempty(ergb))
 #        icon = zeros(length(idx));
 #        kk = [1 2; 1 3; 2 3];
+#        [rep ietex] = rep_registertexture(rep,etex);
 #        for i = 1:size(h,1)
 #          for j = 1:3
 #            rep.nstick = rep.nstick + 1;
@@ -150,7 +153,7 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
 #            rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);
 #            rep.stick{rep.nstick}.r = erad;
 #            rep.stick{rep.nstick}.rgb = ergb;
-#            rep.stick{rep.nstick}.tex = etex;
+#            rep.stick{rep.nstick}.tex = ietex;
 #          endfor
 #        endfor
 #      endif

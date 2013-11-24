@@ -1,6 +1,4 @@
-* cr_newcell handles the order of the vectors correctly. Check that the new cell is sane.x
-* mol_readlog
-* texdb a struct instead of a cell
+* cr_newcell handles the order of the vectors correctly. Check that the new cell is sane.
 * Routine for adaptively set the cylinder and sphere based on the number
   of balls and sticks.
 * Modify constructors to accept basic parameters.
@@ -25,7 +23,6 @@
 * adapt shmueli symmetry builder.
 * camera from meshlab copy shot!!
 * surfaces in the obj file.
-* improve cr_newcell
 * use crystal() for all the object construction -> simpler idiom for if(isfield(bleh))
 * molecular template on crystal: mol+cr -> cryst. positions
   of the mol. crtemplate class: atom id + lattice vector.
@@ -35,8 +32,6 @@
   las operaciones de algebra lineal.
 * modificar rep_surface para consistencia con rep_read_basin.
 * sticks con los colores de los atomos, enlaces dobles, a rayas, etc.
-* A~nadir mol.nat .
-* completar devs.org
 * similar to cr_molmotif but reads a mol and returns a cell array of connected molecules. 
   To be used with cr_crystalbox.
 * define functions for color scales

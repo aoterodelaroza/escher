@@ -24,6 +24,6 @@ function ba = ball()
   ba.x1 = [0 0 0];
   ba.r = 0;
   ba.rgb = [0 0 0 0 0];
-  ba.tex = "";
+  ba.tex = 0;
 
 endfunction

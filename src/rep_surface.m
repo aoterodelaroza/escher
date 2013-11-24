@@ -86,6 +86,10 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
   rep.nvertex += n;
 
   ## add triangles
+  [rep itex] = rep_registertexture(rep,tex);
+  if (grid > 0)
+    [rep igrtex] = rep_registertexture(rep,grtex);
+  endif
   n = rep.ntriangle;
   m = rep.nstick;
   for i = 1:isup(1)
@@ -101,14 +105,14 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
       rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
-      rep.triangle{n}.tex = tex;
+      rep.triangle{n}.tex = itex;
       n++;
       rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(4) idx(2) idx(3)];
       rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
-      rep.triangle{n}.tex = tex;
+      rep.triangle{n}.tex = itex;
 
       if (grid > 0)
         m++;
@@ -118,7 +122,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
         rep.stick{m}.x1 = fval(idx(2),:);
         rep.stick{m}.r = grrad;
         rep.stick{m}.rgb = grrgb;
-        rep.stick{m}.tex = grtex;
+        rep.stick{m}.tex = igrtex;
         m++;
         rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
@@ -126,7 +130,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
         rep.stick{m}.x1 = fval(idx(4),:);
         rep.stick{m}.r = grrad;
         rep.stick{m}.rgb = grrgb;
-        rep.stick{m}.tex = grtex;
+        rep.stick{m}.tex = igrtex;
         m++;
         rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
@@ -134,7 +138,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
         rep.stick{m}.x1 = fval(idx(4),:);
         rep.stick{m}.r = grrad;
         rep.stick{m}.rgb = grrgb;
-        rep.stick{m}.tex = grtex;
+        rep.stick{m}.tex = igrtex;
       endif
     endfor
   endfor

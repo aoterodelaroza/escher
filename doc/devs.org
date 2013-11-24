@@ -67,6 +67,7 @@ v means variable (global)
 | x | atmass               | array        | 1xnat          | Atomic masses                                               |
 | x | atxyz                | array        | 3xnat          | Coordinates (angstrom)                                      |
 | + | mol_readxyz          | fun          | mol            | Read an xyz file (in different formats)                     |
+| + | mol_readlog          | fun          | mol            | Read a gaussian output file                                 |
 | + | mol_readcube         | fun          | mol            | Read the header of a gaussian cube file                     |
 | + | mol_readfchk         | fun          | mol            | Read a gaussian formatted checkpoint file                   |
 | + | mol_fillatnumber     | fun          | mol            | Fill mol.atnumber using mol.atname                          |
@@ -150,6 +151,7 @@ v means variable (global)
 | + | rep_write_coff          | fun            | stdout      | Write the rep to a geomview file with colored vertices    |
 | + | rep_write_obj           | fun            | stdout      | Write the rep to a wavefront obj file (plus mtl)          |
 | + | rep_write_pov           | fun            | stdout      | Write the rep to a povray input file                      |
+| + | rep_registertexture     | fun            | rep,integer | Register a texture in a representation.                   |
 
 ** Ball
 
