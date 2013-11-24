@@ -151,6 +151,7 @@ v means variable (global)
 | + | rep_write_coff          | fun            | stdout      | Write the rep to a geomview file with colored vertices    |
 | + | rep_write_obj           | fun            | stdout      | Write the rep to a wavefront obj file (plus mtl)          |
 | + | rep_write_pov           | fun            | stdout      | Write the rep to a povray input file                      |
+| + | rep_registertexture     | fun            | rep,integer | Register a texture in a representation.                   |
 
 ** Ball
 
