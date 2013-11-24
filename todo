@@ -1,5 +1,4 @@
-* cr_newcell handles the order of the vectors correctly. Check that the new cell is sane.x
-* mol_readlog
+* cr_newcell handles the order of the vectors correctly. Check that the new cell is sane.
 * texdb a struct instead of a cell
 * Routine for adaptively set the cylinder and sphere based on the number
   of balls and sticks.
