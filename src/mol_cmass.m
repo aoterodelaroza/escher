@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
-% function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
+function [cm,mass] = mol_cmass(mol, iat=[], LOG=0)
+% function [cm,mass] = mol_cmass(mol, iat=[], LOG=0)
 %
 % mol_cmass - determine the center of mass of a molecule or part.
 %
@@ -33,7 +33,7 @@ function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
 
 # Check input data, particularly iat1 and iat2.
 if (isempty(iat))
-   iat = 1:n;
+   iat = 1:mol.nat;
 endif
 
 # Get the center of mass:

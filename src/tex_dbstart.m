@@ -92,15 +92,15 @@ function tex_dbstart();
   n = 12;
   texdb{n} = texture();
   texdb{n}.typ = "pov";
-  texdb{n}.name = "chrome";
-  texdb{n}.string = "finish {ambient 0.3 diffuse 0.7 reflection 0.15 brilliance 8 specular 0.8 roughness 0.1}";
+  texdb{n}.name = "metal4";
+  texdb{n}.string = "finish {metallic specular 1.0 roughness 0.01 ambient 0.0 reflection 0.05}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   n = 13;
   texdb{n} = texture();
   texdb{n}.typ = "pov";
-  texdb{n}.name = "metal4";
-  texdb{n}.string = "finish {metallic specular 1.0 roughness 0.01 ambient 0.3}";
+  texdb{n}.name = "chrome";
+  texdb{n}.string = "finish {ambient 0.5 diffuse 0.4 reflection 0.05 brilliance 6 specular 0.8 roughness 0.01}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   #### obj textures ####

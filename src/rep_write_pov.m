@@ -157,13 +157,13 @@ function rep_write_pov(rep,file="",LOG=0)
   fprintf(fid,"  up        <%.5f,%.5f,%.5f>\n",rep.cam.vuv);
   fprintf(fid,"  right     <%.5f,%.5f,%.5f>\n",rep.cam.rht);
   fprintf(fid,"  direction <%.5f,%.5f,%.5f>\n",rep.cam.drt);
-  if (isfield(rep.cam,"vrp"))
+  if (isfield(rep.cam,"vrp") && !isempty(rep.cam.vrp))
     fprintf(fid,"  look_at   <%.5f,%.5f,%.5f>\n",rep.cam.vrp);
   endif
-  if (isfield(rep.cam,"angle"))
+  if (isfield(rep.cam,"angle") && !isempty(rep.cam.angle))
     fprintf(fid,"  angle   %.5f\n",rep.cam.angle);
   endif
-  if (!isempty(rep.cam.matrix))
+  if (isfield(rep.cam,"matrix") && !isempty(rep.cam.matrix))
     ## I use the COP as the initial position of the camera, then translate
     ## away using the modelview matrix. But for this to work I need to translate the
     ## COP to the origin before applying the translation.
@@ -182,10 +182,10 @@ function rep_write_pov(rep,file="",LOG=0)
     fprintf(fid,"    translate <%.10f, %.10f, %.10f>\n",rep.cam.cop);
     fprintf(fid,"  }\n");
   endif
-  if (!isempty(rep.cam.rot))
+  if (isfield(rep.cam,"rot") && !isempty(rep.cam.rot))
     fprintf(fid,"  rotate   <%.5f,%.5f,%.5f>\n",rep.cam.rot);
   endif
-  if (!isempty(rep.cam.trans))
+  if (isfield(rep.cam,"trans") && !isempty(rep.cam.trans))
     fprintf(fid,"  translate   <%.5f,%.5f,%.5f>\n",rep.cam.trans);
   endif
   fprintf(fid,"}\n");

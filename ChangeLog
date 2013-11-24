@@ -1,6 +1,21 @@
+2013-11-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_cmass.m: fixed bug n -> mol.nat. Changed LOG to zero.
+
+	* src/mol_transform.m: eliminated LOG and default zero vector for
+	the translation. Also, moved the molecule to the beginning of the
+	calling sequence.
+
+	* src/rep_refaxes.m: modified the radius to make it a scale of a
+	default parameter.
+
+	* src/rep_write_pov.m: fixed problems with the definition of the
+	camera and the existence of fields from camera().
+
 2013-11-19  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/tex_dbstart.m: added metal4 texture.
+	Modified chrome texture.
 
 	* src/texture.m: texdb_start moved to avoid infinite recursion.
 
