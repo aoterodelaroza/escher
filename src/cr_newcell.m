@@ -27,7 +27,7 @@ function cr = cr_newcell(cr0, v1, v2, v3);
   r = cr0.r;
   g = cr0.g;
 
-  mat = [v1; v2; v3];
+  mat = [v1; v2; v3]';
   minv = inv(mat);
   fvol = det(mat);
   if (fvol < 1d-6)

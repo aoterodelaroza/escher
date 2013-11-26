@@ -1,3 +1,7 @@
+2013-11-26  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/cr_newcell.m: fixed mat -> mat' bug.
+
 2013-11-24  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/grid_mesh.m: improved efficiency. TAGFEM now runs in 20

@@ -1,11 +1,9 @@
+* there is a bug in cr_write_vasp (see test1)
 * cr_newcell handles the order of the vectors correctly. Check that the new cell is sane.
 * Routine for adaptively set the cylinder and sphere based on the number
   of balls and sticks.
 * Modify constructors to accept basic parameters.
 * Include the observations made with TAGFEM_new in the code:
-  0. Make grid_isosurface even more efficient by pushing the texture
-     list as part of the representation, and using an integer
-     pointer for the objects.
   1. Three default lights, two of them shadowless.
   2. The modelview matrix is converted to the 3-angle format.
      Create routines for this. Also for angle-rotation.
@@ -27,7 +25,6 @@
 * molecular template on crystal: mol+cr -> cryst. positions
   of the mol. crtemplate class: atom id + lattice vector.
   molmotif starting from a template.
-* reimplementar __marching_cubes__.m en c++ para isosurface.
 * convertir ball{:}.x en ballx[:] en algunas rutinas para 
   las operaciones de algebra lineal.
 * modificar rep_surface para consistencia con rep_read_basin.
