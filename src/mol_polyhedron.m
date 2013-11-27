@@ -100,7 +100,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         elseif (ischar(by))
           useit = useit || regexp(molv.atname{iv},by);
         elseif (isscalar(by))
-          useit = useit || regexp(molv.atnumber(iv),by);
+          useit = useit || (molv.atnumber(iv) == by);
         else
           for k = 1:length(by)
             useit = useit || (molv.atnumber(iv) == by(k));

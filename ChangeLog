@@ -1,5 +1,10 @@
 2013-11-26  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/tex_dbstart.m: added shiny texture.
+
+	* src/mol_polyhedron.m: fixed bug -- using regexp instead of
+	direct comparison between numbers.
+
 	* src/cr_newcell.m: fixed mat -> mat' bug.
 
 2013-11-24  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
