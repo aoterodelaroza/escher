@@ -10,17 +10,14 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rotx (angle, t = [0,0,0]')
-% function m = op_rotx (angle, t = [0,0,0]')
+function m = op_rotx(angle)
+% function m = op_rotx(angle)
 %
 % op_rotx - returns the matrix corresponding to a counter clockwise rotation
-% of "angle" degrees around the x axis plus the addition translation t.
+% of "angle" degrees around the x axis.
 %
 % Required input variables:
 % angle: rotation angle in degrees.
-%
-% Optional input variables (all with default values):
-% {t = [0,0,0}'}: Translation to be applied after the rotation.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
@@ -28,14 +25,6 @@ function m = op_rotx (angle, t = [0,0,0]')
 
 c = cos(angle*pi/180);
 s = sin(angle*pi/180);
-m = [1 0 0 0; 0 c -s 0; 0 s c 0; 0 0 0 1];
-[r,c] = size(t);
-if (r==3 & c==1)
-   m(1:3,4) = t;
-elseif (r==1 & c==3)
-   m(1:3,4) = t';
-else
-   error('op_rotx: wrong translation component!');
-endif
+m = [1 0 0; 0 c -s; 0 s c];
 
 endfunction

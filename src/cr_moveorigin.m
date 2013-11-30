@@ -10,24 +10,23 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep_addpovtexture(name,string);
-% function rep_addpovtexture(name,string)
+function cr = cr_moveorigin(cr0, tr);
+% function cr = cr_moveorigin(cr0, tr)
 %
-% rep_addpovtexture - add a povray texture to the database.
+% cr_moveorigin - displace the origin of the cell by a translation vector.
 %
 % Required input variables:
-% name: name of the new texture.
-% string: povray texture definition.
+% cr0: input crystal.
+% tr: new origin in crystallographic coordinates.
+%
+% Output variables:
+% cr: output crystal structure.
+%
 
-  global texdb
-  
-  if (!exist("texdb","var") || isempty(texdb))
-    rep_texdbstart();
-  endif
-  
-  n = length(texdb);
-  texdb{n+1}.typ = "pov";
-  texdb{n+1}.name = name;
-  texdb{n+1}.string = string;
+  cr = cr0;
+  for i = 1:cr0.nat
+    cr.x(i,:) = cr0.x(i,:) - tr;
+    cr.x(i,:) -= floor(cr.x(i,:));
+  endfor
 
 endfunction

@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function m = op_rotz (angle, t=[0,0,0]')
-% function m = op_rotz (angle, t=[0,0,0]')
+function m = op_rotz (angle)
+% function m = op_rotz (angle)
 %
 % op_rotz - returns the matrix corresponding to a counter clockwise rotation
 % of "angle" degrees around the z axis.
@@ -19,24 +19,12 @@ function m = op_rotz (angle, t=[0,0,0]')
 % Required input variables:
 % angle: rotation angle in degrees.
 %
-% Optional input variables:
-% {t = [0,0,0]'}: optional traslation to be done after the rotation.
-%
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: June 2011
 
 c = cos(angle*pi/180);
 s = sin(angle*pi/180);
-m = [c -s 0 0; s c 0 0; 0 0 1 0; 0 0 0 1];
-
-[r,c] = size(t);
-if (r==3 & c==1)
-   m(1:3,4) = t;
-elseif (r==1 & c==3)
-   m(1:3,4) = t';
-else
-   error('op_rotz: wrong translation component!');
-endif
+m = [c -s 0; s c 0; 0 0 1];
 
 endfunction

@@ -30,7 +30,7 @@ function [smol idxmol] = mol_burst(mol, bondfactor=1.20)
 %
 
   ## distance matrix
-  nat = length(mol.atnumber);
+  nat = mol.nat;
   lat = 1:nat;
   active = ones(1,nat);
   d = mol_distmatrix(mol);

@@ -22,7 +22,7 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
 % addto: input representation on which the new representation is 
 %        added.
 % i0: initial lattice vectors. 
-% i1: final lattice vectors. Reprenst all cells from i0 to i1.
+% i1: final lattice vectors. Represent all cells from i0 to i1.
 %     Default: only the main cell (i0 = i1 = [0 0 0])
 % radius: the stick radius. By default, 0.05.
 % rgb: the stick color. By default, red. rgb can be given as three integer numbers 
@@ -42,33 +42,14 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
     rep = addto;
   else
     rep = representation();
-    if (isfield(mol,"name") && !isempty(mol.name))
-      rep.name = mol.name;
+    if (isfield(cr,"name") && !isempty(cr.name))
+      rep.name = cr.name;
     endif
-  endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if ((!isfield(rep,"stick")) || rep.nstick == 0)
-    rep.stick = cell();
   endif
 
   ## crystal to cartesian
-  if (isfield(cr,"r"))
-    r = cr.r;
-    g = r * r';
-  else
-    if (isfield(cr,"g"))
-      g = cr.g;
-    else
-      cc = cos(cr.b);
-      g = cr.a' * cr.a;
-      g(1,2) = g(2,1) = g(1,2) * cc(3);
-      g(1,3) = g(3,1) = g(1,3) * cc(2);
-      g(2,3) = g(3,2) = g(2,3) * cc(1);
-    endif
-    r = chol(g)';
-  endif
+  r = cr.r;
+  g = cr.g;
   r *= bohr2ang;
 
   x0 = [
@@ -92,18 +73,20 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
     name = "cell";
   endif
 
+  [rep itex] = rep_registertexture(rep,tex);
   for ix = i0(1):i1(1)
     for iy = i0(2):i1(2)
       for iz = i0(3):i1(3)
         for i = 1:size(x0,1)
           ## add the stick
           rep.nstick = rep.nstick + 1;
+          rep.stick{rep.nstick} = stick();
           rep.stick{rep.nstick}.name = name;
           rep.stick{rep.nstick}.x0 = ([ix iy iz] + x0(i,1:3)) * r;
           rep.stick{rep.nstick}.x1 = ([ix iy iz] + x0(i,4:6)) * r;
           rep.stick{rep.nstick}.r = radius;
           rep.stick{rep.nstick}.rgb = rgb;
-          rep.stick{rep.nstick}.tex = tex;
+          rep.stick{rep.nstick}.tex = itex;
         end
       end
     end

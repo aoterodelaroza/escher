@@ -31,11 +31,8 @@ function [] = mol_geom (mol, tlist, LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: October 2012
 
-   global dbdefined
-   global atdb
-
    # Distances between pairs:
-   nat = length(mol.atnumber);
+   nat = mol.nat;
    tat = length(tlist);
    if (tat > 1)
       printf("Distances between atoms:\n");

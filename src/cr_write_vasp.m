@@ -10,7 +10,7 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function cr_write_vasp(cr,file="",LOG=1)
+function cr_write_vasp(cr,file="",LOG=0)
 % function cr_write_vasp(cr,file="")
 %
 % cr_write_vasp -- write a vasp POSCAR file to file or to the stdout if
@@ -39,13 +39,9 @@ function cr_write_vasp(cr,file="",LOG=1)
   fprintf(lu,"%s ",cr.attyp{1:cr.ntyp});
   fprintf(lu,")\n");
   fprintf(lu,"%.5f\n",1);
-  if (!isstruct(cr) || !isfield(cr,"r"))
-    r = chol(cr.g);
-  else
-    r = cr.r;
-  endif
+  r = cr.r';
   r = r * bohrtoans;
-  fprintf(lu,"%.12f %.12f %.12f\n %.12f %.12f %.12f\n %.12f %.12f %.12f\n",r);
+  fprintf(lu,"%.12f %.12f %.12f\n %.12f %.12f %.12f\n %.12f %.12f %.12f\n",r');
   
   for i = 1:cr.ntyp
     fprintf(lu,"%d ",sum(cr.typ == i));

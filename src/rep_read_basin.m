@@ -41,26 +41,6 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
     rep.name = "basin";
   endif
 
-  ## initialize
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if (rep.nstick == 0)
-    rep.stick = cell();
-  endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-  endif
-  if (rep.ntriangle == 0)
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-  endif
-  if (rep.nvertex == 0)
-    rep.vertex = cell();
-  endif
-
   ## open the file
   if (!exist(file,"file"))
     error(sprintf("Could not find file: %s\n",file));
@@ -95,12 +75,19 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
     nv0 = rep.nvertex;
     for i = 1:nv
       rep.nvertex += 1;
+      rep.vertex{rep.nvertex} = vertex();
       rep.vertex{rep.nvertex}.x = xv(i,:);
       rep.vertex{rep.nvertex}.rgb = frgb;
     endfor
   endif
   
   ## read the faces
+  if (!isempty(ergb))
+    [rep ietex] = rep_registertexture(rep,etex);
+  endif
+  if (!isempty(frgb))
+    [rep iftex] = rep_registertexture(rep,ftex);
+  endif
   for i = 1:nf
     line = fgetl(fid);
     idx = sscanf(line,"%d",5);
@@ -116,30 +103,34 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
       endif
       for j = 1:size(kk,1)
         rep.nstick++;
+        rep.stick{rep.nstick} = stick();
         rep.stick{rep.nstick}.name = "";
         rep.stick{rep.nstick}.x0 = xv(idx(kk(j,1)),:);
         rep.stick{rep.nstick}.x1 = xv(idx(kk(j,2)),:);
         rep.stick{rep.nstick}.r = erad;
         rep.stick{rep.nstick}.rgb = ergb;
-        rep.stick{rep.nstick}.tex = etex;
+        rep.stick{rep.nstick}.tex = ietex;
       endfor
     endif
     ## edges
     if (!isempty(frgb))
       if (length(idx) == 3)
         rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(2) idx(3)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
-        rep.triangle{rep.ntriangle}.tex = ftex;
+        rep.triangle{rep.ntriangle}.tex = iftex;
       elseif (length(idx) == 4)
         rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(2) idx(3)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
-        rep.triangle{rep.ntriangle}.tex = ftex;
+        rep.triangle{rep.ntriangle}.tex = iftex;
         rep.ntriangle += 1;
+        rep.triangle{rep.ntriangle} = triangle();
         rep.triangle{rep.ntriangle}.idx = nv0 + [idx(1) idx(3) idx(4)];
         rep.triangle{rep.ntriangle}.rgb = frgb;
-        rep.triangle{rep.ntriangle}.tex = ftex;
+        rep.triangle{rep.ntriangle}.tex = iftex;
       else
         error("don't know how to handle these polygons");
       endif

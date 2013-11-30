@@ -2,71 +2,289 @@
 o means optional
 x means required
 + means function
-- not yet fully functional
-xxx to do
+v means variable (global)
 
 * Crystal
 
-|     | Variable         | Type     | Dim.      | Apropos                                         |
-|-----+------------------+----------+-----------+-------------------------------------------------|
-| o   | name             | string   |           | Name of the crystal                             |
-| x   | a                | array    | 1x3       | Cell lengths (bohr)                             |
-| x   | b                | array    | 1x3       | Cell angles (degrees)                           |
-| x   | nat              | number   |           | Number of atoms in the unit cell                |
-| x   | ntyp             | number   |           | Number of atomic species                        |
-| x   | typ              | array    | 1xnat     | Atom type index (1..ntyp)                       |
-| x   | x                | array    | natx3     | Atomic positions (cryst)                        |
-| x   | attyp            | cell str | 1xntyp    | Symbols of atomic species                       |
-| x   | ztyp             | array    | 1xntyp    | Atomic numbers of species                       |
-| o   | rvdwtyp          | array    | 1xntyp    | Van der Waals radii (bohr, cr_vdwewald)         |
-| o   | c6typ            | array    | ntypxntyp | C6 coefficients (au, cr_vdwewald)               |
-| o   | zvaltyp          | array    | 1xntyp    | Valence atomic numbers                          |
-| o   | qtyp             | array    | 1xntyp    | Atomic charges (cr_qewald, cr_xrd)              |
-| xxx | omega            | array    |           |                                                 |
-| xxx | r                | array    |           |                                                 |
-| xxx | g                | array    |           |                                                 |
-| +   | crystal          | fun      |           | create an empty cr                              |
-| +   | cr_read_espresso | fun      |           | read cr from QE output                          |
-| +   | cr_read_vasp     | fun      |           | read cr from VASP POSCAR                        |
-| +   | cr_crystalbox    | fun      |           | create mol by cutting a parallelepiped from cr  |
-| +   | cr_spherebox     | fun      |           | create mol by cutting a sphere from cr          |
-| +   | cr_molmotif      | fun      |           | create mol by molecular completion in main cell |
-| +   | cr_unitcell      | fun      |           | create rep for the unit cell using sticks       |
-| +   | cr_write_tessel  | fun      |           | write cr to a tessel input file                 |
-| +   | cr_write_vasp    | fun      |           | write cr to a POSCAR                            |
-| +   | cr_write_cif     | fun      |           | write cr to a cif file                          |
-| +   | cr_write_critic2 | fun      |           | write cr to a critic2 input file                |
-| +   | cr_popinfo       | fun      |           | print info about the cr                         |
-| +   | cr_c2x           | fun      |           | cartesian to crystallographic                   |
-| +   | cr_x2c           | fun      |           | crystallographic to cartesian                   |
-| +   | cr_xrd           | fun      |           | calculate the powder x-ray diffraction pattern  |
-| +   | cr_qewald        | fun      |           | calculate electrostatic energy by Ewald         |
-| +   | cr_vdwewald      | fun      |           | calculate vdw energy by Ewald                   |
-| -   | cr_newcell       | fun      |           | transform the unit cell                         |
-| -   | cr_pw2cell       | fun      |           | ???                                             |
+|   | Variable         | Type     | Dim./Res. | Apropos                                         |
+|---+------------------+----------+-----------+-------------------------------------------------|
+| + | crystal          | fun      | cr        | Constructor                                     |
+| o | name             | string   |           | Name of the crystal                             |
+| x | a                | array    | 1x3       | Cell lengths (bohr)                             |
+| x | b                | array    | 1x3       | Cell angles (degrees)                           |
+| x | nat              | scalar   | integer   | Number of atoms in the unit cell                |
+| x | ntyp             | scalar   | integer   | Number of atomic species                        |
+| x | typ              | array    | 1xnat     | Atom type index (1..ntyp)                       |
+| x | x                | array    | natx3     | Atomic positions (cryst)                        |
+| x | attyp            | cell str | 1xntyp    | Symbols of atomic species                       |
+| x | ztyp             | array    | 1xntyp    | Atomic numbers of species                       |
+| x | r                | array    | 3x3       | Crys to car matrix (bohr)                       |
+| x | g                | array    | 3x3       | Metric tensor (bohr^2)                          |
+| x | omega            | scalar   | real      | Cell volume (bohr^3)                            |
+| o | rvdwtyp          | array    | 1xntyp    | Van der Waals radii (bohr, cr_vdwewald)         |
+| o | c6typ            | array    | ntypxntyp | C6 coefficients (au, cr_vdwewald)               |
+| o | zvaltyp          | array    | 1xntyp    | Valence atomic numbers                          |
+| o | qtyp             | array    | 1xntyp    | Atomic charges (cr_qewald, cr_xrd)              |
+| + | cr_read_espresso | fun      | cr        | create cr from QE output                        |
+| + | cr_read_vasp     | fun      | cr        | read cr from VASP POSCAR                        |
+| + | cr_write_tessel  | fun      | stdout    | write cr to a tessel input file                 |
+| + | cr_write_vasp    | fun      | stdout    | write cr to a POSCAR                            |
+| + | cr_write_cif     | fun      | stdout    | write cr to a cif file                          |
+| + | cr_write_critic2 | fun      | stdout    | write cr to a critic2 input file                |
+| + | cr_insertvacuum  | fun      | cr        | insert vacuum in one of the crystal directions  |
+| + | cr_moveorigin    | fun      | cr        | translate the origin of the unit cell           |
+| + | cr_newcell       | fun      | cr        | transform to a different unit cell              |
+| + | cr_molmotif      | fun      | mol,mask  | create mol by molecular completion in main cell |
+| + | cr_crystalbox    | fun      | mol,mask  | create mol by cutting a parallelepiped from cr  |
+| + | cr_spherebox     | fun      | mol       | create mol by cutting a sphere from cr          |
+| + | cr_applymask     | fun      | mol       | create mol by applying mask to a cr             |
+| + | cr_unitcell      | fun      | rep       | create rep for the unit cell using sticks       |
+| + | cr_c2x           | fun      | 1x3,3x1   | cartesian to crystallographic                   |
+| + | cr_x2c           | fun      | 1x3,3x1   | crystallographic to cartesian                   |
+| + | cr_popinfo       | fun      | stdout    | print info about the cr                         |
+| + | cr_qewald        | fun      | number    | calculate electrostatic energy by Ewald (qtyp)  |
+| + | cr_vdwewald      | fun      | number    | calculate vdw energy by Ewald                   |
+| + | cr_xrd           | fun      |           | calculate the powder x-ray diffraction pattern  |
+
+** Crystal mask
+
+|   | Variable | Type   | Dim./Res. | Apropos                                    |
+|---+----------+--------+-----------+--------------------------------------------|
+| + | crmask   | fun    | mask      | Constructor                                |
+| x | nat      | scalar | integer   | Number of atoms in the mask                |
+| x | l        | array  | natx3     | Lattice vector to the position of the atom |
+| x | i        | array  | 1xnat     | Crystal index of the atom                  |
 
 * Molecule
 
-|   | Variable         | Type   | Dim. | Apropos                                                     |
-|---+------------------+--------+------+-------------------------------------------------------------|
-| o | name             | string |      | Name of the mol                                             |
-| + | mol_burst        | fun    |      | Partition a mol into a cell array of connected submolecules |
-| + | mol_getfragment  | fun    |      | Create a mol from a subset of atoms of another mol          |
-| + | mol_merge        | fun    |      | Merge two mols                                              |
-| + | mol_distmatrix   | fun    |      | Calculate the distance matrix                               |
-| + | mol_fillatnumber | fun    |      | Fill mol.atnumber using mol.atname                          |
-| + | mol_fillatmass   | fun    |      | Fill mol.atmass using mol.atnumber                          |
-| + | mol_cmass        | fun    |      | Calculate the center of mass                                |
-|   |                  |        |      |                                                             |
+|   | Variable             | Type         | Dim./Res.      | Apropos                                                     |
+|---+----------------------+--------------+----------------+-------------------------------------------------------------|
+| + | molecule             | fun          | mol            | Constructor                                                 |
+| o | name                 | string       |                | Name of the mol                                             |
+| x | nat                  | scalar       | integer        | Number of atoms                                             |
+| x | atname               | cell(string) | 1xnat          | Atomic names                                                |
+| x | atnumber             | array        | 1xnat          | Atomic numbers                                              |
+| x | atmass               | array        | 1xnat          | Atomic masses                                               |
+| x | atxyz                | array        | 3xnat          | Coordinates (angstrom)                                      |
+| + | mol_readxyz          | fun          | mol            | Read an xyz file (in different formats)                     |
+| + | mol_readlog          | fun          | mol            | Read a gaussian output file                                 |
+| + | mol_readcube         | fun          | mol            | Read the header of a gaussian cube file                     |
+| + | mol_readfchk         | fun          | mol            | Read a gaussian formatted checkpoint file                   |
+| + | mol_fillatnumber     | fun          | mol            | Fill mol.atnumber using mol.atname                          |
+| + | mol_fillatmass       | fun          | mol            | Fill mol.atmass using mol.atnumber                          |
+| + | mol_ball             | fun          | rep            | Create a rep of the atoms as balls                          |
+| + | mol_stick            | fun          | rep            | Create a rep of the bonds as sticks                         |
+| + | mol_distmatrix       | fun          | array(nat,nat) | Calculate the distance matrix                               |
+| + | mol_cmass            | fun          | array(1x3)     | Calculate the center of mass                                |
+| + | mol_burst            | fun          | cell(mol)      | Partition a mol into a cell array of connected submolecules |
+| + | mol_getfragment      | fun          | mol            | Create a mol from a subset of atoms of another mol          |
+| + | mol_merge            | fun          | mol            | Merge two or more mols                                      |
+| + | mol_writeg09         | fun          | stdout         | Write a g09 template file                                   |
+| + | mol_writenw          | fun          | stdout         | Write a nwchem template file                                |
+| + | mol_writexyz         | fun          | stdout         | Write a xyz file                                            |
+| + | mol_writezmat        | fun          | stdout         | Write the molecular geometry as z-matrix (see zmat_step)    |
+| + | mol_angle            | fun          | number         | Calculate the angle between three atoms                     |
+| + | mol_dbstart          | fun          | number         | Initialize the internal atomic constants table              |
+| + | mol_dbatom           | fun          | number,atom    | Return atomic info from the atomic symbol                   |
+| + | mol_dbsymbol         | fun          | string,atom    | Return atomic info from the atomic number                   |
+| + | mol_rcov             | fun          | number         | Return the covalent radius from the atomic number           |
+| + | mol_polyhedron       | fun          | rep,mol,mol    | Return a rep of polyhedra formed by atoms                   |
+| + | mol_permute          | fun          | mol            | Permute the atoms in a molecule                             |
+| + | mol_order            | fun          | mol            | Sort the atoms in a molecule in some order (e.g. atnumber)  |
+| + | mol_inertiamatrix    | fun          | array(2)       | Calculate and diagonalize the inertia matrix                |
+| + | mol_transform        | fun          | mol            | Rotate and translate a molecule                             |
+| + | mol_classify         | fun          | mol            | Group the atoms in the molecule into classes                |
+| + | mol_addatom          | fun          | mol            | Add an atom to a molecule                                   |
+| + | mol_isplanar         | fun          | logical,array  | True if the molecule is planar (and the perp vector)        |
+| + | mol_islinear         | fun          | logical,array  | True if the molecule is linear (and parallel vector)        |
+| + | mol_isnew            | fun          | logical        | True if the given atom is identical to one in the molecule  |
+| + | mol_geom             | fun          | void           | Print distances, angles, and dihedrals of a molecule        |
+| + | mol_2molsgeometry    | fun          | void           | Calculate distances between atoms in two different mols     |
+| + | mol_internalgeometry | fun          | void           | Calculate and print information about the geoemtry of a mol |
+| + | mol_align            | fun          | mol,array      | Rotate and translet a mol to match a different mol          |
+| + | mol_opt_align        | fun          | mol,array      | Translate and rotate a mol for best alignment with another  |
+| + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol      |
+| + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)           |
 
-name
-atname
-atnumber
-atxyz
-atmass
-conn?
-nfrag?
-ifrag?
-cmfrag?
-nat?
+** Atom
+
+|   | Variable | Type   | Dim./Res. | Apropos         |
+|---+----------+--------+-----------+-----------------|
+| + | atom     | fun    | atom      | Constructor     |
+| x | number   | scalar | integer   | Atomic number   |
+| x | symbol   | string |           | Atomic symbol   |
+| x | mass     | scalar | real      | Atomic mass     |
+| x | rcov     | scalar | real      | Covalent radius |
+| x | color    | array  | 1x3       | Default color   |
+
+* Representation
+
+|   | Variable                | Type           | Dim./Res.   | Apropos                                                   |
+|---+-------------------------+----------------+-------------+-----------------------------------------------------------|
+| + | representation          | fun            | rep         | Constructor                                               |
+| o | name                    | string         |             | Name of the rep                                           |
+| x | nball                   | scalar         | integer     | Number of balls                                           |
+| x | ball                    | cell(ball)     | 1xnball     | Ball cell array                                           |
+| x | nstick                  | scalar         | integer     | Number of sticks                                          |
+| x | stick                   | cell(stick)    | 1xnstick    | Stick cell array                                          |
+| x | ntriangle               | scalar         | integer     | Number of triangles                                       |
+| x | triangle                | cell(triangle) | 1xntriangle | Triangle cell array                                       |
+| x | nvertex                 | scalar         | integer     | Number of vertices                                        |
+| x | vertex                  | cell(vertex)   | 1xnvertex   | Vertex cell array                                         |
+| x | cam                     | camera         |             | Camera for the scene                                      |
+| x | nlight                  | scalar         | integer     | Number of lights in the scene                             |
+| x | light                   | cell(light)    | 1xnlight    | Light cell array                                          |
+| x | bgcolor                 | array          | 1x3         | Background color rgb                                      |
+| + | rep_read_basin          | fun            | rep         | Read a rep from a basin file                              |
+| + | rep_setbgcolor          | fun            | rep         | Set the background color                                  |
+| + | rep_getcm               | fun            | array(4)    | Get the rep center-of-mass and other geometric parameters |
+| + | rep_merge               | fun            | rep         | Merge two or more representations                         |
+| + | rep_refaxes             | fun            | rep         | Create sticks for the reference frame                     |
+| + | rep_addcamera           | fun            | rep         | Add a camera using tessel's three-angle system            |
+| + | rep_addcamera_modelview | fun            | rep         | Add a camera using OpenGL's modelview matrix              |
+| + | rep_addlight            | fun            | rep         | Add a light to the scene                                  |
+| + | rep_setdefaultscene     | fun            | rep         | Set the scene with default cameras, light and bg color    |
+| + | rep_transform           | fun            | rep         | Rotate and translate balls, sticks and vertices of a rep  |
+| + | rep_surface             | fun            | rep         | Create the representation of a parametric surface         |
+| + | rep_polygon             | fun            | rep         | Add a polygon to the representation                       |
+| + | rep_write_off           | fun            | stdout      | Write the rep to a geomview file                          |
+| + | rep_write_coff          | fun            | stdout      | Write the rep to a geomview file with colored vertices    |
+| + | rep_write_obj           | fun            | stdout      | Write the rep to a wavefront obj file (plus mtl)          |
+| + | rep_write_pov           | fun            | stdout      | Write the rep to a povray input file                      |
+| + | rep_registertexture     | fun            | rep,integer | Register a texture in a representation.                   |
+
+** Ball
+
+|   | Variable | Type   | Dim./Res. | Apropos                    |
+|---+----------+--------+-----------+----------------------------|
+| + | ball     | fun    | ball      | Constructor                |
+| o | name     | string |           | Name of the ball           |
+| x | x        | array  | 1x3       | Center position (angstrom) |
+| x | r        | scalar | real      | Radius (angstrom)          |
+| x | rgb      | array  | 1x3,4,5   | Color                      |
+| x | tex      | string |           | Texture                    |
+
+** Stick
+
+|   | Variable | Type   | Dim./Res. | Apropos                     |
+|---+----------+--------+-----------+-----------------------------|
+| + | stick    | fun    | stick     | Constructor                 |
+| o | name     | string |           | Name of the stick           |
+| x | x0       | array  | 1x3       | Origin (angstrom)           |
+| x | x1       | array  | 1x3       | End of the stick (angstrom) |
+| x | r        | scalar | real      | Radius (angstrom)           |
+| x | rgb      | array  | 1x3,4,5   | Color                       |
+| x | tex      | string |           | Texture                     |
+
+** Triangle
+
+|   | Variable | Type   | Dim./Res. | Apropos                 |
+|---+----------+--------+-----------+-------------------------|
+| + | triangle | fun    | triangle  | Constructor             |
+| x | idx      | array  | 1x3       | Array of vertex indices |
+| x | tex      | string |           | Texture                 |
+
+** Vertex
+
+|   | Variable | Type   | Dim./Res. | Apropos             |
+|---+----------+--------+-----------+---------------------|
+| + | vertex   | fun    | vertex    | Constructor         |
+| x | x        | array  | 1x3       | Position (angstrom) |
+| x | tex      | string |           | Texture             |
+
+** Camera
+
+|   | Variable | Type   |  Dim./Res. | Apropos                         |
+|---+----------+--------+------------+---------------------------------|
+| + | camera   | fun    |     camera | Constructor                     |
+| x | cop      | array  |        1x3 | Center of projection (angstrom) |
+| x | vuv      | array  |        1x3 | vuv camera vector (angstrom)    |
+| x | rht      | array  |        1x3 | rht camera vector (angstrom)    |
+| x | drt      | array  |        1x3 | drt camera vector (angstrom)    |
+| x | vrp      | array  |        1x3 | vrp camera vector (angstrom)    |
+| x | angle    | scalar |       real | camera angle                    |
+| x | matrix   | array  | 4x3 or 4x4 | modelview matrix                |
+| x | rot      | array  |        1x3 | povray rotate                   |
+| x | trans    | array  |        1x3 | povray translate (angstrom)     |
+
+** Light
+
+|   | Variable   | Type   | Dim./Res. | Apropos              |
+|---+------------+--------+-----------+----------------------|
+| + | light      | fun    | light     | Constructor          |
+| x | x          | array  | 1x3       | Position (angstrom)  |
+|   | color      | array  | 1x3       | Color (rgb)          |
+| x | intensity  | scalar | real      | Intensity (1=normal) |
+| x | shadowless | scalar | logical   | Cast shadows?        |
+| x | matrix     | array  | 3x3,4x3   | modelview matrix     |
+
+** Texture
+
+|   | Variable          | Type   | Dim./Res. | Apropos                                   |
+|---+-------------------+--------+-----------+-------------------------------------------|
+| + | texture           | fun    | texture   | Constructor                               |
+| + | tex_dbstart       | fun    | void      | Build the internal texture database       |
+| + | tex_addobjtexture | fun    | void      | Add an obj texture to the database        |
+| + | tex_addpovtexture | fun    | void      | Add a pov texture to the database         |
+| x | typ               | string |           | Type of texture (pov,obj)                 |
+| x | name              | string |           | String identifier                         |
+| x | string            | string |           | povray finish string                      |
+| x | pigment           | string |           | povray pigment format string              |
+| x | Ns                | scalar | real      | obj shininess parameter                   |
+| x | Ka                | array  | 1x3       | obj ambient color                         |
+| x | Ks                | array  | 1x3       | obj specular color                        |
+| x | Ni                | scalar | real      | obj optical density (index of refraction) |
+| x | illum             | scalar | real      | obj illumination model                    |
+
+* Grid
+
+|   | Variable        | Type   | Dim./Res.    | Apropos                                                              |
+|---+-----------------+--------+--------------+----------------------------------------------------------------------|
+| x | x0              | array  | 1x3          | Origin of the grid (bohr)                                            |
+| x | dx              | array  | 3x3          | Step vectors in each direction (bohr)                                |
+| x | a               | array  | 3x3          | Size of the cube (bohr)                                              |
+| x | n               | array  | 1x3          | Number of steps in each direction                                    |
+| x | f               | array  | (nx,ny,nz)   | Grid values                                                          |
+| x | omega           | scalar | real         | Cube volume (bohr^3)                                                 |
+| + | grid_           | fun    | grid         | Constructor                                                          |
+| + | grid_mesh       | fun    | 3x(nx,ny,nz) | Calculate three grids with the (x,y,z)-coordinates. ngrid equivalent |
+| + | grid_readcube   | fun    | grid         | Read a gaussian cube file                                            |
+| + | grid_isosurface | fun    | rep          | Create an isosurface rep from a grid                                 |
+
+* Miscellaneous functions
+
+| Function                       | Apropos                                                                                |
+|--------------------------------+----------------------------------------------------------------------------------------|
+| fillrgb(rgb)                   | Fills a 3-,4- or 5-element rgb vector to a 5-dimensional rgb vector.                   |
+| color(name)                    | Given the name of a color, return the rgb(1x3) values, or error                        |
+| colormode_binary(u,f,cp,cm)    | Given an array of (u,v) pairs and a scalar function f, returns an array of colors rgb, |
+|                                | of value cp for the (u,v) for which f>0 and cm otherwise.                              |
+| colormode_full(u,f,scale)      | Given an array of (u,v) pairs and a scalar function f, returns an array of colors rgb, |
+|                                | corresponding to a full color scale from scale(1) (minimum) to scale(2) (maximum).     |
+| colormode_gray(u,f,scale)      | Given an array of (u,v) pairs and a scalar function f, returns an array of colors rgb, |
+|                                | corresponding to a gray scale from scale(1) (minimum) to scale(2) (maximum).           |
+| colormode_hue(u,f,scale)       | Given an array of (u,v) pairs and a scalar function f, returns an array of colors rgb, |
+|                                | with hue equal to f(u), which should be in the 0 to 360 range.                         |
+| cylindermodel(nbase)           | Returns vertices and indices for a unit cylinder with a nbase-gon as base.             |
+| spheremodel(ndiv)              | Returns a model sphere by recursive subdivision of an icosahedron ndiv times.          |
+| op_rotx(angle)                 | a 3x3 matrix representing a rotation of angle around the x- axis                       |
+| op_roty(angle)                 | a 3x3 matrix representing a rotation of angle around the y- axis                       |
+| op_rotz(angle)                 | a 3x3 matrix representing a rotation of angle around the z- axis                       |
+| op_rot3D(a1,a2,a3,mode)        | construct a 3d rotation matrix given three angles, several modes supported.            |
+| zmat_step(x0,x1,x2,d,ang,dieh) | stepper to build cartesian coordinates from z-matrix                                   |
+
+* Global variables
+
+|   | Variable     | Type         | Dim.                  | Apropos                                   |
+|---+--------------+--------------+-----------------------+-------------------------------------------|
+| v | dbcolor      | struct       | (color name->1x3 rgb) | List of named colors and their rgb values |
+| v | texdb        | cell         | cell(texture)         | Cell array of known textures              |
+| v | atdb         | struct       |                       | Atomic quantities                         |
+|   | atdb.symbols | cell(string) | 104                   | Atomic names                              |
+|   | atdb.rcov    | cell(number) | 104                   | Covalent radii                            |
+|   | atdb.mass    | cell(number) | 104                   | Atomic masses                             |
+|   | atdb.color   | cell(number) | 104*3                 | Default colors                            |
+
+TODO -- check that the tests still work.
+
 

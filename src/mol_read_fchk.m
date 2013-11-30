@@ -35,7 +35,7 @@ function [mol] = mol_read_fchk(rootfile, LOG=1)
    endif
    fid = fopen(fchkfile,"r");
 
-   mol=struct();
+   mol=molecule();
 
    nline=0;
    again = 1;
@@ -43,7 +43,7 @@ function [mol] = mol_read_fchk(rootfile, LOG=1)
       ++nline;
       line = fgetl(fid);
       if(nline==1)
-         mol.title = line;
+         mol.name = line;
       elseif(strfind(line,"Number of atoms"))
          [d1 d2 d3 d4 mol.nat] = sscanf(line, "%s %s %s %s %d","C");
       elseif(strfind(line,"Atomic numbers"))
@@ -93,7 +93,7 @@ function [mol] = mol_read_fchk(rootfile, LOG=1)
 
    if (LOG > 0)
       printf("File.: %s\n", fchkfile);
-      printf("Title: %s\n", mol.title);
+      printf("Title: %s\n", mol.name);
       printf("--i- -zi- symb --------Coord (Angfstrom)-------\n");
       for i = 1:mol.nat
          zi = mol.atnumber(i);

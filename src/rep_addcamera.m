@@ -10,13 +10,19 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_addcamera(repi,camangle=[80 75 45],zoom=3,LOG=0)
-% function rep = rep_addcamera(repi,camangle=[80 75 45],zoom=3,LOG=0)
+function rep = rep_addcamera(repi,camangle=[80 75 45],angle=45,persp=1,LOG=0)
+% function rep = rep_addcamera(repi,camangle=[80 75 45],angle=45,persp=1,LOG=0)
 %
 % rep_addcamera - add a camera to a graphical representation
 %
-% Required input variables:
+% Input variables:
 % repi: input representation.
+% camangle: the three camera angles in spherical coordinate.s The first is
+%           phi (angular separation from the +z axis), the second is theta
+%           (rotation about the z) and the third controls the distance
+%           from the center of mass. 
+% angle: the camera field of view.
+% persp: 1 for perspective, 0 for orthographic.
 %
 % Optional input variables (all have default values):
 % {LOG}: verbose level (0=silent,1=verbose).
@@ -34,15 +40,17 @@ function rep = rep_addcamera(repi,camangle=[80 75 45],zoom=3,LOG=0)
 
   ## set the camera using camangle
   rep = repi;
-  rep.cam = struct();
+  rep.cam = camera();
   camangle = camangle * pi / 180;
-  visdis = zoom * max(xdel) / tan(camangle(3)/2);
+  visdis = max(xdel) / tan(camangle(3)/2);
   ss = sin(camangle(1));
   rep.cam.cop = xct + visdis * [ss*cos(camangle(2)), ss*sin(camangle(2)), cos(camangle(1))];
   rep.cam.sky = [0 0 1];
   rep.cam.vuv = [0 0 1];
   rep.cam.rht = [1 0 0];
-  rep.cam.drt = [0 1 0] * zoom;
+  rep.cam.drt = [0 1 0];
+  rep.cam.angle = angle;
   rep.cam.vrp = xct;
+  rep.cam.persp = persp;
 
 endfunction

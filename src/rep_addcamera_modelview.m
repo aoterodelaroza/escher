@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_addcamera_modelview(repi,r,fov,LOG=0)
-% rep = rep_addcamera_modelview(repi,r,fov,LOG=0)
+function rep = rep_addcamera_modelview(repi,r=[eye(3); 0 0 -20],angle=45,persp=1,LOG=0)
+% rep = rep_addcamera_modelview(repi,r=[eye(3); 0 0 -20],angle=45,persp=1,LOG=0)
 %
 % rep_addcamera_modelview - add a camera to a graphical representation, using
 % the opengl modelview matrix.
@@ -19,36 +19,31 @@ function rep = rep_addcamera_modelview(repi,r,fov,LOG=0)
 % Input variables:
 % repi: input representation.
 % r: opengl modelview matrix (4x4). Contains the model rotation (1:3,1:3)
-%    and the translation (4,1:3). The (1:3,4) vector is the center of projection
-%    (the point at which the camera points). If r is 4x3 instead of 4x4, then the 
-%    cop is the barycenter of the balls in the representations.
-% fov: opengl field of view (angle in pov).
-% {LOG}: verbose level (0=silent,1=verbose).
+%    and the translation (4,1:3). The (1:3,4) vector is the point the camera
+%    looks at. If r is 4x3 instead of 4x4, then this point is the barycenter of the scene.
+% angle: the camera field of view.
+% persp: 1 for perspective, 0 for orthographic.
+% LOG: verbose level (0=silent,1=verbose).
 %
-% Required output variables:
+% Output variables:
 % rep: output representation.
-
-  ## xct = rep_getcm(repi);
 
   ## set the camera using euler angles
   rep = repi;
-  rep.cam = struct();
+  rep.cam = camera();
   if (size(r,2) > 3)
     rep.cam.cop = r(1:3,4)'; ## use the cop in the modelview matrix
   else
-    ## calculate the barycenter of the balls
-    cm = [0 0 0];
-    for i = 1:repi.nball
-      cm += repi.ball{i}.x;
-    endfor
-    rep.cam.cop = cm / repi.nball;
+    [xct xmin xmax xdel] = rep_getcm(repi);
+    rep.cam.cop = xct;
   endif
   rep.cam.sky = [0 1 0]; ## default
   rep.cam.vuv = [0 1 0]; ## default
   rep.cam.rht = [1 0 0]; ## default divided by 4/3 (1:1 ratio)
   rep.cam.drt = [0 0 -1]; ## pov is right-handed
-  rep.cam.angle = fov; ## field-of-view is angle
+  rep.cam.angle = angle; ## field-of-view is angle
   rep.cam.matrix = r(1:4,1:3); ## modelview matrix
   rep.cam.invmatrix = 1; ## inverse of that
+  rep.cam.persp = persp;
 
 endfunction

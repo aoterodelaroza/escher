@@ -47,7 +47,7 @@ endswitch
 if (LOG > 0)
    printf('mol_unitconversion: %s\n', conv);
    printf('Final result:\n');
-   natoms = length(molout.atmass);
+   natoms = molout.nat;
    printf("Number of atoms: %d\n", natoms);
    printf("number, symbol, at_number, xyz coordinates:\n");
    for i = 1:natoms

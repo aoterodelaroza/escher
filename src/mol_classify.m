@@ -35,11 +35,8 @@ function [iclass] = mol_classify(mol, iat, bondfactor=1.2, LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2012
 
-   global dbdefined
-   global atdb
-
 # Check iat data.
-nat = length(mol.atnumber);
+nat = mol.nat;
 iclass = -ones(1,nat);
 if (isempty(iat))
    is = 1:nat;
@@ -76,7 +73,7 @@ for i = 1:nis
       x = mol.atxyz(1:3,i) - mol.atxyz(1:3,j);
       dist(i,j) = dist(j,i) = sqrt(x' * x);
       zj = mol.atnumber(j);
-      dconn = bondfactor * (atdb.rcov(zi) + atdb.rcov(zj));
+      dconn = bondfactor * (mol_rcov(zi) + mol_rcov(zj));
       conn(i,j) = conn(j,i) = (dist(i,j) <= dconn);
    endfor
 endfor

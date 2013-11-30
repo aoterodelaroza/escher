@@ -1,3 +1,302 @@
+2013-11-26  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/tex_dbstart.m: added shiny texture.
+
+	* src/mol_polyhedron.m: fixed bug -- using regexp instead of
+	direct comparison between numbers.
+
+	* src/cr_newcell.m: fixed mat -> mat' bug.
+
+2013-11-24  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/grid_mesh.m: improved efficiency. TAGFEM now runs in 20
+	seconds.
+
+	* src/rep_registertexture.m: added. I modified the texture
+	system. Now rep contain a list of strings and balls, etc. contain
+	integer indices to that list. The strings correspond to entries in
+	the texdb.
+
+	* src/...: lots of changes related to the handling of
+	textures.
+
+2013-11-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_readlog.m: implemented gaussian output reader.
+
+2013-11-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_cmass.m: fixed bug n -> mol.nat. Changed LOG to zero.
+
+	* src/mol_transform.m: eliminated LOG and default zero vector for
+	the translation. Also, moved the molecule to the beginning of the
+	calling sequence.
+
+	* src/rep_refaxes.m: modified the radius to make it a scale of a
+	default parameter.
+
+	* src/rep_write_pov.m: fixed problems with the definition of the
+	camera and the existence of fields from camera().
+
+2013-11-19  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/tex_dbstart.m: added metal4 texture.
+	Modified chrome texture.
+
+	* src/texture.m: texdb_start moved to avoid infinite recursion.
+
+	* src/ball.m: fixed bug.
+
+2013-11-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/atom.m: fixed bug.
+
+2013-10-28  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* doc/devs.org: fully-written now. Check for reference on
+	functions and objects. A major overhaul of the code
+	happened. Check today and yesterday for a list of changes.
+
+	* src/mol_unitconvert.m: moved to the attic. This can only end up
+	in weeping and gnashing of teeth.
+
+	* src/mol_opt_align.m: moved to the attic. mol_align does the same
+	thing (?).
+
+	* src/mol_groupgeometry.m: moved to the attic. The same can be
+	achieved by combining existing routines.
+
+	* src/mol_adduct.m: moved to the attic. Too specific. The same can
+	be achieved by combining existing routines.
+
+	* src/mol_cr2topo.m, src/mol_fchk2topo.m, src/mol_smiles2topo.m:
+	moved to the attic. Too specific.
+
+	* src/mol_limits.m: moved to the attic. The same can be achieved
+	using simple octave routines.
+
+	* src/mol_cuberange.m: moved to the attic. Too specific.
+
+	* src/mol_hemap.m: moved to the attic. Too specific.
+
+	* src/mol_permute.m: moved from mol_reorder.m (because we already
+	have mol_order and it's confusing).
+
+	* src/atom.m: added constructor for the atom object.
+
+2013-10-27  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* all: I have moved a lot of code around to i) use constructors
+	and objects that have all their fields defined (if empty), ii)
+	modify molecule to always use mol.nat. Also I'm not saving any
+	properties except those you can't get by using other routines. For
+	instance, no conn or frag, which you can get by defining smaller
+	mols.
+
+	* src/mol_rcov.m: added to avoid having global atdb all over the
+	place.
+
+	* src/mol_dist.m: moved to the attic. This can be done with octave
+	routines.
+
+	* src/mol_dist2.m: moved to the attic. This can be done by using a
+	combination of mol_distmatrix and mol_getfragment.
+
+	* src/stick.m: added constructor.
+
+	* src/rep_getcm.m, src/rep_merge.m: removed check of nballs, nsticks, etc.
+
+	* src/mplot_molplot.m, mplot_reset.m, mplot_writepov.m: moved to
+	the attic. Superseded by recent routines.
+
+	* src/mol_adduct.m, src/op_rotx.m, src/op_roty.m, src/op_rotz.m:
+	op -> 3x3 matrix. Easier to use than the 4x4 variety, which can
+	always be regenerated on the fly with standard octave operations.
+
+	* src/get_xyz_geom_c6x6_yz3.m, src/n3p3cl6.m, src/pnx2_n.m,
+	src/op_prod.m: moved to the attic.
+
+	* src/get_geom_xyz.m: moved to the attic. Superseded by
+	mol_readxyz.
+
+	* todo: added todo entry about constructors.
+
+	* src/cr_pw2cell.m: moved to the attic. Superseded by
+	cr_read_espresso.
+
+	* src/cr_molmotif.m: use cr.r instead of regenerating it from cr.a
+	and cr.b.
+
+	* src/cr_applymask.m, src/cr_c2x.m, cr_crystalbox.m,
+        src/cr_insertvacuum.m, src/cr_newcell.m, src/cr_spherebox.m,
+        src/cr_unitcell.m, cr_write_vasp, cr_x2c: removed regeneration
+	of r. cr.r is required now.
+
+	* src/crystal.m: saved the code to generate r and g from a and b
+	here.
+
+	* src/color.m: converted dbcolor to a struct, eliminated the
+	spaces.
+
+	* src/c6h6_scme2.m: moved to the attic.
+
+2013-10-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/rep_addlight.m, src/rep_write_pov.m: added shadowless and
+	intensity option to rep_addlight.
+
+	* src/mol_ball.m: strict=0 is now default in mol_ball.
+
+	* src/grid_isosurface.m: changed the defaults to opaque blue faces
+	and black edges.
+
+	* src/grid_mesh.m: fixed bug in the coordinate generation of
+	non-orthogonal grids.
+
+2013-10-22  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/grid_isosurface.m: improved the performance of this routine
+	by a lot by preallocating the cell array and using matrix
+	operations. It turns out that the generation of the iso-surface is
+	very efficient, even for huge cubes.
+
+	* src/grid_readcube.m: made the file reading (much) more efficient
+	by using a single fscanf() to read the entire cube file.
+
+	* src/mol_stick.m: improved performance of the routine by slicing
+	the loop into chunks based on matrix-operations.
+
+2013-10-21  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* todo: added a couple entries.
+
+	* src/grid_isosurface.m: changed '\' to '...' because the new
+	octave keeps complaining about it.
+
+2013-09-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/rep_write_pov.m: added perspective setting.
+
+	* src/rep_addcamera_modelview.m, src/rep_addcamera.m: added angle
+	and perspective.
+
+	* src/rep_setdefaultscene.m: pass angle and perspective to
+	underlying routines.
+
+	* escher_data/002_kb65: added test 2.
+
+2013-09-12  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/cr_write_vasp.m: r -> r' bug.
+
+2013-09-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* all: change to /etc/alternative/octave reverted.
+
+	* src/mol_polyhedron.m: returns the molecule with the centers and
+	the molecule with the vertices. Also, fixed name and
+	continuations.
+
+	* src/rep_addcamera_modelview.m: use rep_getcm to get the center
+	of mass instead of the calculating the barycenter of the balls on
+	the spot.
+
+	* src/rep_write_pov.m: continuation lines with '...' instead of
+	'\'.
+
+	* all: moved /usr/bin/octave to /etc/alternatives/octave .
+
+	* src/cr_spherebox.m: a more reasonable definition of the
+	lattice vector star.
+
+	* src/mol_writexyz.m: write a xyz using the 'correct' atomic
+	symbol, and not the symbol coming from the calculation. E.g. for
+	VASP it's Ta_pv instead of Ta, which avogadro doesn't understand.
+
+	* src/cr_spherebox.m: fixed cr_crystalbox -> was giving
+	strange results for slabs because ix0 was not negative for some
+	x0.
+
+	* src/mol_dbstart.m: made continuation symbol '\' be '...' -> the
+	latest version of octave says \ is going to be deprecated soon.
+
+2013-08-29  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/rep_refaxes.m: commented out negative axes. Sticks a little
+	thicker (0.01 -> 0.03).
+
+	* src/mol_ball.m: changed the default radius in mol_ball from 0.5
+	to 0.6.
+
+2013-08-23  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_polyhedron.m: changed default for transparency.
+
+	* src/cr_unitcell.m: fixed documentation.
+
+	* src/cr_read_vasp.m: now accepts a cell array of atomic symbols
+	instead of the POTCAR.
+
+2013-08-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/cr_newcell.m: changed fvol check to disallow negative
+	volumes.
+
+	* src/cr_write_vasp.m: changed default LOG=1 in cr_write_vasp.
+	Fixed bug: it's cr.r', not cr.r for VASP inputs.
+
+	* todo: made entry for implementing schmueli's symmetry builder
+	and to clean up the crystal description. Maybe the R matrix would
+	be enough for internal computations?
+
+	* src/cr_write_critic2.m: removed the GUESS keyword, which is no
+	longer used in the new critic2.
+
+	* src/cr_moveorigin.m: created. Displaces the origin of the cell
+	to a new location.
+
+	* src/cr_insertvacuum.m: created. Inserts a vacuum along a
+	crystallographic direction, possibly chopping off some atoms and
+	recentering the cell so the inversion center is preserved at the
+	origin. A nice tool for building surfaces.
+
+2013-08-18  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* README: small fix.
+
+	* escher_data/001_agtao3: added test 001 corresponding to tale
+	4 in the webpage.
+
+2013-08-17  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_polyhedron.m: caught bug in the generation of faces.
+
+	* src/cr_newcell.m: created. Change the unit cell of a crystal
+	by giving the new lattice vectors in the crystallographic
+	coordinates of the original cell. Implements tessel's
+	newunitcell, but allows creating a new crystal object.
+
+	* src/cr_unitcell.m: fixed bug--mol, not cr.
+
+2013-08-15  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* README: wrote a simple README file for escher.
+
+2013-08-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* escher_data/mol/polygon/: added. Example on how to use the
+	rep_polygon routine.
+
+	* src/mol_write_zmat.m: modified calling sequence.
+
+	* src/rep_polygon.m: added. Draw a polygon in the scene.
+
+	* src/mol_polyhedron.m: fixed defaults in the documentation.
+
+2013-07-29  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_write_zmat.m: corrected documentation.
+
 2013-07-15  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* escher_data/mol/burrito/: added test. Carbon nanotube with

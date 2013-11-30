@@ -40,48 +40,40 @@ else
   rmin = rad0(1);
 endif
 
+## transform x0 to the main cell
+x0 = x0 - floor(x0);
+
 ## crystal to cartesian
-if (isfield(cr,"r"))
-  r = cr.r;
-  g = r * r';
-else
-  if (isfield(cr,"g"))
-    g = cr.g;
-  else
-    cc = cos(cr.b);
-    g = cr.a' * cr.a;
-    g(1,2) = g(2,1) = g(1,2) * cc(3);
-    g(1,3) = g(3,1) = g(1,3) * cc(2);
-    g(2,3) = g(3,2) = g(2,3) * cc(1);
-  endif
-  r = chol(g)';
-endif
+r = cr.r;
+g = cr.g;
 rinv = inv(r);
 
 ## find the relevant lattice vectors
 xc = x0 * r;
 xc0 = xc - [rad rad rad];
 xc1 = xc + [rad rad rad];
-ix0 = floor(xc0 * rinv);
-ix1 = ceil(xc1 * rinv)-1;
-nvecs = prod(ix1-ix0+1); nvecsm1 = max(prod(ix1-1-(ix0+1)+1),0);
-lvecs = zeros(nvecs,3);
+ix0 = abs(floor(xc0 * rinv));
+ix1 = abs(ceil(xc1 * rinv));
+ix0 = max(ix0,ix1)+1;
+
+lvecs = zeros(prod(2*ix0+1),3);
 n = 0;
-for ix = ix0(1):ix1(1)
-  for iy = ix0(2):ix1(2)
-    for iz = ix0(3):ix1(3)
+for ix = -ix0(1):ix0(1)
+  for iy = -ix0(2):ix0(2)
+    for iz = -ix0(3):ix0(3)
       n += 1;
       lvecs(n,:) = [ix iy iz];
     endfor
   endfor
 endfor
+nvecs = size(lvecs,1);
 
 ## build the molecule, assume that cells on the border contribute 1/4
 ## of the atoms in the unit cell to save memory.
-mol = struct();
+mol = molecule();
 mol.atname = cell();
-mol.atnumber = zeros(1,nvecsm1*cr.nat+nvecs*cr.nat/4);
-mol.atxyz = zeros(3,nvecsm1*cr.nat+nvecs*cr.nat/4);
+mol.atnumber = zeros(1,nvecs*cr.nat+nvecs*cr.nat/4);
+mol.atxyz = zeros(3,nvecs*cr.nat+nvecs*cr.nat/4);
 n = 0;
 rmin2 = rmin * rmin; rad2 = rad * rad;
 for i = 1:cr.nat
@@ -97,6 +89,7 @@ for i = 1:cr.nat
     endif
   endfor
 endfor
+mol.nat = n
 if (n > 0)
   mol.atnumber = mol.atnumber(1:n);
   mol.atxyz = mol.atxyz(:,1:n) * bohr2angstrom;
@@ -106,5 +99,6 @@ endif
 if (isfield(cr,"name") && !isempty(cr.name))
   mol.name = cr.name;
 endif
+mol = mol_fillatmass(mol);
 
 endfunction

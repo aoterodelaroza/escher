@@ -27,7 +27,7 @@ function [mol] = mol_fillatmass(moli)
 % Created: June 2011
 
   mol = moli;
-  for i = 1:length(moli.atnumber)
+  for i = 1:moli.nat
     [symb,atprop] = mol_dbsymbol(moli.atnumber(i));
     mol.atmass(i) = atprop.mass;
   endfor

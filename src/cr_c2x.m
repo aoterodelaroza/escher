@@ -14,8 +14,7 @@
 function x = cr_c2x(cr,c)
 % function x = cr_c2x(cr,c)
 %
-% cr_c2x - cartesian to crystallographic coordinates. Use cr.r if available.
-%          Otherwise, use the cholesky decomposition of the metric tensor.
+% cr_c2x - cartesian to crystallographic coordinates. Use cr.r.
 %
 % Required input variables:
 % {cr}: crystal (structure)**2.
@@ -26,21 +25,7 @@ function x = cr_c2x(cr,c)
 %
 
   ## crystal to cartesian
-  if (isfield(cr,"r"))
-    r = cr.r;
-  else
-    if (isfield(cr,"g"))
-      g = cr.g;
-    else
-      cc = cos(cr.b);
-      g = cr.a' * cr.a;
-      g(1,2) = g(2,1) = g(1,2) * cc(3);
-      g(1,3) = g(3,1) = g(1,3) * cc(2);
-      g(2,3) = g(3,2) = g(2,3) * cc(1);
-    endif
-    r = chol(g)';
-  endif
-  rinv = inv(r);
+  rinv = inv(cr.r);
 
   ## works for row and column
   if (size(cz,2) > 1)

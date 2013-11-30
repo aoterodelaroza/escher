@@ -10,32 +10,25 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep_addobjtexture(name,Ns=96.078,Ka=[0 0 0],Ks=[128 128 128],Ni=1,illum=2);
-% function rep_addobjtexture(name,Ns=96.078,Ka=[0 0 0],Ks=[0.5 0.5 0.5],Ni=1,illum=2);
+function tex_addpovtexture(name,string);
+% function tex_addpovtexture(name,string)
 %
-% rep_addobjtexture - add an obj texture to the database.
+% tex_addpovtexture - add a povray texture to the database.
 %
 % Required input variables:
 % name: name of the new texture.
-% Ns: shininess of the material.
-% Ka: ambient color (three rgb integers)
-% Ks: specular color (three rgb integers)
-% Ni: optical density (index of refraction)
-% illum: illumination model.
+% string: povray texture definition.
 
   global texdb
   
   if (!exist("texdb","var") || isempty(texdb))
-    rep_texdbstart();
+    tex_dbstart();
   endif
   
   n = length(texdb);
-  texdb{n+1}.typ = "obj";
+  texdb{n+1} = texture();
+  texdb{n+1}.typ = "pov";
   texdb{n+1}.name = name;
-  texdb{n+1}.Ns = Ns;
-  texdb{n+1}.Ka = Ka;
-  texdb{n+1}.Ks = Ks;
-  texdb{n+1}.Ni = Ni;
-  texdb{n+1}.illum = illum;
+  texdb{n+1}.string = string;
 
 endfunction

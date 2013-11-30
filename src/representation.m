@@ -32,9 +32,10 @@ function rep = representation()
   rep.triangle = cell();
   rep.vertex = cell();
 
-  rep.cam = struct();
+  rep.cam = camera();
   rep.nlight = 0;
   rep.light = cell();
   rep.bgcolor = zeros(1,3);
+  rep.texlib = {};
 
 endfunction

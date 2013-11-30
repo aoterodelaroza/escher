@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
-% function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
+function [cm,mass] = mol_cmass(mol, iat=[], LOG=0)
+% function [cm,mass] = mol_cmass(mol, iat=[], LOG=0)
 %
 % mol_cmass - determine the center of mass of a molecule or part.
 %
@@ -31,21 +31,9 @@ function [cm,mass] = mol_cmass(mol, iat=[], LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2011
 
-# Fill the atmass array 
-if (!isfield(mol,"atmass") || isempty(mol.atmass))
-  if (!isfield(mol,"atnumber") || isempty(mol.atnumber))
-    mol = mol_fillatnumber(mol);
-  endif
-  mol = mol_fillatmass(mol);
-endif
-
 # Check input data, particularly iat1 and iat2.
 if (isempty(iat))
-   n = length(mol.atmass);
-   iat = 1:n;
-endif
-if (length(iat) < 1)
-   error('mol_cmass: the molecular fragment is empty!');
+   iat = 1:mol.nat;
 endif
 
 # Get the center of mass:
@@ -55,7 +43,7 @@ cm = xi * mol.atmass(iat)' / mass;
 
 if (LOG > 0)
    printf('mol_cmass: center of mass of (part of?) a molecule\n');
-   printf('Fragment (%d):', length(mol.atmass));
+   printf('Fragment (%d):', mol.nat);
    printf(' %d', iat);
    printf('\n');
    for i = 1 : length(iat)

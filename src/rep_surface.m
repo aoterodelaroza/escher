@@ -42,18 +42,6 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
   else
     rep = representation();
   endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-    rep.vertex = cell();
-  endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-    rep.stick = cell();
-  endif
 
   ## calculate function values
   u = zeros(nuv(1)*nuv(2),2);
@@ -90,6 +78,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
     for j = 1:nuv(2)
       ## Coordinates
       n++;
+      rep.vertex{n} = vertex();
       rep.vertex{n}.x = fval(n,:);
       rep.vertex{n}.rgb = rgb(n,:);
     endfor
@@ -97,6 +86,10 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
   rep.nvertex += n;
 
   ## add triangles
+  [rep itex] = rep_registertexture(rep,tex);
+  if (grid > 0)
+    [rep igrtex] = rep_registertexture(rep,grtex);
+  endif
   n = rep.ntriangle;
   m = rep.nstick;
   for i = 1:isup(1)
@@ -107,40 +100,45 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
       idx = [(i-1)*nuv(2)+j, (i1-1)*nuv(2)+j, (i1-1)*nuv(2)+j1, (i-1)*nuv(2)+j1];
 
       n++;
+      rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(1) idx(2) idx(4)];
       rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
-      rep.triangle{n}.tex = tex;
+      rep.triangle{n}.tex = itex;
       n++;
+      rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(4) idx(2) idx(3)];
       rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
-      rep.triangle{n}.tex = tex;
+      rep.triangle{n}.tex = itex;
 
       if (grid > 0)
         m++;
+        rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
         rep.stick{m}.x0 = fval(idx(1),:);
         rep.stick{m}.x1 = fval(idx(2),:);
         rep.stick{m}.r = grrad;
         rep.stick{m}.rgb = grrgb;
-        rep.stick{m}.tex = grtex;
+        rep.stick{m}.tex = igrtex;
         m++;
+        rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
         rep.stick{m}.x0 = fval(idx(1),:);
         rep.stick{m}.x1 = fval(idx(4),:);
         rep.stick{m}.r = grrad;
         rep.stick{m}.rgb = grrgb;
-        rep.stick{m}.tex = grtex;
+        rep.stick{m}.tex = igrtex;
         m++;
+        rep.stick{m} = stick();
         rep.stick{m}.name = "surface";
         rep.stick{m}.x0 = fval(idx(2),:);
         rep.stick{m}.x1 = fval(idx(4),:);
         rep.stick{m}.r = grrad;
         rep.stick{m}.rgb = grrgb;
-        rep.stick{m}.tex = grtex;
+        rep.stick{m}.tex = igrtex;
       endif
     endfor
   endfor

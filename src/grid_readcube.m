@@ -60,17 +60,10 @@ function g = grid_readcube (cubefile, LOG=0)
   endfor
 
   ## now read in the function values at the grid
-  nd = 0;
-  alldata = zeros(1,prod(g.n));
-  while (!feof(fqub))
-    line = fgetl(fqub);
-    data = sscanf(line,"%g");
-    for i = 1:length(data)
-      nd++;
-      alldata(nd) = data(i);
-    endfor
-  endwhile
+  alldata = fscanf(fqub,"%g");
+  fclose(fqub);
 
+  ## rearrange the grid
   nd = 0;
   for ix = 1:g.n(1)
     for iy = 1:g.n(2)
@@ -78,8 +71,6 @@ function g = grid_readcube (cubefile, LOG=0)
       nd = nd + g.n(3);
     endfor
   endfor
-
-  fclose(fqub);
 
   if (LOG>0)
     printf('grid_readcube:\n');

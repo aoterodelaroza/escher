@@ -1,3 +1,7 @@
+!!THIS DOCUMENT IS OUTDATED!!
+DEVS.ORG IS THE ONLY DOCUMENT THAT IS KEPT UP TO DATE FOR NOW.
+The installation section may apply, though.
+
 ==================================
 MolWare user's and reference guide
 ==================================

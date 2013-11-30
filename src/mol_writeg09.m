@@ -100,7 +100,7 @@ function err = mol_writeg09(mol, code="def", conditions=struct([]), LOG=2)
   fprintf(fid, "(VLC00) %s (%s)\n", title, calc);
   fprintf(fid, "\n");
   fprintf(fid, "0 1\n");
-  for i = 1 : length(mol.atmass);
+  for i = 1 : mol.nat;
      fprintf(fid,"   %-2s  ", mol.atname{i});
      fprintf(fid,"  %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
      fprintf(fid,"\n");
@@ -118,7 +118,7 @@ function err = mol_writeg09(mol, code="def", conditions=struct([]), LOG=2)
      endfor
      if (LOG > 1)
         printf("Molecule: %s\n", mol.name);
-        for i = 1 : length(mol.atmass);
+        for i = 1 : mol.nat;
            printf("%5d %-2s %5d", mol.atname{i}, mol.atnumber(i));
            printf("  %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
            printf("\n");

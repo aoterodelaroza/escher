@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function  err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
-% function err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
+function  err = mol_writexyz (mol, filename="none", mode="axyz")
+% function err = mol_writexyz (mol, filename="none", mode="axyz")
 %
 % mol_writexyz - write in the data of a molecule to a xyz file. Several
 %               similar xyz formats are supported.
@@ -21,7 +21,7 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
 %       mol.name --> name of the molecule.
 %       mol.atname --> {1:M} cell array with the symbols of the atoms
 %                       (M is the number of atoms in the molecule).
-%       mol.xyz --> Mx3 matrix with the cartesian coordinates of the atoms.
+%       mol.atxyz --> Mx3 matrix with the cartesian coordinates of the atoms.
 %
 % Optional input variables (all have default values):
 % {filename="none"): name of the output data file. By defult, the standard
@@ -55,10 +55,6 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
   angtobohr = 1.88972613288564;
   bohrtoans = 0.52917720859;
 
-  if (LOG > 0)
-     mol
-  endif
-
   err = 1;
   if (strcmpi(filename,"none"))
      fid = stdout();
@@ -70,7 +66,7 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
      endif
   endif
 
-  nat = length(mol.atname);
+  nat = mol.nat;
   fprintf(fid," %d\n", nat);
   if (isfield(mol,"name") && !isempty(mol.name))
     fprintf(fid,"# %s\n",mol.name);
@@ -78,52 +74,46 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz", LOG=0)
     fprintf(fid,"# File title\n");
   endif
   for i = 1 : nat
-     #sy = cell2mat(mol.atname{i});
-     if (strcmpi(mode, "axyz"))
-        sy = mol.atname{i};
-        fprintf(fid," %-2s  ", sy);
-        fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
-        fprintf(fid,"\n");
-     elseif (strcmpi(mode, "anxyz"))
-        sy = mol.atname{i};
-        iz = mol_dbatom(sy);
-        fprintf(fid," %-2s  ", sy);
-        fprintf(fid," %-2d  ", iz);
-        fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
-        fprintf(fid,"\n");
-     elseif (strcmpi(mode, "naxyz"))
-        sy = mol.atname{i};
-        iz = mol_dbatom(sy);
-        fprintf(fid," %-2d  ", iz);
-        fprintf(fid," %-2s  ", sy);
-        fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
-        fprintf(fid,"\n");
-     elseif (strcmpi(mode, "nxyz"))
-        sy = mol.atname{i};
-        iz = mol_dbatom(sy);
-        fprintf(fid," %-2d  ", iz);
-        fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
-        fprintf(fid,"\n");
-     elseif (strcmpi(mode, "xyz"))
-        fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
-        fprintf(fid,"\n");
-     else
-        error("mol_writexyz", "Unknown write format!");
-     endif
-     ###sy = mol.atname{i};
-     ###iz = mol_dbatom(sy);
-     ###if (strcmpi(mode(1),"a"))
-     ###   fprintf(fid," %-2s  ", sy);
-     ###elseif (strcmpi(mode(1),"n"))
-     ###   fprintf(fid," %-2d  ", iz);
-     ###endif
-     ###if (strcmpi(mode(2),"a"))
-     ###   fprintf(fid," %2s  ", sy);
-     ###elseif (strcmpi(mode(2),"n"))
-     ###   fprintf(fid," %-2d  ", iz);
-     ###endif
-     ###fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
-     ###fprintf(fid,"\n");
+    iz = mol_dbatom(mol.atname{i});
+    sy = mol_dbsymbol(iz);
+    if (strcmpi(mode, "axyz"))
+      fprintf(fid," %-2s  ", sy);
+      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid,"\n");
+    elseif (strcmpi(mode, "anxyz"))
+      fprintf(fid," %-2s  ", sy);
+      fprintf(fid," %-2d  ", iz);
+      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid,"\n");
+    elseif (strcmpi(mode, "naxyz"))
+      fprintf(fid," %-2d  ", iz);
+      fprintf(fid," %-2s  ", sy);
+      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid,"\n");
+    elseif (strcmpi(mode, "nxyz"))
+      fprintf(fid," %-2d  ", iz);
+      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid,"\n");
+    elseif (strcmpi(mode, "xyz"))
+      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid,"\n");
+    else
+      error("mol_writexyz", "Unknown write format!");
+    endif
+###sy = mol.atname{i};
+###iz = mol_dbatom(sy);
+###if (strcmpi(mode(1),"a"))
+###   fprintf(fid," %-2s  ", sy);
+###elseif (strcmpi(mode(1),"n"))
+###   fprintf(fid," %-2d  ", iz);
+###endif
+###if (strcmpi(mode(2),"a"))
+###   fprintf(fid," %2s  ", sy);
+###elseif (strcmpi(mode(2),"n"))
+###   fprintf(fid," %-2d  ", iz);
+###endif
+###fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+###fprintf(fid,"\n");
   endfor
 
   if (!strcmpi(filename,"none"))

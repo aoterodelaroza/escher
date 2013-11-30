@@ -10,11 +10,11 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15], \
-                              frgb=[0 0 128 0 225], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",\
-                              erad=0.025)
-% function rep = mol_polyhedron(molc, molv, rep="", at="", by="", dist=[-1 1.15], \
-%                               frgb=[0 0 255 0.5], ergb=[0 0 255], ftex="opaque_triangle_default", etex="stick_default",
+function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15],...
+                                frgb=[0 0 128 115 115], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",...
+                                erad=0.025)
+% function [rep molc1 molv1] = mol_polyhedron(molc, molv, rep="", at="", by="", dist=[-1 1.15], \
+%                               frgb=[0 0 128 0 225], ergb=[0 0 128], ftex="opaque_triangle_default", etex="stick_default",
 %                               erad=0.025)
 %
 % mol_polyhedron - create polyhedra by giving the center atoms, vertex atoms and a distance criterion
@@ -46,53 +46,45 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
 % etex: edge texture.
 % erad: edge radius.
 %
+% Output variables:
+% rep: the representation containing the polyhedra
+% molc1: the molecule containing the polyhedra centers (subset of molc).
+% molv1: the molecule containing the polyhedra vertices (subset of molv).
+%
 
   ## initial representation 
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
     rep = representation();
-    if (isfield(mol,"name") && !isempty(mol.name))
-      rep.name = mol.name;
+    if (isfield(molc,"name") && !isempty(molc.name))
+      rep.name = molc.name;
     endif
   endif
 
-  ## initialize
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-  endif
-  if (rep.nstick == 0)
-    rep.stick = cell();
-  endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-  endif
-  if (rep.ntriangle == 0)
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-  endif
-  if (rep.nvertex == 0)
-    rep.vertex = cell();
-  endif
-
   ## covalent radii
-  nc = length(molc.atnumber);
-  nv = length(molv.atnumber);
+  nc = molc.nat;
+  nv = molv.nat;
   if (dist(1) < 0)
     rcovc = zeros(1,nc);
     for i = 1:nc
-      [sym atom] = mol_dbsymbol(molc.atnumber(i));
-      rcovc(i) = atom.rcov;
+      rcovc(i) = mol_rcov(molc.atnumber(i));
     endfor
     rcovv = zeros(1,nv);
     for i = 1:nv
-      [sym atom] = mol_dbsymbol(molv.atnumber(i));
-      rcovv(i) = atom.rcov;
+      rcovv(i) = mol_rcov(molv.atnumber(i));
     endfor
   endif
 
+  ## build the polyhedra
+  if (!isempty(frgb))
+    [rep iftex] = rep_registertexture(rep,ftex);
+  endif
+  if (!isempty(ergb))
+    [rep ietex] = rep_registertexture(rep,etex);
+  endif
+  ic1 = [];
+  iv1 = [];
   for ic = 1:nc
     useit = (ischar(at) && regexp(molc.atname{ic},at));
     useit = useit || (isscalar(at) && molc.atnumber(ic) == at);
@@ -108,7 +100,7 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
         elseif (ischar(by))
           useit = useit || regexp(molv.atname{iv},by);
         elseif (isscalar(by))
-          useit = useit || regexp(molv.atnumber(iv),by);
+          useit = useit || (molv.atnumber(iv) == by);
         else
           for k = 1:length(by)
             useit = useit || (molv.atnumber(iv) == by(k));
@@ -128,6 +120,14 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
         endif
       endfor
 
+      ## skip polyhedra with less than 4 points
+      if (length(idx) < 4)
+        continue
+      endif
+
+      ic1 = [ic1 ic];
+      iv1 = unique([iv1 idx]);
+
       ## build the polyhedron using the convex hull
       v = molv.atxyz(:,idx)';
       h = convhulln(v);
@@ -135,15 +135,16 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
         nv0 = rep.nvertex;
         for i = 1:length(idx)
           rep.nvertex += 1;
+          rep.vertex{rep.nvertex} = vertex();
           rep.vertex{rep.nvertex}.x = molv.atxyz(:,idx(i))';
           rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
         endfor
-        nv0 = rep.ntriangle;
         for i = 1:size(h,1)
           rep.ntriangle += 1;
+          rep.triangle{rep.ntriangle} = triangle();
           rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
           rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
-          rep.triangle{rep.ntriangle}.tex = ftex;
+          rep.triangle{rep.ntriangle}.tex = iftex;
         endfor
       endif
       if (!isempty(ergb))
@@ -152,16 +153,20 @@ function rep = mol_polyhedron(molc, molv, addto="", at="", by="", dist=[-1 1.15]
         for i = 1:size(h,1)
           for j = 1:3
             rep.nstick = rep.nstick + 1;
+            rep.stick{rep.nstick} = stick();
             rep.stick{rep.nstick}.name = "";
             rep.stick{rep.nstick}.x0 = v(h(i,kk(j,1)),:);
             rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);
             rep.stick{rep.nstick}.r = erad;
             rep.stick{rep.nstick}.rgb = ergb;
-            rep.stick{rep.nstick}.tex = etex;
+            rep.stick{rep.nstick}.tex = ietex;
           endfor
         endfor
       endif
     endif
   endfor
+
+  molc1 = mol_getfragment(molc,ic1);
+  molv1 = mol_getfragment(molv,iv1);
 
 endfunction

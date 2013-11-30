@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
-% function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+% function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
 %
 % mol_ball - create balls for an atomic type given by its symbol.
 %
@@ -43,7 +43,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1
 %
 
   ## number of atoms
-  nat = length(mol.atname);
+  nat = mol.nat;
 
   ## initial representation 
   if (!isempty(addto) && isstruct(addto))
@@ -54,28 +54,27 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1
       rep.name = mol.name;
     endif
   endif
-  if (!isfield(rep,"nball"))
-    rep.nball = 0;
-  endif
-  if (rep.nball == 0)
-    rep.ball = cell();
-  endif
 
   ## Create balls
   if (strict != 1 && strict != 2)
-    zz = mol_dbatom(symb,LOG);
+    if (strcmp(symb,".+"))
+      zz = -1;
+    else
+      zz = mol_dbatom(symb,LOG);
+    endif
   endif
+  [rep itex] = rep_registertexture(rep,tex);
   for i = 1:nat
     if (strict == 2)
       doit = strcmp(mol.atname{i},symb);
     elseif (strict == 1)
       doit = regexp(mol.atname{i},symb);
     else
-      doit = (zz == mol.atnumber(i));
+      doit = (zz < 0) || (zz == mol.atnumber(i));
     endif
     if (doit) 
       n = rep.nball = rep.nball+1;
-      rep.ball{n} = struct();
+      rep.ball{n} = ball();
       rep.ball{n}.x = mol.atxyz(:,i)';
       rep.ball{n}.name = mol.atname{i};
       [dum, atom] = mol_dbsymbol(mol.atnumber(i),LOG);
@@ -89,7 +88,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=1, radius=-0.5, rgb=[-1
       else
         rep.ball{n}.rgb = [atom.color 0 0];
       endif
-      rep.ball{n}.tex = tex;
+      rep.ball{n}.tex = itex;
     endif
   endfor
 

@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
-% function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
+function [mol] = mol_readxyz (filename, LOG=0)
+% function [mol] = mol_readxyz (filename, LOG=0)
 %
 % mol_readxyz - read in the data of a molecule from a xyz file. Several
 %               similar xyz formats are supported.
@@ -20,12 +20,6 @@ function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
 % filename: name of the data file.
 %
 % Optional input variables (all have default values):
-% {mode = "axyz"}: Several xyz formats are used by different programs.
-%       This routine is designed to use a format by default but
-%       try to guess the correct format. Available possibilities are:
-%       "axyz" ----> atomic symbol + (x,y,z) coordinates    
-%       "nxyz" ----> atomic number + (x,y,z) coordinates    
-%       "anxyz" ---> atomic symbol + atomic number + (x,y,z) coordinates    
 % {LOG = 1}: print information about the data read in if LOG>0.
 %            LOG = 0  no output.
 %            LOG = 1  number of points read in, volume and energy range.
@@ -64,10 +58,7 @@ function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
   endif
 
   natoms = 0;
-  mol.name = 'unknown';
-  mol.atname = {};
-  mol.atnumber = [];
-  mol.atxyz = [];
+  mol = molecule();
 
   ## Read in data file:
   columns = "axyz";
@@ -115,7 +106,7 @@ function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
           continue
        elseif (count==4)
           xyz = cellfun('str2num',g(2:4));
-          if (!ischar(g{1}))
+          if (!isempty(str2num(g{1})))
              columns = "nxyz";
              atnumber = str2num(g{1});
              [atsymbol,atprop] = mol_dbsymbol(atnumber);
@@ -147,13 +138,13 @@ function [mol] = mol_readxyz (filename, mode='axyz', LOG=0)
        mol.atname{natoms} = atsymbol;
        mol.atnumber(natoms) = atnumber;
        mol.atmass(natoms) = atprop.mass;
-       %%%mol.atxyz{natoms} = xyz';
        mol.atxyz(1:3,natoms) = xyz';
     else
        error("mol_readxyz: unknown order of data columns!");
     endif
     nl++;
   endwhile
+  mol.nat = natoms;
   fclose(fid);
 
   if (LOG>0)
