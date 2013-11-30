@@ -31,6 +31,8 @@
 Daniel
 --------
 * keyboard vtk window interaction (POVExport, PNG, camera position, ...)
+    s key : to solid
+    w key : to wireframe
 * NCIPlots(colourediso), critical points(polyhedra), ORTEP(ellipsoid),
     popplot
 * surface espresso input generation

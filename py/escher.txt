@@ -1,0 +1,49 @@
+Instalation in Fedora 19
+===========================
+
+- Install gcc make automake
+    sudo yum install make automake gcc gcc-c++
+- Install cmake-2.8.12.1 or >=2.8
+    sudo yum install cmake
+    #./bootstrap
+    #  make
+- Install git
+    sudo yum install git
+- Download VTK
+    git clone git://vtk.org/VTK.git
+    cd VTK
+    I'm sure release candidate 3 works. I cannot assure others
+    will work. It must be v6 at least.
+    git checkout v6.0.0.rc3
+- Install dependencies of VTK
+    sudo yum install freeglut freeglut-devel
+    sudo yum install libXt-devel
+    sudo yum install python-devel
+- Install VTK
+    ccmake .
+    Type c to configure
+    Turn ON BUILD_SHARED_LIBS
+    It is advisable that you change 
+    CMAKE_INSTALL_PREFIX to a folder in your $HOME
+    Turn ON VTK_WRAP_PYTHON
+    Type c to configure
+    Again to be sure:
+    Type c to configure
+    Type g to generate configuration file
+    make
+    make install
+    echo 'export PYTHONPATH=$PYTHONPATH:/path/to/VTK/Wrapping/Python/vtk' >> $HOME/.bashrc
+    echo 'export LD_LIBARY_PATH=$LD_LIBARY_PATH:/path/to/prefix/lib/' >> $HOME/.bashrc
+
+check if it works:
+python -c 'import vtk'
+
+- Install numpy
+    sudo yum install numpy
+
+Define
+    echo 'export ESCHER_data=/path/to/escher_data/' >> $HOME/.bashrc
+
+Go to $ESCHER_HOME/py and run
+
+python try.py

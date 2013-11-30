@@ -10,7 +10,6 @@
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 # more details.
 
-#from math import cos, sin, pi, sqrt, acos, degrees
 from math import sqrt, acos, degrees
 import vtk
 import numpy as np
@@ -33,10 +32,7 @@ class Representation():
         self.name = ""
 
         self.nball = 0
-        #self.ball = []
-
         self.nstick = 0
-        #self.stick = []
 
         self.ntriangle = 0
         self.nvertex = 0
@@ -177,7 +173,133 @@ class Representation():
         #png.SetFileName('img.png')
         #png.Write()
     
-    def gridvolume(self, orig, delta, dims, scalars):
+    def imagedata(self, orig, delta, dims):
+
+        log.debug('Scalar grid volume data')
+        # construct the volume
+        grid = vtk.vtkImageData()
+        grid.SetOrigin(orig) 
+        grid.SetSpacing(delta)
+        grid.SetDimensions(dims) # number of points in each direction
+
+        self.grid = grid
+
+    def array(self, dims, scalars, name):
+
+        log.debug('vtkDoubleArray creation')
+        array = vtk.vtkDoubleArray()
+        array.SetNumberOfComponents(1) # this is 3 for a vector
+        array.SetNumberOfTuples(self.grid.GetNumberOfPoints())
+
+        nd = 0
+        for k in range(dims[2]):
+            for j in range(dims[1]):
+                for i in range(dims[0]):
+                    array.SetValue(nd, scalars[i,j,k])
+                    nd = nd + 1
+
+        array.SetName(name)
+
+        return array
+
+    def outline(self):
+
+        bounds = vtk.vtkOutlineFilter()
+        bounds.SetInputData(self.grid)
+
+        boundsMapper = vtk.vtkPolyDataMapper()
+        boundsMapper.SetInputConnection(bounds.GetOutputPort())
+
+        boundsActor = vtk.vtkActor()
+        boundsActor.SetMapper(boundsMapper)
+        boundsActor.GetProperty().SetColor(0, 0, 0)
+        self.ren.AddActor(boundsActor)
+
+    def lookuptable(self):
+
+        #lutNCI = vtk.vtkLookupTable()
+        #lutNCI.SetNumberOfColors(3)
+        #lutNCI.SetHueRange(0.667, 0.0)
+        #lutNCI.SetSaturationRange(1.0, 1.0)
+        #lutNCI.SetValueRange(0.8, 0.8)
+        #lutNCI.Build()
+
+        # color palette
+        # -3.0 -> blue
+        #  0.1 -> green
+        #  3.0 -> red
+        colorNCI = vtk.vtkColorTransferFunction()
+        colorNCI.AddRGBPoint(-3.0,0.0,0.0,1.0)
+        colorNCI.AddRGBPoint(0.1,0.0,1.0,0.0)
+        colorNCI.AddRGBPoint(3.0,1.0,0.0,0.0)
+        self.colorNCI = colorNCI
+
+    def scalarbar(self):
+
+        scalarBar = vtk.vtkScalarBarActor()
+        scalarBar.SetLookupTable(self.mapper.GetLookupTable())
+        scalarBar.SetTitle("sign(lambda_2)rho")
+        scalarBar.SetOrientationToHorizontal()
+        scalarBar.GetLabelTextProperty().SetColor(0,0,1)
+        scalarBar.GetTitleTextProperty().SetColor(0,0,1)
+        # position it in window
+        coord = scalarBar.GetPositionCoordinate()
+        coord.SetCoordinateSystemToNormalizedViewport()
+        coord.SetValue(0.1,0.05)
+        scalarBar.SetWidth(.8)
+        scalarBar.SetHeight(.085)
+
+        self.ren.AddActor(scalarBar)
+
+
+    def marchingcubes(self, isovalue):
+
+        log.debug('Marching Cubes algorithm contour filter')
+        # ContourFilter or MarchingCubes
+        #isoExtractor = vtk.vtkContourFilter()
+        isoExtractor = vtk.vtkMarchingCubes()
+        isoExtractor.SetInputData(self.grid)
+        # isosurface id and value
+        isoExtractor.SetValue(0, isovalue)
+        #isoExtractor.GenerateValues(4, isovalue-0.05, isovalue+0.05)
+        isoExtractor.ComputeGradientsOn()
+
+        isoNormals = vtk.vtkPolyDataNormals()
+        isoNormals.SetInputConnection(isoExtractor.GetOutputPort())
+        isoNormals.SetFeatureAngle(35.0)
+        isoNormals.ConsistencyOn()
+        isoNormals.SplittingOn()
+
+        isoStripper = vtk.vtkStripper()
+        isoStripper.SetInputConnection(isoNormals.GetOutputPort())
+
+        isoLocator = vtk.vtkCellLocator()
+        isoLocator.SetDataSet(isoExtractor.GetOutput())
+        isoLocator.LazyEvaluationOn()
+
+        isoMapper = vtk.vtkPolyDataMapper()
+        isoMapper.SetInputConnection(isoStripper.GetOutputPort())
+        isoMapper.ScalarVisibilityOn()
+        self.mapper = isoMapper
+        #isoMapper.InterpolateScalarsBeforeMappingOn()
+        #isoMapper.SetScalarModeToUsePointData()
+        #isoMapper.ColorByArrayComponent('dens', 0) # doesn't work
+        #isoMapper.GetArrayName('dens') # doesn't work
+
+        isoProperty = vtk.vtkProperty()
+        isoProperty.SetColor(0.2,1,0.2) # ~green
+        #isoProperty.SetInterpolationToPhong()
+
+        iso = vtk.vtkActor()
+        iso.SetMapper(isoMapper)
+        iso.SetProperty(isoProperty)
+        #iso.GetProperty().SetRepresentationToWireframe()
+        #iso.GetProperty().SetOpacity(.6)
+
+        #self.ren.AddViewProp(iso)
+        self.ren.AddActor(iso)
+
+    def _gridvolume(self, orig, delta, dims, scalars):
 
         log.debug('Scalar grid volume data')
         # construct the volume
@@ -226,7 +348,7 @@ class Representation():
 #        array2.SetName("dens")
 #        self.grid.GetPointData().SetScalars(array2)
 
-    def volumescalar(self, dims, scalars):
+    def _volumescalar(self, dims, scalars):
 
         array = vtk.vtkDoubleArray()
         array.SetNumberOfComponents(1) # this is 3 for a vector
@@ -242,83 +364,6 @@ class Representation():
         array.SetName("dens")
         self.array = array
         self.grid.GetPointData().AddArray(array)
-
-    def marchingcubes(self, isovalue):
-
-        log.debug('Marching Cubes algorithm contour filter')
-        # ContourFilter or MarchingCubes
-        #isoExtractor = vtk.vtkContourFilter()
-        isoExtractor = vtk.vtkMarchingCubes()
-        isoExtractor.SetInputData(self.grid)
-        # isosurface id and value
-        isoExtractor.SetValue(0, isovalue)
-        #isoExtractor.GenerateValues(4, isovalue-0.05, isovalue+0.05)
-        isoExtractor.ComputeGradientsOn()
-
-        isoNormals = vtk.vtkPolyDataNormals()
-        isoNormals.SetInputConnection(isoExtractor.GetOutputPort())
-        isoNormals.SetFeatureAngle(35.0)
-        isoNormals.ConsistencyOn()
-        isoNormals.SplittingOn()
-
-        isoStripper = vtk.vtkStripper()
-        isoStripper.SetInputConnection(isoNormals.GetOutputPort())
-
-        isoLocator = vtk.vtkCellLocator()
-        isoLocator.SetDataSet(isoExtractor.GetOutput())
-        isoLocator.LazyEvaluationOn()
-
-        #lutNCI = vtk.vtkLookupTable()
-        #lutNCI.SetNumberOfColors(3)
-        #lutNCI.SetHueRange(0.667, 0.0)
-        #lutNCI.SetSaturationRange(1.0, 1.0)
-        #lutNCI.SetValueRange(0.8, 0.8)
-        #lutNCI.Build()
-
-        colorNCI = vtk.vtkColorTransferFunction()
-        colorNCI.AddRGBPoint(-3.0,0.0,0.0,1.0)
-        colorNCI.AddRGBPoint(0.1,0.0,1.0,0.0)
-        colorNCI.AddRGBPoint(3.0,1.0,0.0,0.0)
-
-        isoMapper = vtk.vtkPolyDataMapper()
-        isoMapper.SetInputConnection(isoStripper.GetOutputPort())
-        isoMapper.ScalarVisibilityOn()
-        #isoMapper.SetLookupTable(lutNCI)
-        isoMapper.SetLookupTable(colorNCI)
-        isoMapper.SetScalarModeToUsePointFieldData()
-        isoMapper.SelectColorArray(1)
-        isoMapper.SetScalarRange(-5.0, 5.0)
-        #isoMapper.InterpolateScalarsBeforeMappingOn()
-        #isoMapper.SetScalarModeToUsePointData()
-        #isoMapper.ColorByArrayComponent('dens', 0) # doesn't work
-        #isoMapper.GetArrayName('dens') # doesn't work
-
-        scalarBar = vtk.vtkScalarBarActor()
-        scalarBar.SetLookupTable(isoMapper.GetLookupTable())
-        scalarBar.SetTitle("sign(lambda_2)rho")
-        scalarBar.SetOrientationToHorizontal()
-        scalarBar.GetLabelTextProperty().SetColor(0,0,1)
-        scalarBar.GetTitleTextProperty().SetColor(0,0,1)
-        # position it in window
-        coord = scalarBar.GetPositionCoordinate()
-        coord.SetCoordinateSystemToNormalizedViewport()
-        coord.SetValue(0.1,0.05)
-        scalarBar.SetWidth(.8)
-        scalarBar.SetHeight(.085)
-
-        #isoProperty = vtk.vtkProperty()
-        #isoProperty.SetColor(0.2,1,0.2) # ~green
-        #isoProperty.SetInterpolationToPhong()
-
-        iso = vtk.vtkActor()
-        iso.SetMapper(isoMapper)
-        #iso.SetProperty(isoProperty)
-        #iso.GetProperty().SetRepresentationToWireframe()
-        #iso.GetProperty().SetOpacity(.6)
-
-        #self.ren.AddViewProp(iso)
-        self.ren.AddActor(iso)
-        self.ren.AddActor(scalarBar)
 
 
 
