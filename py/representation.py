@@ -16,6 +16,7 @@ import numpy as np
 from logging import getLogger
 log = getLogger('escherlog')
 
+
 class Representation():
 
     '''
@@ -131,11 +132,16 @@ class Representation():
         # create a rendering window and renderer
         ren = vtk.vtkRenderer()
         # camera (optional)
+        global camera
         camera = vtk.vtkCamera()
         camera.SetPosition(15,0,0)
         camera.SetFocalPoint(0,0,0)
         camera.ParallelProjectionOn()
         ren.SetActiveCamera(camera)
+        log.info('Initial camera orientation: {}'.format(camera.GetOrientation()))
+        log.info('Initial camera orientation: {}'.format(camera.GetOrientationWXYZ()))
+        log.info('Initial camera position: {}'.format(camera.GetPosition()))
+        log.info('Initial camera focal point: {}'.format(camera.GetFocalPoint()))
 #        ren.ResetCamera()
 #        ren.GetActiveCamera().Azimuth(30)
 #        ren.GetActiveCamera().Elevation(20)
@@ -143,13 +149,20 @@ class Representation():
 #        ren.ResetCameraClippingRange()
         ren.SetBackground(1,1,1)
 
+        global renWin
         renWin = vtk.vtkRenderWindow()
         renWin.AddRenderer(ren)
         renWin.SetSize(1700,1200)
         renWin.StereoCapableWindowOn()
-        self.renWin = renWin
+        #self.renWin = renWin
 
         iren = vtk.vtkRenderWindowInteractor()
+        iren.SetInteractorStyle(vtk.vtkInteractorStyleTrackballCamera())
+        iren.RemoveObservers('MiddleButtonPressEvent')
+        iren.AddObserver("MiddleButtonPressEvent",self.exporter)
+        #iren.RemoveObservers('LeftButtonPressEvent')
+        #iren.AddObserver('LeftButtonPressEvent', DummyFunc1, 1.0)
+        #iren.AddObserver('LeftButtonPressEvent', DummyFunc2, -1.0)
         iren.SetRenderWindow(renWin)
         self.ren = ren
         self.iren = iren
@@ -160,10 +173,25 @@ class Representation():
         self.iren.Initialize()
         self.iren.Start()
 
-        pov = vtk.vtkPOVExporter()
-        pov.SetRenderWindow(self.renWin)
-        pov.SetFileName('out.pov')
-        pov.Write()
+#        pov = vtk.vtkPOVExporter()
+#        pov.SetRenderWindow(renWin)
+#        pov.SetFileName('out.pov')
+#        pov.Write()
+#
+#        obj = vtk.vtkOBJExporter()
+#        obj.SetInput(renWin)
+#        obj.SetFilePrefix('out')
+#        obj.Write()
+#
+#        vrml = vtk.vtkVRMLExporter()
+#        vrml.SetRenderWindow(renWin)
+#        vrml.SetFileName('out.wrl')
+#        vrml.Write()
+#
+#        oogl = vtk.vtkOOGLExporter()
+#        oogl.SetRenderWindow(renWin)
+#        oogl.SetFileName('out.oogl')
+#        oogl.Write()
 
         ## image
         #wif = vtk.vtkWindowToImageFilter()
@@ -365,5 +393,43 @@ class Representation():
         self.array = array
         self.grid.GetPointData().AddArray(array)
 
+    @staticmethod
+    def exporter(obj, ev):
+        log.debug("Middle Button pressed")
 
+        log.info('Current camera orientation: {}'.format(camera.GetOrientation()))
+        log.info('Current camera orientation: {}'.format(camera.GetOrientationWXYZ()))
+        log.info('Current camera position: {}'.format(camera.GetPosition()))
+        log.info('Current camera focal point: {}'.format(camera.GetFocalPoint()))
+
+        log.debug('Exporting current structure to POVRay, OBJ, VRML 2.0, OOGL.')
+
+        # POVRay output 
+        pov = vtk.vtkPOVExporter()
+        pov.SetRenderWindow(renWin)
+        pov.SetFileName('out.pov')
+        pov.Write()
+
+        # OBJ wavefront output 
+        # main file: <prefix>.obj 
+        # textures:  <prefix>.mtl
+        obj = vtk.vtkOBJExporter()
+        obj.SetInput(renWin)
+        obj.SetFilePrefix('out')
+        obj.Write()
+
+        # VRML 2.0 output
+        # It can be imported with Blender
+        vrml = vtk.vtkVRMLExporter()
+        vrml.SetRenderWindow(renWin)
+        vrml.SetFileName('out.wrl')
+        vrml.Write()
+
+        # Geomview OOGL ouput
+        oogl = vtk.vtkOOGLExporter()
+        oogl.SetRenderWindow(renWin)
+        oogl.SetFileName('out.oogl')
+        oogl.Write()
+
+        return
 

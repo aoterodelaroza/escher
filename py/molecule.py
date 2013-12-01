@@ -79,7 +79,7 @@ class Molecule():
         with open(filename, 'r') as file:
             text = file.read()
 
-        lines = [line for line in text.splitlines() if line]
+        lines = [line for line in text.splitlines()]
         lines = map(lambda s: s.strip(), lines)
         return lines
 

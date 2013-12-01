@@ -16,6 +16,8 @@ tools/
 *.gnu
 *.mtl
 *.pov
+*.wrl
+*.oogl
 
 chem-2.0
 
