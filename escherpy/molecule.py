@@ -13,19 +13,16 @@
 #from __future__ import print_function, division
 from math import sqrt
 import shlex as lex
-from ConfigParser import SafeConfigParser
+from logging import getLogger
 import numpy as np
 from chem import elements 
-import logcolors
 from representation import Representation
 from grid import Grid
 
-parser = SafeConfigParser()
-parser.read('escher.ini')
+log = getLogger('escherlog')
 
-print parser.get('molecule', 'structfile')
 
-log = logcolors.escherlog()
+#log = logcolors.escherlog()
 #log.setLevel(log.DEBUG)
 
 class Molecule():
@@ -375,8 +372,9 @@ class Molecule():
 
                 
 if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
+    pass
+    #import doctest
+    #doctest.testmod()
                     
 
 

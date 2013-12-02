@@ -16,6 +16,27 @@ import numpy as np
 from logging import getLogger
 log = getLogger('escherlog')
 
+vtkversion = vtk.vtkVersion().GetVTKSourceVersion().split()[-1]
+vtkversion = int(vtkversion.split(".")[0])
+vtk6 = (vtkversion == 6)
+
+blenderinput = \
+'''
+import os
+import bpy
+
+bpy.data.objects['Cube'].select = True
+bpy.ops.object.delete()
+bpy.data.objects['Camera'].select = True
+bpy.ops.object.delete()
+
+bpy.ops.import_scene.x3d(filepath=os.getcwd() + "/out.wrl")
+
+cam = bpy.data.cameras.get('Viewpoint')
+cam.type = 'ORTHO'
+cam.ortho_scale = 20.
+'''
+
 
 class Representation():
 
@@ -140,6 +161,7 @@ class Representation():
         ren.SetActiveCamera(camera)
         log.info('Initial camera orientation: {}'.format(camera.GetOrientation()))
         log.info('Initial camera orientation: {}'.format(camera.GetOrientationWXYZ()))
+        log.info('Initial camera-focus distance: {}'.format(camera.GetDistance()))
         log.info('Initial camera position: {}'.format(camera.GetPosition()))
         log.info('Initial camera focal point: {}'.format(camera.GetFocalPoint()))
 #        ren.ResetCamera()
@@ -399,6 +421,7 @@ class Representation():
 
         log.info('Current camera orientation: {}'.format(camera.GetOrientation()))
         log.info('Current camera orientation: {}'.format(camera.GetOrientationWXYZ()))
+        log.info('Current camera-focus distance: {}'.format(camera.GetDistance()))
         log.info('Current camera position: {}'.format(camera.GetPosition()))
         log.info('Current camera focal point: {}'.format(camera.GetFocalPoint()))
 
@@ -410,9 +433,10 @@ class Representation():
         pov.SetFileName('out.pov')
         pov.Write()
 
-        # OBJ wavefront output 
+        # OBJ Wavefront output 
         # main file: <prefix>.obj 
         # textures:  <prefix>.mtl
+        # It can be imported with g3dviewer
         obj = vtk.vtkOBJExporter()
         obj.SetInput(renWin)
         obj.SetFilePrefix('out')
@@ -430,6 +454,13 @@ class Representation():
         oogl.SetRenderWindow(renWin)
         oogl.SetFileName('out.oogl')
         oogl.Write()
+
+        log.debug('Generating Blender script.')
+
+        # Blender script to view VRML file
+        # Runnable with blender -P blender.py
+        blenderf = open('blender.py', 'w')
+        blenderf.write(blenderinput)
 
         return
 

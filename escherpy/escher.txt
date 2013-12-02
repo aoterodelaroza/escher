@@ -1,5 +1,7 @@
 Instalation in Fedora 19
 ===========================
+Installation instructions to run the 'escherpy' module.
+More or less the same with other distributions.
 
 - Install gcc make automake
     sudo yum install make automake gcc gcc-c++
@@ -41,9 +43,12 @@ python -c 'import vtk'
 - Install numpy
     sudo yum install numpy
 
-Define
+Define:
     echo 'export ESCHER_data=/path/to/escher_data/' >> $HOME/.bashrc
+    echo 'export PYTHONPATH=$PYTHONPATH:/path/to/escher/' >> $HOME/.bashrc
 
-Go to $ESCHER_HOME/py and run
+Go to $ESCHER_HOME/test and run any testme.py:
 
-python try.py
+    ./testme.py
+
+
