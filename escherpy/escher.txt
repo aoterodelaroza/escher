@@ -51,4 +51,8 @@ Go to $ESCHER_HOME/test and run any testme.py:
 
     ./testme.py
 
+After that several  3D files will appear and a Blender script
+to visualize the VRML file. It can be run with:
+    blender -P vrml.bpy
+
 

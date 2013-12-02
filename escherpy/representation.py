@@ -20,6 +20,7 @@ vtkversion = vtk.vtkVersion().GetVTKSourceVersion().split()[-1]
 vtkversion = int(vtkversion.split(".")[0])
 vtk6 = (vtkversion == 6)
 
+
 blenderinput = \
 '''
 import os
@@ -36,7 +37,6 @@ cam = bpy.data.cameras.get('Viewpoint')
 cam.type = 'ORTHO'
 cam.ortho_scale = 20.
 '''
-
 
 class Representation():
 
@@ -65,6 +65,7 @@ class Representation():
         self.nlight = 0
         self.light = []
         self.bgcolor = np.zeros([1,3])
+
     
     @staticmethod
     def ball(radius, position, color):
@@ -114,7 +115,7 @@ class Representation():
         source.SetResolution(60)
         source.SetCenter(0,0,0)
          
-        # create a transform that rotates the cone
+        # create a transform that rotates the bond cylinder
         transform = vtk.vtkTransform()
         # translate axes to the center of bond
         transform.Translate(center)
@@ -125,23 +126,23 @@ class Representation():
         transformFilter.SetInputConnection(source.GetOutputPort())
         transformFilter.Update()
          
-        # mapper for original cone
-        coneMapper1 = vtk.vtkPolyDataMapper()
-        coneMapper1.SetInputConnection(source.GetOutputPort())
+        # mapper for original cylinder
+        cylinMapper1 = vtk.vtkPolyDataMapper()
+        cylinMapper1.SetInputConnection(source.GetOutputPort())
          
-        # another mapper for the rotated cone
-        coneMapper2 = vtk.vtkPolyDataMapper()
-        coneMapper2.SetInputConnection(transformFilter.GetOutputPort())
+        # another mapper for the rotated cylinder
+        cylinMapper2 = vtk.vtkPolyDataMapper()
+        cylinMapper2.SetInputConnection(transformFilter.GetOutputPort())
          
-        # actor for original cone
-        actor1 = vtk.vtkActor()
-        actor1.SetMapper(coneMapper1)
+        # actor for original cylinder
+        #actor1 = vtk.vtkActor()
+        #actor1.SetMapper(cylinMapper1)
          
-        # actor for rotated cone
+        # actor for rotated cylinder
         actor2 = vtk.vtkActor()
-        actor2.SetMapper(coneMapper2)
+        actor2.SetMapper(cylinMapper2)
          
-        actor1.GetProperty().SetColor(1,0,0) # (R,G,B)
+        #actor1.GetProperty().SetColor(1,0,0) # (R,G,B)
         actor2.GetProperty().SetColor(1,1,1) # (R,G,B)
 
         #return actor1, actor2
@@ -182,9 +183,6 @@ class Representation():
         iren.SetInteractorStyle(vtk.vtkInteractorStyleTrackballCamera())
         iren.RemoveObservers('MiddleButtonPressEvent')
         iren.AddObserver("MiddleButtonPressEvent",self.exporter)
-        #iren.RemoveObservers('LeftButtonPressEvent')
-        #iren.AddObserver('LeftButtonPressEvent', DummyFunc1, 1.0)
-        #iren.AddObserver('LeftButtonPressEvent', DummyFunc2, -1.0)
         iren.SetRenderWindow(renWin)
         self.ren = ren
         self.iren = iren
@@ -195,25 +193,6 @@ class Representation():
         self.iren.Initialize()
         self.iren.Start()
 
-#        pov = vtk.vtkPOVExporter()
-#        pov.SetRenderWindow(renWin)
-#        pov.SetFileName('out.pov')
-#        pov.Write()
-#
-#        obj = vtk.vtkOBJExporter()
-#        obj.SetInput(renWin)
-#        obj.SetFilePrefix('out')
-#        obj.Write()
-#
-#        vrml = vtk.vtkVRMLExporter()
-#        vrml.SetRenderWindow(renWin)
-#        vrml.SetFileName('out.wrl')
-#        vrml.Write()
-#
-#        oogl = vtk.vtkOOGLExporter()
-#        oogl.SetRenderWindow(renWin)
-#        oogl.SetFileName('out.oogl')
-#        oogl.Write()
 
         ## image
         #wif = vtk.vtkWindowToImageFilter()
@@ -459,7 +438,7 @@ class Representation():
 
         # Blender script to view VRML file
         # Runnable with blender -P blender.py
-        blenderf = open('blender.py', 'w')
+        blenderf = open('vrml.bpy', 'w')
         blenderf.write(blenderinput)
 
         return

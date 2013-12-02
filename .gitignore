@@ -18,7 +18,7 @@ tools/
 *.pov
 *.wrl
 *.oogl
-blender.py
+*.bpy
 
 chem-2.0
 
@@ -63,3 +63,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+###################
+Vim files
+###################
+
+*.swp
+
