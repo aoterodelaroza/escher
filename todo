@@ -52,15 +52,15 @@
 
 Daniel
 --------
-* keyboard vtk window interaction (POVExport, PNG, camera position, ...)
+* DONE keyboard vtk window interaction (POVExport, PNG, camera position, ...)
     s key : to solid
     w key : to wireframe
-* NCIPlots(colourediso), critical points(polyhedra), ORTEP(ellipsoid),
-    popplot
-* surface espresso input generation
-* mol_readxyz.m --> .py
+* DONE NCIPlots(colourediso)
+* critical points(polyhedra) from multiwfn, ORTEP(ellipsoid), popplot (read .basin)
+* surface input generation for quantum espresso
+* DONE (partially) mol_readxyz.m --> .py
 * set camera parameters for any input data
-* dictionary of atom colors and radius
+* DONE dictionary of atom colors and covalent radii
 * bond colors and double, triple bonds
 * radial distribution function g(r)
-* use debug variable ESCHER_DEBUG='ON'
+* DONE use debug variable ESCHER_DEBUG='ON'

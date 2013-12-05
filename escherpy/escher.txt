@@ -44,14 +44,16 @@ python -c 'import vtk'
     sudo yum install numpy
 
 Define:
-    echo 'export ESCHER_data=/path/to/escher_data/' >> $HOME/.bashrc
+    echo 'export ESCHER_DATA=/path/to/escher_data/' >> $HOME/.bashrc
     echo 'export PYTHONPATH=$PYTHONPATH:/path/to/escher/' >> $HOME/.bashrc
+Optionally you can let the log write detailed info about the run:
+    echo 'export ESCHER_DEBUG="ON"' >> $HOME/.bashrc
 
 Go to $ESCHER_HOME/test and run any testme.py:
 
     ./testme.py
 
-After that several  3D files will appear and a Blender script
+After that, several 3D files will appear and a Blender script
 to visualize the VRML file. It can be run with:
     blender -P vrml.bpy
 

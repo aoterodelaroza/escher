@@ -68,7 +68,7 @@ class Representation():
 
     
     @staticmethod
-    def ball(radius, position, color):
+    def ball(radius, position, color): #, name):
         '''
         Make a sphere of a certain radius, position
         and color. This will represent an atom.
@@ -87,6 +87,21 @@ class Representation():
         sphereActor = vtk.vtkActor()
         sphereActor.SetMapper(sphereMapper)
         (sphereActor.GetProperty()).SetColor(color)
+
+        ## Add atomic name label
+        #atext = vtk.vtkVectorText()
+        #atext.SetText(name)
+        #textMapper = vtk.vtkPolyDataMapper()
+        #textMapper.SetInputConnection(atext.GetOutputPort())
+        #textActor = vtk.vtkFollower()
+        #textActor.SetMapper(textMapper)
+        #textActor.SetScale(0.8, 0.8, 0.8)
+        ##postxt = position
+        ##postxt[1] = position[1] - radius
+        #textActor.AddPosition(position)
+        #textActor.GetProperty().SetColor(0,0,0) # (R,G,B)
+        #return sphereActor, textActor
+
         return sphereActor
 
     @staticmethod
@@ -327,6 +342,34 @@ class Representation():
 
         #self.ren.AddViewProp(iso)
         self.ren.AddActor(iso)
+
+    def surface(self,nv, vxyz, color):
+        """
+        Construct a surface from a set of vertices
+        """
+
+        points = vtk.vtkPoints()
+        for i in range(0, nv):
+            points.InsertPoint(i, vxyz[i])
+        polydata = vtk.vtkPolyData()
+        polydata.SetPoints(points)
+
+        delny = vtk.vtkDelaunay3D()
+        delny.SetInputData(polydata)
+        delny.SetTolerance(0.01)
+        delny.SetAlpha(0.0)
+        delny.BoundingTriangulationOff()
+
+        surfmap = vtk.vtkDataSetMapper()
+        surfmap.SetInputConnection(delny.GetOutputPort())
+
+        triangulation = vtk.vtkActor()
+        triangulation.SetMapper(surfmap)
+        triangulation.GetProperty().SetColor(color)
+
+        self.ren.AddActor(triangulation)
+
+
 
     def _gridvolume(self, orig, delta, dims, scalars):
 

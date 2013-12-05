@@ -4,10 +4,15 @@ __all__ = ['molecule']
 import os
 #from ConfigParser import SafeConfigParser
 from molecule import Molecule
+import logging
 import logcolors
 
 log = logcolors.escherlog()
-#log.setLevel(log.DEBUG)
+if os.environ['ESCHER_DEBUG'] == 'ON':
+    log.setLevel(logging.DEBUG)
+else:
+    log.setLevel(logging.INFO)
+
 
 escher_data = os.environ['ESCHER_DATA']
 

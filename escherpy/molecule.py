@@ -71,6 +71,9 @@ class Molecule():
         self.rep = Representation()
         self.rep.window()
 
+        self.cptype = []
+        self.cpxyz = np.zeros(3)
+        self.vxyz = []
 
 
     def openf(self, filename):
@@ -90,6 +93,85 @@ class Molecule():
             self.readcube()
         if self.structfile.endswith('.xyz'):
             self.readxyz()
+
+    def readcps(self):
+
+        if self.cpsfile == 'CPprop.txt':
+            self.readmultiwfn()
+
+    def readsurf(self, atom):
+
+        if self.basinfile.endswith('.basin'):
+            self.readbasin(atom)
+
+    def readbasin(self, atname='H'):
+        """
+        Extracts interatomic surface (IAS)  
+        from a *.basin file
+        """
+        log.debug('Reading file {}'.format(self.basinfile))
+        lines = self.openf(self.basinfile)
+
+        for n,i in enumerate(lines):
+
+            if n==11:
+                # number of vertices
+                nv = int(lex.split(i)[0])
+                log.debug('Number of vertices being read: {}'.format(nv))
+                self.vxyz = np.zeros([nv,3])
+
+            elif n==14:
+                for j in range(nv):
+                    self.vxyz[j,:] = np.array( \
+                           [float(k) for k in lex.split(lines[n+j])[0:3]])
+                log.debug('Surface vertices coordinates: \n {}'.format(self.vxyz))
+
+        color = [ col/255. for col in colors[atname] ]
+        self.rep.surface(nv,self.vxyz, color)
+        #for i in range(nv):
+        #    sphereatom = self.rep.ball(0.05, self.vxyz[i], [1.,1.,1.])
+        #    self.rep.ren.AddActor(sphereatom)
+
+
+    def readmultiwfn(self):
+        """
+        Extracts CPs information 
+        from a multiwfn critical points file
+        """
+
+        log.debug('Reading file {}'.format(self.cpsfile))
+
+        lines = self.openf(self.cpsfile)
+        for n,i in enumerate(lines):
+
+            if i.startswith('======='): 
+
+                cptype = lex.split(i)[4]
+                if cptype == '(3,-3)':
+                    # nuclear critical point
+                    self.cptype = np.append(self.cptype, 'NCP')
+                if cptype == '(3,-1)':
+                    # bond critical point
+                    self.cptype = np.append(self.cptype, 'BCP')
+                if cptype == '(3,1)':
+                    # ring critical point
+                    self.cptype = np.append(self.ctypee, 'RCP')
+                if cptype == '(3,3)':
+                    # cage critical point
+                    self.cptype = np.append(self.cptype, 'CCP')
+
+
+            if i.startswith('Position'): 
+
+                cpx = float(lex.split(i)[-3])
+                cpy = float(lex.split(i)[-2])
+                cpz = float(lex.split(i)[-1])
+                self.cpxyz = np.vstack([self.cpxyz, [cpx,cpy,cpz]])
+
+        log.debug('Critical points type: \n {}'.format(self.cptype))
+        # Delete first row of the matrix, the one used to initialize
+        self.cpxyz = np.delete(self.cpxyz, 0, 0)
+        log.debug('Critical points coordinates: \n {}'.format(self.cpxyz))
 
     def readxyz(self):
         """
@@ -158,31 +240,46 @@ class Molecule():
         log.debug('Add stick/ball representation')
 
         for i in range(self.nat):
-            # instead use a dictionary
-            #if self.atname[i] == 'H':
-            #    color = [1,1,1]
-            #elif self.atname[i] == 'C':
-            #    color = [0.5,0.5,0.5]
-            #elif self.atname[i] == 'N':
-            #    color = [0,0,1,255]
-            #elif self.atname[i] == 'O':
-            #    color = [1,0,0]
-            #else:
-            #    color = [1.0,0.5,0.0]
-            color = [ col/255. for col in colors[self.atname[i]]]
+            color = [ col/255. for col in colors[self.atname[i]] ]
             radi = rcov[self.atname[i]]/200.
+            #sphereatom, spheretext = self.rep.ball(radi, self.atxyz[i], color,self.atname[i])
             sphereatom = self.rep.ball(radi, self.atxyz[i], color)
             self.rep.ren.AddActor(sphereatom)
+            #self.rep.ren.AddActor(spheretext)
+            #spheretext.SetCamera(self.rep.ren.GetActiveCamera())
 
         for i in range(self.nat):
             for j in range(i):
                 dist = sqrt((self.atxyz[i][0] - self.atxyz[j][0])**2 + 
                             (self.atxyz[i][1] - self.atxyz[j][1])**2 + 
                             (self.atxyz[i][2] - self.atxyz[j][2])**2)
-                if (dist) < ((rcov[self.atname[i]]+rcov[self.atname[j]])/60.) :
+                if (dist) < ((rcov[self.atname[i]]+rcov[self.atname[j]])/50.) :
                     stickbond = self.rep.stick(self.atxyz[i], 
                                                self.atxyz[j])
                     self.rep.ren.AddActor(stickbond)
+
+    def cpball(self):
+        log.debug('Add critical points ball representation')
+
+        for i in range(len(self.cpxyz)):
+            if self.cptype[i] == 'NCP':
+                color = [0.2,0.2,0.2]
+                radi = 0.0
+            if self.cptype[i] == 'BCP':
+                color = [0.1,0.95,0.1]
+                radi = 0.2
+            if self.cptype[i] == 'RCP':
+                color = [1,1,1]
+                radi = 0.1
+            if self.cptype[i] == 'CCP':
+                color = [1,1,1]
+                radi = 0.1
+
+            #sphereatom, spheretext = self.rep.ball(radi, self.atxyz[i], color,self.atname[i])
+            sphereatom = self.rep.ball(radi, self.cpxyz[i], color)
+            self.rep.ren.AddActor(sphereatom)
+            #self.rep.ren.AddActor(spheretext)
+            #spheretext.SetCamera(self.rep.ren.GetActiveCamera())
 
     def isosurface(self, filename):
 
@@ -222,9 +319,8 @@ class Molecule():
 
                 
 if __name__ == '__main__':
-    pass
-    #import doctest
-    #doctest.testmod()
+    import doctest
+    doctest.testmod()
                     
 
 
