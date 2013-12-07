@@ -6,45 +6,46 @@ v means variable (global)
 
 * Crystal
 
-|   | Variable         | Type     | Dim./Res. | Apropos                                         |
-|---+------------------+----------+-----------+-------------------------------------------------|
-| + | crystal          | fun      | cr        | Constructor                                     |
-| o | name             | string   |           | Name of the crystal                             |
-| x | a                | array    | 1x3       | Cell lengths (bohr)                             |
-| x | b                | array    | 1x3       | Cell angles (degrees)                           |
-| x | nat              | scalar   | integer   | Number of atoms in the unit cell                |
-| x | ntyp             | scalar   | integer   | Number of atomic species                        |
-| x | typ              | array    | 1xnat     | Atom type index (1..ntyp)                       |
-| x | x                | array    | natx3     | Atomic positions (cryst)                        |
-| x | attyp            | cell str | 1xntyp    | Symbols of atomic species                       |
-| x | ztyp             | array    | 1xntyp    | Atomic numbers of species                       |
-| x | r                | array    | 3x3       | Crys to car matrix (bohr)                       |
-| x | g                | array    | 3x3       | Metric tensor (bohr^2)                          |
-| x | omega            | scalar   | real      | Cell volume (bohr^3)                            |
-| o | rvdwtyp          | array    | 1xntyp    | Van der Waals radii (bohr, cr_vdwewald)         |
-| o | c6typ            | array    | ntypxntyp | C6 coefficients (au, cr_vdwewald)               |
-| o | zvaltyp          | array    | 1xntyp    | Valence atomic numbers                          |
-| o | qtyp             | array    | 1xntyp    | Atomic charges (cr_qewald, cr_xrd)              |
-| + | cr_read_espresso | fun      | cr        | create cr from QE output                        |
-| + | cr_read_vasp     | fun      | cr        | read cr from VASP POSCAR                        |
-| + | cr_write_tessel  | fun      | stdout    | write cr to a tessel input file                 |
-| + | cr_write_vasp    | fun      | stdout    | write cr to a POSCAR                            |
-| + | cr_write_cif     | fun      | stdout    | write cr to a cif file                          |
-| + | cr_write_critic2 | fun      | stdout    | write cr to a critic2 input file                |
-| + | cr_insertvacuum  | fun      | cr        | insert vacuum in one of the crystal directions  |
-| + | cr_moveorigin    | fun      | cr        | translate the origin of the unit cell           |
-| + | cr_newcell       | fun      | cr        | transform to a different unit cell              |
-| + | cr_molmotif      | fun      | mol,mask  | create mol by molecular completion in main cell |
-| + | cr_crystalbox    | fun      | mol,mask  | create mol by cutting a parallelepiped from cr  |
-| + | cr_spherebox     | fun      | mol       | create mol by cutting a sphere from cr          |
-| + | cr_applymask     | fun      | mol       | create mol by applying mask to a cr             |
-| + | cr_unitcell      | fun      | rep       | create rep for the unit cell using sticks       |
-| + | cr_c2x           | fun      | 1x3,3x1   | cartesian to crystallographic                   |
-| + | cr_x2c           | fun      | 1x3,3x1   | crystallographic to cartesian                   |
-| + | cr_popinfo       | fun      | stdout    | print info about the cr                         |
-| + | cr_qewald        | fun      | number    | calculate electrostatic energy by Ewald (qtyp)  |
-| + | cr_vdwewald      | fun      | number    | calculate vdw energy by Ewald                   |
-| + | cr_xrd           | fun      |           | calculate the powder x-ray diffraction pattern  |
+|   | Variable          | Type     | Dim./Res. | Apropos                                         |
+|---+-------------------+----------+-----------+-------------------------------------------------|
+| + | crystal           | fun      | cr        | Constructor                                     |
+| o | name              | string   |           | Name of the crystal                             |
+| x | a                 | array    | 1x3       | Cell lengths (bohr)                             |
+| x | b                 | array    | 1x3       | Cell angles (degrees)                           |
+| x | nat               | scalar   | integer   | Number of atoms in the unit cell                |
+| x | ntyp              | scalar   | integer   | Number of atomic species                        |
+| x | typ               | array    | 1xnat     | Atom type index (1..ntyp)                       |
+| x | x                 | array    | natx3     | Atomic positions (cryst)                        |
+| x | attyp             | cell str | 1xntyp    | Symbols of atomic species                       |
+| x | ztyp              | array    | 1xntyp    | Atomic numbers of species                       |
+| x | r                 | array    | 3x3       | Crys to car matrix (bohr)                       |
+| x | g                 | array    | 3x3       | Metric tensor (bohr^2)                          |
+| x | omega             | scalar   | real      | Cell volume (bohr^3)                            |
+| o | rvdwtyp           | array    | 1xntyp    | Van der Waals radii (bohr, cr_vdwewald)         |
+| o | c6typ             | array    | ntypxntyp | C6 coefficients (au, cr_vdwewald)               |
+| o | zvaltyp           | array    | 1xntyp    | Valence atomic numbers                          |
+| o | qtyp              | array    | 1xntyp    | Atomic charges (cr_qewald, cr_xrd)              |
+| + | cr_read_espresso  | fun      | cr        | create cr from QE output                        |
+| + | cr_read_vasp      | fun      | cr        | read cr from VASP POSCAR                        |
+| + | cr_write_tessel   | fun      | stdout    | write cr to a tessel input file                 |
+| + | cr_write_vasp     | fun      | stdout    | write cr to a POSCAR                            |
+| + | cr_write_cif      | fun      | stdout    | write cr to a cif file                          |
+| + | cr_write_critic2  | fun      | stdout    | write cr to a critic2 input file                |
+| + | cr_write_espresso | fun      | stdout    | write cr to a quantum espresso input file       |
+| + | cr_insertvacuum   | fun      | cr        | insert vacuum in one of the crystal directions  |
+| + | cr_moveorigin     | fun      | cr        | translate the origin of the unit cell           |
+| + | cr_newcell        | fun      | cr        | transform to a different unit cell              |
+| + | cr_molmotif       | fun      | mol,mask  | create mol by molecular completion in main cell |
+| + | cr_crystalbox     | fun      | mol,mask  | create mol by cutting a parallelepiped from cr  |
+| + | cr_spherebox      | fun      | mol       | create mol by cutting a sphere from cr          |
+| + | cr_applymask      | fun      | mol       | create mol by applying mask to a cr             |
+| + | cr_unitcell       | fun      | rep       | create rep for the unit cell using sticks       |
+| + | cr_c2x            | fun      | 1x3,3x1   | cartesian to crystallographic                   |
+| + | cr_x2c            | fun      | 1x3,3x1   | crystallographic to cartesian                   |
+| + | cr_popinfo        | fun      | stdout    | print info about the cr                         |
+| + | cr_qewald         | fun      | number    | calculate electrostatic energy by Ewald (qtyp)  |
+| + | cr_vdwewald       | fun      | number    | calculate vdw energy by Ewald                   |
+| + | cr_xrd            | fun      |           | calculate the powder x-ray diffraction pattern  |
 
 ** Crystal mask
 
@@ -284,7 +285,4 @@ v means variable (global)
 |   | atdb.rcov    | cell(number) | 104                   | Covalent radii                            |
 |   | atdb.mass    | cell(number) | 104                   | Atomic masses                             |
 |   | atdb.color   | cell(number) | 104*3                 | Default colors                            |
-
-TODO -- check that the tests still work.
-
 
