@@ -1,9 +1,10 @@
 
-__all__ = ['molecule']
+__all__ = ['molecule', 'crystal']
 
 import os
 #from ConfigParser import SafeConfigParser
 from molecule import Molecule
+from crystal import Crystal
 import logging
 import logcolors
 

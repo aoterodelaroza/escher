@@ -11,7 +11,7 @@
 # more details.
 
 #from __future__ import print_function, division
-from math import sqrt
+from math import sqrt, sin, cos, radians
 import shlex as lex
 from logging import getLogger
 import numpy as np
@@ -28,7 +28,7 @@ log = getLogger('escherlog')
 #log = logcolors.escherlog()
 #log.setLevel(log.DEBUG)
 
-class Molecule():
+class Molecule(object):
 
     '''
     molecule data structure
@@ -96,7 +96,7 @@ class Molecule():
 
     def readcps(self):
 
-        if self.cpsfile == 'CPprop.txt':
+        if self.cpsfile.endswith('CPprop.txt'):
             self.readmultiwfn()
 
     def readsurf(self, atom):
@@ -236,6 +236,60 @@ class Molecule():
                 log.debug('Atoms: \n {}'.format(self.atname))
                 log.debug('Atomic coordinates: \n {}'.format(self.atxyz))
 
+    def rot(self, *angles):
+        '''
+        Rotation in 3D 
+        angles = [alpha, beta, theta] in degrees
+        R_z(theta) * R_x(alpha) * R_y(beta) * xyz
+
+        '''
+
+        log.debug('Rotating around z axis: {} degrees.'.format(angles[2]))
+        log.debug('Rotating around x axis: {} degrees.'.format(angles[0]))
+        log.debug('Rotating around y axis: {} degrees.'.format(angles[1]))
+
+        c = [cos(radians(angle)) for angle in angles]
+        s = [sin(radians(angle)) for angle in angles]
+        rx = np.array([[1,0,0],[0, c[0], -s[0]], [0,s[0],c[0]]])
+        ry = np.array([[c[1],0,s[1]],[0, 1, 0], [-s[1],0,c[1]]])
+        rz = np.array([[c[2],-s[2],0],[s[2], c[2], 0], [0,0,1]])
+
+        for atom in range(len(self.atname)):
+            # First: rotate around z axis
+            self.atxyz[atom] = np.transpose(np.dot(rz,np.transpose(self.atxyz[atom])))
+            # Second: rotate around x axis
+            self.atxyz[atom] = np.transpose(np.dot(rx,np.transpose(self.atxyz[atom])))
+            # Third: rotate around y axis
+            self.atxyz[atom] = np.transpose(np.dot(ry,np.transpose(self.atxyz[atom])))
+
+    def rotx(self, angle):
+
+        c = cos(radians(angle))
+        s = sin(radians(angle))
+        rx = np.array([[1,0,0],[0, c, -s], [0,s,c]])
+
+        for atom in range(len(self.atname)):
+            self.atxyz[atom] = np.transpose(np.dot(rx,np.transpose(self.atxyz[atom])))
+
+    def roty(self, angle):
+
+        c = cos(radians(angle))
+        s = sin(radians(angle))
+        ry = np.array([[c,0,s],[0, 1, 0], [-s,0,c]])
+
+        for atom in range(len(self.atname)):
+            self.atxyz[atom] = np.transpose(np.dot(ry,np.transpose(self.atxyz[atom])))
+
+    def rotz(self, angle):
+
+        c = cos(radians(angle))
+        s = sin(radians(angle))
+        rz = np.array([[c,-s,0],[s, c, 0], [0,0,1]])
+
+        for atom in range(len(self.atname)):
+            self.atxyz[atom] = np.transpose(np.dot(rz,np.transpose(self.atxyz[atom])))
+
+
     def stickball(self):
         log.debug('Add stick/ball representation')
 
@@ -254,8 +308,7 @@ class Molecule():
                             (self.atxyz[i][1] - self.atxyz[j][1])**2 + 
                             (self.atxyz[i][2] - self.atxyz[j][2])**2)
                 if (dist) < ((rcov[self.atname[i]]+rcov[self.atname[j]])/50.) :
-                    stickbond = self.rep.stick(self.atxyz[i], 
-                                               self.atxyz[j])
+                    stickbond = self.rep.stick(self.atxyz[i], self.atxyz[j])
                     self.rep.ren.AddActor(stickbond)
 
     def cpball(self):
@@ -281,8 +334,9 @@ class Molecule():
             #self.rep.ren.AddActor(spheretext)
             #spheretext.SetCamera(self.rep.ren.GetActiveCamera())
 
-    def isosurface(self, filename):
+    def isosurface(self, filename, isovalue):
 
+        self.isovalue = isovalue
         grid = Grid()
 
         grid.readcube(filename)
@@ -293,12 +347,25 @@ class Molecule():
         gridarray = self.rep.array(grid.n, grid.f, 'scalars')
         self.rep.grid.GetPointData().SetScalars(gridarray)
         self.rep.marchingcubes(self.isovalue)
-        
-    def nciplot(self):
+
+    def nciplot(self, densfile, gradfile):
 
         self.isovalue = 0.5
-        self.rep.lookuptable()
-        self.isosurface(self.gradfile)
+        rangecolor=[-3.,3.]
+        colortable=[[0.,0.,1.],[0.,1.,0.],[1.,0.,0.]]
+
+        self.surfmap(densfile, gradfile, self.isovalue, rangecolor, colortable)
+        
+    def surfmap(self, densfile, gradfile, isovalue=0.5, 
+                rangecolor=[-3.,3.],
+                colortable=[[0.,0.,1.],[0.,1.,0.],[1.,0.,0.]]):
+
+
+        self.densfile = densfile
+        self.gradfile = gradfile
+        self.isovalue = isovalue
+        self.rep.lookuptable(rangecolor, colortable)
+        self.isosurface(self.gradfile, self.isovalue)
 
         dens = Grid()
         dens.readcube(self.densfile)
@@ -313,7 +380,7 @@ class Molecule():
         self.rep.scalarbar()
         
 
-    def start(self):
+    def show(self):
 
         self.rep.start()
 

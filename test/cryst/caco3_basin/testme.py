@@ -21,5 +21,5 @@ mol.readsurf('O')
 mol.readstruct()
 mol.stickball()
 #mol.nciplot()
-mol.start()
+mol.show()
 

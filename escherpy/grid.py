@@ -15,7 +15,7 @@ import shlex as lex
 import numpy as np
 log = getLogger('escherlog')
 
-class Grid():
+class Grid(object):
 
     '''
     function g = grid()

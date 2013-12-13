@@ -38,7 +38,7 @@ cam.type = 'ORTHO'
 cam.ortho_scale = 20.
 '''
 
-class Representation():
+class Representation(object):
 
     '''
     function rep = representation()
@@ -259,7 +259,7 @@ class Representation():
         boundsActor.GetProperty().SetColor(0, 0, 0)
         self.ren.AddActor(boundsActor)
 
-    def lookuptable(self):
+    def lookuptable(self, rangecolor, colortable):
 
         #lutNCI = vtk.vtkLookupTable()
         #lutNCI.SetNumberOfColors(3)
@@ -270,12 +270,14 @@ class Representation():
 
         # color palette
         # -3.0 -> blue
-        #  0.1 -> green
+        #  0.0 -> green
         #  3.0 -> red
         colorNCI = vtk.vtkColorTransferFunction()
-        colorNCI.AddRGBPoint(-3.0,0.0,0.0,1.0)
-        colorNCI.AddRGBPoint(0.1,0.0,1.0,0.0)
-        colorNCI.AddRGBPoint(3.0,1.0,0.0,0.0)
+        colorNCI.AddRGBPoint(rangecolor[0],*colortable[0])
+        colorNCI.AddRGBPoint(0.,*colortable[1])
+        colorNCI.AddRGBPoint(rangecolor[1],*colortable[2])
+        #colorNCI.AddRGBPoint(0.0,0.0,1.0,0.0)
+        #colorNCI.AddRGBPoint(rangecolor[1],1.0,0.0,0.0)
         self.colorNCI = colorNCI
 
     def scalarbar(self):

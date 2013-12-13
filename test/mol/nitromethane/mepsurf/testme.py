@@ -7,15 +7,16 @@
 import escherpy as esc
 
 
+
 mol = esc.Molecule()
 
 mol.structfile = esc.escher_data + 'mol/nitromethane/nitromethane.xyz'
+isovalue = -0.05
+mol.isosurface(esc.escher_data + 'mol/nitromethane/potential.cube', isovalue)
+
 mol.readstruct()
 mol.stickball()
-
-mol.cpsfile = esc.escher_data + 'mol/nitromethane/CPprop.txt'
-mol.readcps()
-mol.cpball()
-
+#mol.readcps()
+#mol.cpball()
+#mol.nciplot()
 mol.show()
-
