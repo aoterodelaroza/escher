@@ -39,7 +39,7 @@ class Grid(object):
         self.f = []
         self.omega = 0.0
 
-    def abrir(self, filename):
+    def openf(self, filename):
         """
         Opens a file and returns lines without whitespaces.
         """
@@ -59,7 +59,7 @@ class Grid(object):
         log.debug('Reading file {}'.format(filename))
 
         ## parsing is not done the clever way, it could be improved
-        lines = self.abrir(filename)
+        lines = self.openf(filename)
         for n,i in enumerate(lines):
             if n==0: # first line
                 self.name = i

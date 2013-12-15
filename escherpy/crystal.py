@@ -13,6 +13,7 @@
 from logging import getLogger
 import numpy as np
 from molecule import Molecule
+from grid import Grid
 
 log = getLogger('escherlog')
 
@@ -43,6 +44,8 @@ class Crystal(Molecule):
         self.x       = []
         self.cellparams   = np.zeros(6)
         self.omega   = NaN
+
+        self.grid = Grid()
 
         super(Crystal, self).__init__()
         # python 3.x

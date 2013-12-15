@@ -1,4 +1,6 @@
 
+# from escherpy import *
+# * means __all__ modules
 __all__ = ['molecule', 'crystal']
 
 import os
@@ -9,8 +11,12 @@ import logging
 import logcolors
 
 log = logcolors.escherlog()
-if os.environ['ESCHER_DEBUG'] == 'ON':
-    log.setLevel(logging.DEBUG)
+
+if os.environ['ESCHER_DEBUG']:
+    if os.environ['ESCHER_DEBUG'] == 'ON':
+        log.setLevel(logging.DEBUG)
+    elif os.environ['ESCHER_DEBUG'] == 'OFF':
+        log.setLevel(logging.INFO)
 else:
     log.setLevel(logging.INFO)
 

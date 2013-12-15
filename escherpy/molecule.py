@@ -25,13 +25,11 @@ from atom import rcov
 log = getLogger('escherlog')
 
 
-#log = logcolors.escherlog()
-#log.setLevel(log.DEBUG)
-
 class Molecule(object):
 
     '''
     molecule data structure
+
     >>> mol = Molecule()
     >>> mol.structfile = '../../escher_data/mol/ethylene_iso/c2h4.cube'
     >>> mol.readstruct()
@@ -88,6 +86,9 @@ class Molecule(object):
         return lines
 
     def readstruct(self):
+        '''
+        Reads atomic positions
+        '''
 
         if self.structfile.endswith('.cube'):
             self.readcube()
@@ -95,11 +96,17 @@ class Molecule(object):
             self.readxyz()
 
     def readcps(self):
+        '''
+        Reads critical points CPs
+        '''
 
         if self.cpsfile.endswith('CPprop.txt'):
             self.readmultiwfn()
 
     def readsurf(self, atom):
+        '''
+        Reads surface vertices
+        '''
 
         if self.basinfile.endswith('.basin'):
             self.readbasin(atom)
@@ -263,6 +270,9 @@ class Molecule(object):
             self.atxyz[atom] = np.transpose(np.dot(ry,np.transpose(self.atxyz[atom])))
 
     def rotx(self, angle):
+        '''
+        Rotates around the x axis
+        '''
 
         c = cos(radians(angle))
         s = sin(radians(angle))
@@ -272,6 +282,9 @@ class Molecule(object):
             self.atxyz[atom] = np.transpose(np.dot(rx,np.transpose(self.atxyz[atom])))
 
     def roty(self, angle):
+        '''
+        Rotates around the y axis
+        '''
 
         c = cos(radians(angle))
         s = sin(radians(angle))
@@ -281,6 +294,9 @@ class Molecule(object):
             self.atxyz[atom] = np.transpose(np.dot(ry,np.transpose(self.atxyz[atom])))
 
     def rotz(self, angle):
+        '''
+        Rotates around the z axis
+        '''
 
         c = cos(radians(angle))
         s = sin(radians(angle))
@@ -335,6 +351,9 @@ class Molecule(object):
             #spheretext.SetCamera(self.rep.ren.GetActiveCamera())
 
     def isosurface(self, filename, isovalue):
+        '''
+        Plots an isosurface 
+        '''
 
         self.isovalue = isovalue
         grid = Grid()
@@ -349,6 +368,9 @@ class Molecule(object):
         self.rep.marchingcubes(self.isovalue)
 
     def nciplot(self, densfile, gradfile):
+        '''
+        Plots non covalent interactions (NCI) regions
+        '''
 
         self.isovalue = 0.5
         rangecolor=[-3.,3.]
@@ -359,7 +381,10 @@ class Molecule(object):
     def surfmap(self, densfile, gradfile, isovalue=0.5, 
                 rangecolor=[-3.,3.],
                 colortable=[[0.,0.,1.],[0.,1.,0.],[1.,0.,0.]]):
-
+        '''
+        Maps the values of a field at points belonging to a
+        surface.
+        '''
 
         self.densfile = densfile
         self.gradfile = gradfile
@@ -381,6 +406,9 @@ class Molecule(object):
         
 
     def show(self):
+        '''
+        Renders the molecule
+        '''
 
         self.rep.start()
 

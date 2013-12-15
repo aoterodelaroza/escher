@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# A multiwfn critical points analyzer
+# A MEP values mapping on a density isosurface
 
 
 import escherpy as esc
