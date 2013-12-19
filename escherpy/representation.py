@@ -249,7 +249,10 @@ class Representation(object):
     def outline(self):
 
         bounds = vtk.vtkOutlineFilter()
-        bounds.SetInputData(self.grid)
+        if vtk6:
+            bounds.SetInputData(self.grid)
+        else:
+            bounds.SetInput(self.grid)
 
         boundsMapper = vtk.vtkPolyDataMapper()
         boundsMapper.SetInputConnection(bounds.GetOutputPort())
@@ -304,7 +307,10 @@ class Representation(object):
         # ContourFilter or MarchingCubes
         #isoExtractor = vtk.vtkContourFilter()
         isoExtractor = vtk.vtkMarchingCubes()
-        isoExtractor.SetInputData(self.grid)
+        if vtk6:
+            isoExtractor.SetInputData(self.grid)
+        else:
+            isoExtractor.SetInput(self.grid)
         # isosurface id and value
         isoExtractor.SetValue(0, isovalue)
         #isoExtractor.GenerateValues(4, isovalue-0.05, isovalue+0.05)
@@ -357,7 +363,10 @@ class Representation(object):
         polydata.SetPoints(points)
 
         delny = vtk.vtkDelaunay3D()
-        delny.SetInputData(polydata)
+        if vtk6:
+            delny.SetInputData(polydata)
+        else:
+            delny.SetInput(polydata)
         delny.SetTolerance(0.01)
         delny.SetAlpha(0.0)
         delny.BoundingTriangulationOff()
