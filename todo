@@ -1,3 +1,25 @@
+* surfaces: update the other routines.
+* surfaces: update the documentation.
+Added to rep:
+nsurf
+surf{:}
+
+Object surface:
+name -- string
+v -- vertices 
+f -- faces
+frgb -- face color
+ftex -- face texture
+ergb -- edge color
+etex -- edge texture
+n -- normals
+
+surface_() -- constructor (update me!)
+* surfaces: implement obj writer.
+* surfaces to vertex and face representation
+* surfaces to edge representation
+* clean up grid_isosurface (no edges)
+* periodic table of colors, list of textures
 * mol_polyhedron can build polyhedra without centers.
 * cr_newcell handles the order of the vectors correctly. Check that the new cell is sane.
 * Routine for adaptively set the cylinder and sphere based on the number
@@ -13,6 +35,7 @@
   5. Change the default texture for surfaces.  
   6. Re-write write_obj to take into account the number of edges,
      or to write a mesh directly.
+* triangles in obj files
 * Kabsch algorithm?
 * Problem with cartesian coordinates not being consistent with critic2's.
 * BUG: orthographic camera does not play well with the moldelview matrix distance parameter.

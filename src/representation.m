@@ -32,6 +32,9 @@ function rep = representation()
   rep.triangle = cell();
   rep.vertex = cell();
 
+  rep.nsurf = 0;
+  rep.surf = cell();
+
   rep.cam = camera();
   rep.nlight = 0;
   rep.light = cell();

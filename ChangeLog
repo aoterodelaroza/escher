@@ -1,3 +1,16 @@
+2013-12-21  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/surface_.m: added surface object.
+
+	* src/ball.m: fixed typo.
+
+	* src/rep_write_pov.m and others: implemented surface object as
+	mesh2 in the povray output.
+
+2013-12-07  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/ball.m: fixed typo.
+
 2013-11-26  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/tex_dbstart.m: added shiny texture.
