@@ -86,3 +86,6 @@ Daniel
 * bond colors and double, triple bonds
 * radial distribution function g(r)
 * DONE use debug variable ESCHER_DEBUG='ON'
+* handle units, coordinates (cartesian, cristaline, internal)
+* more parsers (ORCA, ...) database of results extracted (sqlite3)
+* point and space symmetry groups

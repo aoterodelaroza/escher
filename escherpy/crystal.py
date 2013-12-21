@@ -10,9 +10,14 @@
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 # more details.
 
+from logging import getLogger
 import numpy as np
+from molecule import Molecule
+from grid import Grid
 
-class Crystal():
+log = getLogger('escherlog')
+
+class Crystal(Molecule):
 
     '''
     function cr = crystal()
@@ -37,7 +42,20 @@ class Crystal():
         self.ztyp    = []
         self.typ     = []
         self.x       = []
-        self.a       = np.zeros(1,3)
-        self.b       = np.zeros(1,3)
-        self.omega   = 0.0
+        self.cellparams   = np.zeros(6)
+        self.omega   = NaN
+
+        self.grid = Grid()
+
+        super(Crystal, self).__init__()
+        # python 3.x
+        #super().__init__()
+
+    def cellbox(self):
+
+        stickbond = self.rep.stick(self.atxyz[i], self.atxyz[j])
+        self.rep.ren.AddActor(stickbond)
+
+    def steitz_op(self, rot, translation):
+        pass
 

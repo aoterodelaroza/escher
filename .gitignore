@@ -2,6 +2,7 @@
 *png
 *gif
 *tags
+*.db
 
 # workaround camera placement with g3dviewer
 tools/
@@ -19,6 +20,15 @@ tools/
 *.wrl
 *.oogl
 *.bpy
+
+#--------------------
+# doc/ directory
+#--------------------
+
+*.aux
+*.log
+*.out
+*.toc
 
 chem-2.0
 

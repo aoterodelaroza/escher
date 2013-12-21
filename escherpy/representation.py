@@ -38,7 +38,7 @@ cam.type = 'ORTHO'
 cam.ortho_scale = 20.
 '''
 
-class Representation():
+class Representation(object):
 
     '''
     function rep = representation()
@@ -249,7 +249,10 @@ class Representation():
     def outline(self):
 
         bounds = vtk.vtkOutlineFilter()
-        bounds.SetInputData(self.grid)
+        if vtk6:
+            bounds.SetInputData(self.grid)
+        else:
+            bounds.SetInput(self.grid)
 
         boundsMapper = vtk.vtkPolyDataMapper()
         boundsMapper.SetInputConnection(bounds.GetOutputPort())
@@ -259,7 +262,7 @@ class Representation():
         boundsActor.GetProperty().SetColor(0, 0, 0)
         self.ren.AddActor(boundsActor)
 
-    def lookuptable(self):
+    def lookuptable(self, rangecolor, colortable):
 
         #lutNCI = vtk.vtkLookupTable()
         #lutNCI.SetNumberOfColors(3)
@@ -270,12 +273,14 @@ class Representation():
 
         # color palette
         # -3.0 -> blue
-        #  0.1 -> green
+        #  0.0 -> green
         #  3.0 -> red
         colorNCI = vtk.vtkColorTransferFunction()
-        colorNCI.AddRGBPoint(-3.0,0.0,0.0,1.0)
-        colorNCI.AddRGBPoint(0.1,0.0,1.0,0.0)
-        colorNCI.AddRGBPoint(3.0,1.0,0.0,0.0)
+        colorNCI.AddRGBPoint(rangecolor[0],*colortable[0])
+        colorNCI.AddRGBPoint(0.,*colortable[1])
+        colorNCI.AddRGBPoint(rangecolor[1],*colortable[2])
+        #colorNCI.AddRGBPoint(0.0,0.0,1.0,0.0)
+        #colorNCI.AddRGBPoint(rangecolor[1],1.0,0.0,0.0)
         self.colorNCI = colorNCI
 
     def scalarbar(self):
@@ -302,7 +307,10 @@ class Representation():
         # ContourFilter or MarchingCubes
         #isoExtractor = vtk.vtkContourFilter()
         isoExtractor = vtk.vtkMarchingCubes()
-        isoExtractor.SetInputData(self.grid)
+        if vtk6:
+            isoExtractor.SetInputData(self.grid)
+        else:
+            isoExtractor.SetInput(self.grid)
         # isosurface id and value
         isoExtractor.SetValue(0, isovalue)
         #isoExtractor.GenerateValues(4, isovalue-0.05, isovalue+0.05)
@@ -355,7 +363,10 @@ class Representation():
         polydata.SetPoints(points)
 
         delny = vtk.vtkDelaunay3D()
-        delny.SetInputData(polydata)
+        if vtk6:
+            delny.SetInputData(polydata)
+        else:
+            delny.SetInput(polydata)
         delny.SetTolerance(0.01)
         delny.SetAlpha(0.0)
         delny.BoundingTriangulationOff()
