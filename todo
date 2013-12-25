@@ -1,3 +1,7 @@
+* add stick fancy representation similar to mercury
+* add orientation along crystallographic axes
+* add routine to plot the crystallographic axes
+
 * surfaces: update the other routines.
 * surfaces: update the documentation.
 Added to rep:
