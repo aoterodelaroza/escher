@@ -11,6 +11,7 @@
 # more details.
 
 import time
+import csv
 from logging import getLogger
 import shlex as lex
 import numpy as np
@@ -37,6 +38,7 @@ class Grid(object):
         self.n = np.array([], dtype=np.int)
         # all cube scalr data dim=1 array
         self.alldata = []
+        #self.alldata = np.array([])
         self.f = []
         self.omega = 0.0
 
@@ -59,7 +61,6 @@ class Grid(object):
 
         log.debug('Reading file {}'.format(filename))
 
-        startime = time.time()
         ## parsing is not done the clever way, it could be improved
         lines = self.openf(filename)
         for n,i in enumerate(lines):
@@ -82,18 +83,23 @@ class Grid(object):
                 log.debug('Grid dimensions {0:d} {1:d} {2:d}'.format(*self.n))
                 self.omega = np.linalg.det(self.a)
             elif n==(6+self.nat):
-                for j in range(len(lines)-6-self.nat):
-                    self.alldata.extend([float(k) for k in lex.split(lines[n+j])])
+                startime = time.time()
+                #self.alldata = np.genfromtxt(lines[n:])
+                for j in csv.reader(lines[n:], delimiter=' '):
+                    j = filter(None, j)
+                    j = map(float, j)
+                    self.alldata.extend(j)
+                #for j in range(len(lines)-6-self.nat):
+                    #self.alldata.extend([float(k) for k in lex.split(lines[n+j])])
+                    #self.alldata = np.append(self.alldata, np.fromstring(lines[n+j], sep=' '))
+                print time.time() - startime
                 self.alldata = np.array(self.alldata)
                 log.debug('Grid data points {0:d}'.format(len(self.alldata)))
-        print time.time() - startime
-        startime = time.time()
         self.f = np.zeros(self.n)
         ndim = 0
         for i in range(self.n[0]):
             for j in range(self.n[1]):
                 self.f[i,j,:] = self.alldata[ndim:ndim+self.n[2]] 
                 ndim = ndim + self.n[2]
-        print time.time() - startime
 
 
