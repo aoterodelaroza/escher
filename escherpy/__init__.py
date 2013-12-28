@@ -12,16 +12,36 @@ import logcolors
 
 log = logcolors.escherlog()
 
-if os.environ['ESCHER_DEBUG']:
-    if os.environ['ESCHER_DEBUG'] == 'ON':
+debug = os.environ.get('ESCHER_DEBUG')
+if debug: 
+    if debug == 'ON':
         log.setLevel(logging.DEBUG)
-    elif os.environ['ESCHER_DEBUG'] == 'OFF':
+    elif debug == 'OFF':
         log.setLevel(logging.INFO)
 else:
     log.setLevel(logging.INFO)
+del debug
 
+#try: 
+#    debug = os.environ['ESCHER_DEBUG']
+#    if debug == 'ON':
+#        log.setLevel(logging.DEBUG)
+#    elif debug == 'OFF':
+#        log.setLevel(logging.INFO)
+#except KeyError:
+#    log.setLevel(logging.INFO)
+#    raise KeyError
 
-escher_data = os.environ['ESCHER_DATA']
+escher_data = os.environ.get('ESCHER_DATA')
+if not escher_data:
+    print 'You need to define the shell variable ESCHER_DATA pointing to your escher dir'
+    exit()
+
+#try:
+#    escher_data = os.environ['ESCHER_DATA']
+#except KeyError:
+#    print 'You need to define the shell variable ESCHER_DATA pointing to your escher dir'
+#    raise KeyError
 
 #parser = SafeConfigParser()
 #parser.read('escher.ini')

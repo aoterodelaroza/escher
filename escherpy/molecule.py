@@ -78,7 +78,7 @@ class Molecule(object):
         """
         Opens a file and returns lines without whitespaces.
         """
-        with open(filename, 'r') as file:
+        with open(filename, 'rb') as file:
             text = file.read()
 
         lines = [line for line in text.splitlines()]

@@ -10,6 +10,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 # more details.
 
+import time
 from logging import getLogger
 import shlex as lex
 import numpy as np
@@ -43,7 +44,7 @@ class Grid(object):
         """
         Opens a file and returns lines without whitespaces.
         """
-        with open(filename, 'r') as file:
+        with open(filename, 'rb') as file:
             text = file.read()
 
         lines = [line for line in text.splitlines() if line]
@@ -58,6 +59,7 @@ class Grid(object):
 
         log.debug('Reading file {}'.format(filename))
 
+        startime = time.time()
         ## parsing is not done the clever way, it could be improved
         lines = self.openf(filename)
         for n,i in enumerate(lines):
@@ -84,11 +86,14 @@ class Grid(object):
                     self.alldata.extend([float(k) for k in lex.split(lines[n+j])])
                 self.alldata = np.array(self.alldata)
                 log.debug('Grid data points {0:d}'.format(len(self.alldata)))
+        print time.time() - startime
+        startime = time.time()
         self.f = np.zeros(self.n)
         ndim = 0
         for i in range(self.n[0]):
             for j in range(self.n[1]):
                 self.f[i,j,:] = self.alldata[ndim:ndim+self.n[2]] 
                 ndim = ndim + self.n[2]
+        print time.time() - startime
 
 

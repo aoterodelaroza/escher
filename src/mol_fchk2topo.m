@@ -54,7 +54,7 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
 % Default conditions:
    cdn = struct(
       "qal", 6,
-      "mrg", 2,
+      "mrg", 3,
       "rho", 1,
       "mep", 1,
       "cube", 0,
@@ -106,10 +106,10 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
       fprintf(fid, "load %s-rho.cube\n", name);
       fprintf(fid, "\n");
       fprintf(fid, "auto\n");
-      fprintf(fid, "qtree 4\n");
+      fprintf(fid, "#qtree 4\n");
       fprintf(fid, "yt\n");
       fprintf(fid, "EOF\n");
-      fprintf(fid, "mv stdin_cps.xyz %s_rho.xyz\n\n",name);
+      fprintf(fid, "mv stdin_cps.tess %s_rho.tess\n\n",name);
    endif
 
    if (cdn.mep > 0)
@@ -125,15 +125,15 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
       fprintf(fid, "molecule %s-mep.cube\n", name);
       fprintf(fid, "load %s-mep.cube\n", name);
       fprintf(fid, "load %s-rho.cube\n", name);
-      fprintf(fid, "load as '-$1'\n");
+      fprintf(fid, 'load as "-$1"\n');
       fprintf(fid, "reference 3\n");
       fprintf(fid, "\n");
       fprintf(fid, "auto\n");
-      fprintf(fid, "qtree 4\n");
+      fprintf(fid, "#qtree 4\n");
       fprintf(fid, "integrable 2\n");
       fprintf(fid, "yt\n");
       fprintf(fid, "EOF\n");
-      fprintf(fid, "mv stdin_cps.xyz %s_mep.xyz\n\n",name);
+      fprintf(fid, "mv stdin_cps.tess %s_mep.tess\n\n",name);
    endif
 
    fclose(fid);
