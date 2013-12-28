@@ -80,6 +80,13 @@ function [rep] = rep_merge(varargin);
         rep.light{rep.nlight} = rep1.light{j};
       endfor
 
+      ## lights
+      n1 = rep1.nsurf; 
+      for j = 1:n1
+        rep.nsurf += 1;
+        rep.surf{rep.nsurf} = rep1.surf{j};
+      endfor
+
       ## camera and background color
       rep.cam = rep1.cam;
       rep.bgcolor = rep1.bgcolor;

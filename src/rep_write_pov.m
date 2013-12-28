@@ -70,6 +70,7 @@ function rep_write_pov(rep,file="",LOG=0)
     endif
   endfor
 
+  ## write sticks to the pov file
   for i = 1:rep.nstick
     ## skip degenerate cylinders
     if (norm(rep.stick{i}.x1 - rep.stick{i}.x0) < eps)
@@ -117,6 +118,31 @@ function rep_write_pov(rep,file="",LOG=0)
   fprintf(fid,"object {Mol1 rotate <0,0,0>}\n");
   fprintf(fid,"\n");
 
+  ## surfaces
+  for i = 1:rep.nsurf
+    fprintf(fid,"mesh2 {\n");
+    fprintf(fid,"  vertex_vectors {\n");
+    fprintf(fid,"  %d,\n",size(rep.surf{i}.v,1));
+    fprintf(fid,"  <%.10f,%.10f,%.10f>,\n",rep.surf{i}.v');
+    fprintf(fid,"  }\n");
+    fprintf(fid,"  normal_vectors {\n");
+    fprintf(fid,"  %d,\n",size(rep.surf{i}.n,1));
+    fprintf(fid,"  <%.10f,%.10f,%.10f>,\n",rep.surf{i}.n');
+    fprintf(fid,"  }\n");
+    fprintf(fid,"  texture_list {\n");
+    fprintf(fid,"  1,\n");
+    s = sprintf("  texture{%s %s}",rep.texlib{rep.surf{i}.ftex},pigment{rep.surf{i}.ftex});
+    fprintf(fid,s,fillrgb(rep.surf{i}.frgb)/255);
+    fprintf(fid,"\n  }\n");
+    fprintf(fid,"  face_indices {\n");
+    fprintf(fid,"  %d\n",size(rep.surf{i}.f,1));
+    fprintf(fid,"  <%d,%d,%d>,0,\n",(rep.surf{i}.f-1)');
+    fprintf(fid,"  }\n");
+    fprintf(fid,"  inside_vector <0, 0, 1>\n");
+    fprintf(fid,"}\n");
+  endfor
+
+  ## camera
   if (!isfield(rep.cam,"cop") || isempty(rep.cam.cop))
     error("empty camera: missing rep_setdefaultscene?");
   endif
@@ -166,6 +192,7 @@ function rep_write_pov(rep,file="",LOG=0)
   fprintf(fid,"}\n");
   fprintf(fid,"\n");
 
+  ## lights
   for i = 1:rep.nlight
     fprintf(fid,"light_source {\n  <%.5f,%.5f,%.5f>\n",rep.light{i}.x);
     fprintf(fid,"  color rgb<%.5f,%.5f,%.5f>\n",rep.light{i}.color/255*rep.light{i}.intensity);
@@ -192,9 +219,11 @@ function rep_write_pov(rep,file="",LOG=0)
   endfor
   fprintf(fid,"\n");
 
+  ## background color
   fprintf(fid," background {color rgb <%.5f,%.5f,%.5f>}\n",rep.bgcolor(1:3)/255);
   fprintf(fid,"\n");
 
+  ## wrap up
   if (!isempty(file))
     root = strrep(file,".pov","");
     fprintf(fid,"//runme: povray -D -UV +I%s +O%s.png +W1000 +H1000 +A\n",file,root);

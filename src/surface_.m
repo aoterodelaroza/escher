@@ -10,20 +10,22 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function ba = ball()
-% function ba = ball()
+function surf = surface_()
+% function surf = surface_()
 %
-% ball - create an empty ball
+% surface - create an empty surface
 %
 % Output:
-% {ba}: the empty ball.
+% {st}: the empty surface.
 %
 
-  ba.name = "";
-  ba.x0 = [0 0 0];
-  ba.x1 = [0 0 0];
-  ba.r = 0;
-  ba.rgb = [0 0 0 0 0];
-  ba.tex = 0;
+  surf.name = "";
+  surf.v = [];
+  surf.f = [];
+  surf.n = [];
+  surf.frgb = [0 0 0 0 0];
+  surf.ftex = 0;
+  surf.ergb = [0 0 0 0 0];
+  surf.etex = 0;
 
 endfunction

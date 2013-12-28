@@ -10,12 +10,12 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 0],ergb=[0 0 0],...
+function [rep surf] = grid_isosurface(g,addto="",iso,frgb=[51 160 255 0 0],ergb=[],...
                                ftex="opaque_triangle_default",etex="stick_default",erad=0.005)
-% function rep = grid_isosurface(g,addto="",iso,frgb=[51 160 255 0 0],ergb=[0 0 0],...
+% function [rep surf] = grid_isosurface(g,addto="",iso,frgb=[51 160 255 0 0],ergb=[],...
 %                                ftex="opaque_triangle_default",etex="stick_default",erad=0.005)
 %
-% grid_isosurface - plot an isosurface into a representation
+% grid_isosurface - plot an isosurface into a representation.
 %
 % Input variables:
 % g: grid description
@@ -29,6 +29,9 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 0],ergb=[0 0 0],..
 % etex: edge texture.
 % erad: edge radius.
 %
+% Output:
+% rep: the reprsentation containing the isosurface.
+% surf: the surface object containing the isosurface.
   
   bohrtoans = 0.52917720859;
 
@@ -41,59 +44,69 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 0],ergb=[0 0 0],..
       rep.name = g.name;
     endif
   endif
-  if (!isfield(rep,"ntriangle"))
-    rep.ntriangle = 0;
-    rep.triangle = cell();
-  endif
-  if (!isfield(rep,"nvertex"))
-    rep.nvertex = 0;
-    rep.vertex = cell();
-  endif
-  if (!isfield(rep,"nstick"))
-    rep.nstick = 0;
-    rep.stick = cell();
-  endif
 
+  ## build the isosurface
+  surf = surface_();
   [xx,yy,zz] = grid_mesh(g);
-  [f,v] = isosurface(xx,yy,zz,g.f,iso);
-  v *= bohrtoans;
+  [surf.f,surf.v] = isosurface(xx,yy,zz,g.f,iso);
+  surf.v *= bohrtoans;
+  nor = cross((surf.v(surf.f(:,2),:) - surf.v(surf.f(:,1),:)),(surf.v(surf.f(:,3),:) - surf.v(surf.f(:,1),:)));
+  surf.n = zeros(size(surf.v));
+  for i = 1:rows(surf.f)
+    surf.n(surf.f(i,1),:) += nor(i,:);
+    surf.n(surf.f(i,2),:) += nor(i,:);
+    surf.n(surf.f(i,3),:) += nor(i,:);
+  endfor
+  surf.n = surf.n ./ norm(surf.n,2,"rows");
+  surf.n(find(!isfinite(surf.n))) = 1/sqrt(3);
 
+  ## face texture
   if (!isempty(frgb))
-    frgb = fillrgb(frgb);
-
-    ## pre-allocate vertices
-    nv = rep.nvertex;
-    rep.nvertex += size(v,1);
-    empty = struct("x",[0 0 0],"rgb",frgb);
-    rep.vertex(nv+1:rep.nvertex) = {empty};
-    ## fill
-    for i = nv+1:rep.nvertex
-      rep.vertex{i}.x = v(i-nv,:);
-    endfor
-
-    ## pre-allocate triangles
-    n = rep.ntriangle;
-    rep.ntriangle += size(f,1);
+    surf.frgb = fillrgb(frgb);
     [rep iftex] = rep_registertexture(rep,ftex);
-    empty = struct("idx",[0 0 0],"rgb",[0 0 0 0 0],"tex",iftex);
-    rep.triangle(n+1:rep.ntriangle) = {empty};
-    ## fill triangles
-    for i = n+1:rep.ntriangle
-      rep.triangle{i}.idx = nv + f(i-n,:);
-      rep.triangle{i}.rgb = (rep.vertex{rep.triangle{i}.idx(1)}.rgb +...
-                             rep.vertex{rep.triangle{i}.idx(2)}.rgb +...
-                             rep.vertex{rep.triangle{i}.idx(3)}.rgb) /3;
-    endfor
+    surf.ftex = iftex;
   endif
+
+  ## add it to the representation
+  rep.nsurf += 1;
+  rep.surf{rep.nsurf} = surf;
+
+#  if (!isempty(frgb))
+#    frgb = fillrgb(frgb);
+#
+#    ## pre-allocate vertices
+#    nv = rep.nvertex;
+#    rep.nvertex += size(v,1);
+#    empty = struct("x",[0 0 0],"rgb",frgb);
+#    rep.vertex(nv+1:rep.nvertex) = {empty};
+#    ## fill
+#    for i = nv+1:rep.nvertex
+#      rep.vertex{i}.x = v(i-nv,:);
+#    endfor
+#
+#    ## pre-allocate triangles
+#    n = rep.ntriangle;
+#    rep.ntriangle += size(f,1);
+#    [rep iftex] = rep_registertexture(rep,ftex);
+#    empty = struct("idx",[0 0 0],"rgb",[0 0 0 0 0],"tex",iftex);
+#    rep.triangle(n+1:rep.ntriangle) = {empty};
+#    ## fill triangles
+#    for i = n+1:rep.ntriangle
+#      rep.triangle{i}.idx = nv + f(i-n,:);
+#      rep.triangle{i}.rgb = (rep.vertex{rep.triangle{i}.idx(1)}.rgb +...
+#                             rep.vertex{rep.triangle{i}.idx(2)}.rgb +...
+#                             rep.vertex{rep.triangle{i}.idx(3)}.rgb) /3;
+#    endfor
+#  endif
 
   ## edges
   if (!isempty(ergb))
     ## pre-determine the edge pairs 
-    nt = size(f,1);
+    nt = size(surf.f,1);
     ipairs = zeros(3*nt,2);
     jaux = ((1:nt) - 1) * 3 + 1;
     for i = 1:nt
-      aux = sort(f(i,:));
+      aux = sort(surf.f(i,:));
       ipairs(jaux(i),:) = [aux(1) aux(2)];
       ipairs(jaux(i)+1,:) = [aux(1) aux(3)];
       ipairs(jaux(i)+2,:) = [aux(2) aux(3)];
@@ -111,8 +124,8 @@ function rep = grid_isosurface(g,addto="",iso,frgb=[0 255 0 0 0],ergb=[0 0 0],..
     rep.stick(n+1:rep.nstick) = {empty};
     ## fill edges -> this is the hard part
     for i = n+1:rep.nstick
-      rep.stick{i}.x0 = v(ipairs(i-n,1),:);
-      rep.stick{i}.x1 = v(ipairs(i-n,2),:);
+      rep.stick{i}.x0 = surf.v(ipairs(i-n,1),:);
+      rep.stick{i}.x1 = surf.v(ipairs(i-n,2),:);
     endfor
   endif
 
