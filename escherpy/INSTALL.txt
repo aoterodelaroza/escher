@@ -47,7 +47,7 @@ python -c 'import vtk'
 
 Define:
     echo 'export ESCHER_DATA=/path/to/escher_data/' >> $HOME/.bashrc
-    echo 'export PYTHONPATH=$PYTHONPATH:/path/to/escher/' >> $HOME/.bashrc
+    echo 'export PYTHONPATH=$PYTHONPATH:/path/to/escher/escherpy' >> $HOME/.bashrc
 Optionally you can let the log write detailed info about the run:
     echo 'export ESCHER_DEBUG="ON"' >> $HOME/.bashrc
 

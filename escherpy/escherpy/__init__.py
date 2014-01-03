@@ -1,4 +1,10 @@
 
+__doc__ = '''\
+Escherpy is a python package for tranforming quantum chemistry common files,
+manipulate molecular/crystal data and visualize it.
+'''
+__author__ = 'Daniel Menendez'
+
 # from escherpy import *
 # * means __all__ modules
 __all__ = ['molecule', 'crystal']
@@ -44,7 +50,7 @@ if not escher_data:
 #    raise KeyError
 
 #parser = SafeConfigParser()
-#parser.read('escher.ini')
+#parser.read('../escher.ini')
 
 #print parser.get('molecule', 'structfile')
 #print parser.get('molecule', 'densfile')
