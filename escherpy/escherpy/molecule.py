@@ -1,23 +1,29 @@
-# Copyright (C) 2011 Victor Lua~na and Alberto Otero-de-la-Roza
-#
-# This octave routine is free software: you can redistribute it and/or modify
+# ESCHERpy -- A computational chemistry workflow tool
+# Copyright (C) 2013 Daniel Menendez
+# 
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or (at
-# your option) any later version. See <http://www.gnu.org/licenses/>.
-#
-# The routine distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-# more details.
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #from __future__ import print_function, division
-from math import sqrt, sin, cos, radians
+from math import sqrt, sin, cos, radians, pi
 import shlex as lex
 from logging import getLogger
 import numpy as np
 from chem import elements 
 from representation import Representation
 from grid import Grid
+from matplotlib.cm import gray
+import matplotlib.pyplot as plt
 
 from atom import colors
 from atom import rcov
@@ -81,7 +87,7 @@ class Molecule(object):
         with open(filename, 'rb') as file:
             text = file.read()
 
-        lines = [line for line in text.splitlines()]
+        lines = (line for line in text.splitlines())
         lines = map(lambda s: s.strip(), lines)
         return lines
 
@@ -128,14 +134,14 @@ class Molecule(object):
                 self.vxyz = np.zeros([nv,3])
 
             elif n==14:
-                for j in range(nv):
+                for j in xrange(nv):
                     self.vxyz[j,:] = np.array( \
                            [float(k) for k in lex.split(lines[n+j])[0:3]])
                 log.debug('Surface vertices coordinates: \n {}'.format(self.vxyz))
 
         color = [ col/255. for col in colors[atname] ]
         self.rep.surface(nv,self.vxyz, color)
-        #for i in range(nv):
+        #for i in xrange(nv):
         #    sphereatom = self.rep.ball(0.05, self.vxyz[i], [1.,1.,1.])
         #    self.rep.ren.AddActor(sphereatom)
 
@@ -200,7 +206,7 @@ class Molecule(object):
                 self.title = i
                 log.debug('Title: {}'.format(self.title))
             elif n==2:
-                for j in range(self.nat):
+                for j in xrange(self.nat):
                     self.atname = np.append(self.atname, 
                             [str(lex.split(lines[n+j])[0])])
                     #self.atname.append(elements.find(self.atnumber[-1]))
@@ -232,7 +238,7 @@ class Molecule(object):
                 # initialize atomic names, coordinates with right size
                 self.atxyz = np.zeros([self.nat,3])
             elif n==6:
-                for j in range(self.nat):
+                for j in xrange(self.nat):
                     self.atnumber = np.append(self.atnumber, 
                             [int(lex.split(lines[n+j])[0])])
                     self.atname.append(elements.find(self.atnumber[-1]))
@@ -261,7 +267,7 @@ class Molecule(object):
         ry = np.array([[c[1],0,s[1]],[0, 1, 0], [-s[1],0,c[1]]])
         rz = np.array([[c[2],-s[2],0],[s[2], c[2], 0], [0,0,1]])
 
-        for atom in range(len(self.atname)):
+        for atom in xrange(len(self.atname)):
             # First: rotate around z axis
             self.atxyz[atom] = np.transpose(np.dot(rz,np.transpose(self.atxyz[atom])))
             # Second: rotate around x axis
@@ -278,7 +284,7 @@ class Molecule(object):
         s = sin(radians(angle))
         rx = np.array([[1,0,0],[0, c, -s], [0,s,c]])
 
-        for atom in range(len(self.atname)):
+        for atom in xrange(len(self.atname)):
             self.atxyz[atom] = np.transpose(np.dot(rx,np.transpose(self.atxyz[atom])))
 
     def roty(self, angle):
@@ -290,7 +296,7 @@ class Molecule(object):
         s = sin(radians(angle))
         ry = np.array([[c,0,s],[0, 1, 0], [-s,0,c]])
 
-        for atom in range(len(self.atname)):
+        for atom in xrange(len(self.atname)):
             self.atxyz[atom] = np.transpose(np.dot(ry,np.transpose(self.atxyz[atom])))
 
     def rotz(self, angle):
@@ -302,14 +308,14 @@ class Molecule(object):
         s = sin(radians(angle))
         rz = np.array([[c,-s,0],[s, c, 0], [0,0,1]])
 
-        for atom in range(len(self.atname)):
+        for atom in xrange(len(self.atname)):
             self.atxyz[atom] = np.transpose(np.dot(rz,np.transpose(self.atxyz[atom])))
 
 
     def stickball(self):
         log.debug('Add stick/ball representation')
 
-        for i in range(self.nat):
+        for i in xrange(self.nat):
             color = [ col/255. for col in colors[self.atname[i]] ]
             radi = rcov[self.atname[i]]/200.
             #sphereatom, spheretext = self.rep.ball(radi, self.atxyz[i], color,self.atname[i])
@@ -318,8 +324,8 @@ class Molecule(object):
             #self.rep.ren.AddActor(spheretext)
             #spheretext.SetCamera(self.rep.ren.GetActiveCamera())
 
-        for i in range(self.nat):
-            for j in range(i):
+        for i in xrange(self.nat):
+            for j in xrange(i):
                 dist = sqrt((self.atxyz[i][0] - self.atxyz[j][0])**2 + 
                             (self.atxyz[i][1] - self.atxyz[j][1])**2 + 
                             (self.atxyz[i][2] - self.atxyz[j][2])**2)
@@ -330,7 +336,7 @@ class Molecule(object):
     def cpball(self):
         log.debug('Add critical points ball representation')
 
-        for i in range(len(self.cpxyz)):
+        for i in xrange(len(self.cpxyz)):
             if self.cptype[i] == 'NCP':
                 color = [0.2,0.2,0.2]
                 radi = 0.0
@@ -370,6 +376,9 @@ class Molecule(object):
     def nciplot(self, densfile, gradfile):
         '''
         Plots non covalent interactions (NCI) regions
+
+        Density file is rho(r)*sign(lambda_2)
+        Gradient is reduced density gradient
         '''
 
         self.isovalue = 0.5
@@ -377,6 +386,35 @@ class Molecule(object):
         colortable=[[0.,0.,1.],[0.,1.,0.],[1.,0.,0.]]
 
         self.surfmap(densfile, gradfile, self.isovalue, rangecolor, colortable)
+
+    def nciplot2D(self, densfile, gradfile):
+        '''
+        Plots non covalent interactions (NCI) in 2D
+        from dens and grad files generated by critic2
+
+        Density file is rho(r)*sign(lambda_2)
+        Gradient is reduced density gradient
+        '''
+
+        dens = Grid()
+        dens.readcube(densfile)
+        grad = Grid()
+        grad.readcube(gradfile)
+        #C_s = 1./(2.*(3.*pi**2)**(1./3.))
+        #absgrad = np.absolute(grad.alldata)
+        #rho4 = np.power(dens.alldata, 4)
+        #rho43 = np.power(dens.alldata, -3.)
+        #nums = np.multiply(C_s, absgrad)
+        #s = np.divide(nums, rho43)
+        plt.ylim([-0.,2.])
+        plt.xlim([-0.1,0.1])
+        dens.alldata = np.divide(dens.alldata, 100.)
+        plt.plot(dens.alldata, grad.alldata, 'b8', markersize=3.)
+        #tmp = dens.alldata[np.where(dens.alldata < 0.2)]
+        #print tmp[np.where(tmp > -0.2)]
+        #print dens.alldata[12], grad.alldata[12]
+        #plt.scatter(dens.alldata, grad.alldata, c=[1.,0.,0.], s=4.)
+
         
     def surfmap(self, densfile, gradfile, isovalue=0.5, 
                 rangecolor=[-3.,3.],
@@ -411,6 +449,7 @@ class Molecule(object):
         '''
 
         self.rep.start()
+        plt.show()
 
                 
 if __name__ == '__main__':

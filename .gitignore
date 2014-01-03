@@ -74,6 +74,8 @@ nosetests.xml
 .project
 .pydevproject
 
+escherpy/MANIFEST
+
 ###################
 Vim files
 ###################

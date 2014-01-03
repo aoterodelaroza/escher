@@ -1,21 +1,26 @@
-# Copyright (C) 2011 Victor Lua~na and Alberto Otero-de-la-Roza
-#
-# This octave routine is free software: you can redistribute it and/or modify
+# ESCHERpy -- A computational chemistry workflow tool
+# Copyright (C) 2013 Daniel Menendez
+# 
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or (at
-# your option) any later version. See <http://www.gnu.org/licenses/>.
-#
-# The routine distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-# more details.
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
 import csv
 from logging import getLogger
 import shlex as lex
 import numpy as np
 log = getLogger('escherlog')
+from profile import profile_this, time_this
+from memory_profiler import profile
 
 class Grid(object):
 
@@ -49,10 +54,13 @@ class Grid(object):
         with open(filename, 'rb') as file:
             text = file.read()
 
-        lines = [line for line in text.splitlines() if line]
-        lines = map(lambda s: s.strip(), lines)
+        lines = (line for line in text.splitlines() if line)
+        lines = map(str.strip, lines)
         return lines
 
+    #@time_this
+    #@profile_this
+    #@profile
     def readcube(self, filename):
         """
         Extracts structure information and grid values
@@ -83,7 +91,6 @@ class Grid(object):
                 log.debug('Grid dimensions {0:d} {1:d} {2:d}'.format(*self.n))
                 self.omega = np.linalg.det(self.a)
             elif n==(6+self.nat):
-                startime = time.time()
                 #self.alldata = np.genfromtxt(lines[n:])
                 for j in csv.reader(lines[n:], delimiter=' '):
                     j = filter(None, j)
@@ -92,7 +99,6 @@ class Grid(object):
                 #for j in range(len(lines)-6-self.nat):
                     #self.alldata.extend([float(k) for k in lex.split(lines[n+j])])
                     #self.alldata = np.append(self.alldata, np.fromstring(lines[n+j], sep=' '))
-                print time.time() - startime
                 self.alldata = np.array(self.alldata)
                 log.debug('Grid data points {0:d}'.format(len(self.alldata)))
         self.f = np.zeros(self.n)
