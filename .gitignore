@@ -1,5 +1,6 @@
 *pdf
 *png
+*jpg
 *gif
 *tags
 *.db
@@ -7,19 +8,42 @@
 # workaround camera placement with g3dviewer
 tools/
 
-#--------------------
+#-----------------------------------------
 # test/ directory
-#--------------------
+#-----------------------------------------
 *.obj
 *.off
 *.coff
 *.dat
 *.gnu
+#-----------------------------------------
+# escherpy/test/ directory
+#-----------------------------------------
+escherpy/tests/cover/
+
+#-----------------------------------------
+# escherpy/examples/ directory
+#-----------------------------------------
 *.mtl
 *.pov
 *.wrl
 *.oogl
 *.bpy
+*.cube
+*.incritic
+*.outcritic
+*.xyz
+*.gbw
+*.ges
+*.wfn
+*.scfp
+*.inp
+
+#-------------------------
+# escherpy/doc/ directory
+#-------------------------
+
+escherpy/doc/docs/
 
 #--------------------
 # doc/ directory

@@ -18,6 +18,7 @@ from math import sqrt, acos, degrees
 import vtk
 import numpy as np
 from logging import getLogger
+from templates.blender import blenderinput
 log = getLogger('escherlog')
 
 vtkversion = vtk.vtkVersion().GetVTKSourceVersion().split()[-1]
@@ -25,22 +26,6 @@ vtkversion = int(vtkversion.split(".")[0])
 vtk6 = (vtkversion == 6)
 
 
-blenderinput = \
-'''
-import os
-import bpy
-
-bpy.data.objects['Cube'].select = True
-bpy.ops.object.delete()
-bpy.data.objects['Camera'].select = True
-bpy.ops.object.delete()
-
-bpy.ops.import_scene.x3d(filepath=os.getcwd() + "/out.wrl")
-
-cam = bpy.data.cameras.get('Viewpoint')
-cam.type = 'ORTHO'
-cam.ortho_scale = 20.
-'''
 
 class Representation(object):
 
@@ -53,7 +38,7 @@ class Representation(object):
     {rep}: the empty representation.
     '''
 
-    def __init__(self,repi=None,camangle=np.matrix([80,75,45]),zoom=3,LOG=0):
+    def __init__(self,repi=None,camangle=np.matrix([80,75,45]),zoom=3):
 
         self.name = ""
 
@@ -168,6 +153,9 @@ class Representation(object):
         return actor2
 
     def window(self):
+        '''
+        Creates a VTK rendering window
+        '''
         log.debug('Setting VTK rendering window')
 
         # create a rendering window and renderer
@@ -175,7 +163,7 @@ class Representation(object):
         # camera (optional)
         global camera
         camera = vtk.vtkCamera()
-        camera.SetPosition(15,0,0)
+        camera.SetPosition(-30,0,0)
         camera.SetFocalPoint(0,0,0)
         camera.ParallelProjectionOn()
         ren.SetActiveCamera(camera)
@@ -207,6 +195,9 @@ class Representation(object):
         self.iren = iren
 
     def start(self):
+        '''
+        Starts rendering the VTK window
+        '''
         log.debug('VTK render window starting')
         # enable user interface interactor
         self.iren.Initialize()
@@ -222,6 +213,19 @@ class Representation(object):
         #png.Write()
     
     def imagedata(self, orig, delta, dims):
+        '''
+        Creates a VTKImageData object from
+        given voxel specifications
+
+        :param list orig: corner origin of the voxel
+                          [x0, y0, z0]
+        :param list delta: spacing between points of the voxel
+                          [dx, dy, dz]
+        :param list dims: number of points in each direction of the voxel
+                          [nx, ny, nz]
+
+
+        '''
 
         log.debug('Scalar grid volume data')
         # construct the volume
@@ -251,6 +255,10 @@ class Representation(object):
         return array
 
     def outline(self):
+        '''
+        Outline box that indicates the
+        volumetric limits
+        '''
 
         bounds = vtk.vtkOutlineFilter()
         if vtk6:
@@ -267,6 +275,9 @@ class Representation(object):
         self.ren.AddActor(boundsActor)
 
     def lookuptable(self, rangecolor, colortable):
+        '''
+        A color map creator
+        '''
 
         #lutNCI = vtk.vtkLookupTable()
         #lutNCI.SetNumberOfColors(3)
@@ -288,6 +299,10 @@ class Representation(object):
         self.colorNCI = colorNCI
 
     def scalarbar(self):
+        '''
+        Renders a scalar bar showing the colorbar used
+        with :py:meth:`lookuptable`
+        '''
 
         scalarBar = vtk.vtkScalarBarActor()
         scalarBar.SetLookupTable(self.mapper.GetLookupTable())
@@ -306,6 +321,9 @@ class Representation(object):
 
 
     def marchingcubes(self, isovalue):
+        '''
+        Extracts an isosurface from volumetric data
+        '''
 
         log.debug('Marching Cubes algorithm contour filter')
         # ContourFilter or MarchingCubes
@@ -454,6 +472,12 @@ class Representation(object):
 
     @staticmethod
     def exporter(obj, ev):
+        '''
+        Exports representation state to several
+        common 3D file formats while pressing the
+        mouse middle button on the VTK window
+
+        '''
         log.debug("Middle Button pressed")
 
         log.info('Current camera orientation: {}'.format(camera.GetOrientation()))

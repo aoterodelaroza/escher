@@ -22,9 +22,13 @@ setup(name='escherpy',
                 'numpy',           # ==1.6.2',
                 'matplotlib',      # ==1.1.1rc2',
                 'pexpect',         # ==2.4',
-                'memory_profiler', # ==0.30',     # developers
-                'wxPython',        # ==2.8.12.1', # developers
-                'RunSnakeRun',     # ==2.0.4',    # developers
+                'memory_profiler', # ==0.30',     # developers, profiling
+                'wxPython',        # ==2.8.12.1', # developers, profiling
+                'RunSnakeRun',     # ==2.0.4',    # developers, profiling
+                'nose',            # ==1.3.0,     # developers, tests
+                'coverage',        # ==     ,     # developers, tests
+                'Sphinx',          # ==           # developers, doc
+                'cloud_sptheme',   # ==           # developers, doc
                 'Cython',          # ==0.19.2',   # future
                ],
       classifiers=['Development Status :: 1 - Planning',
@@ -39,7 +43,7 @@ setup(name='escherpy',
                    'Topic :: Scientific/Engineering :: Visualization',
                    'Topic :: Multimedia :: Graphics :: 3D Modeling',
                   ],
-      libraries = [('foo', dict(sources=['escherpy/foo.f90']))],
+#      libraries = [('foo', dict(sources=['escherpy/foo.f90']))],
 #      ext_modules = [Extension('escherpy.foo',
 #                                sources=['escherpy/foo.pyx'],
 #                                libraries= = ['foo'])]
