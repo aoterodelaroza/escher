@@ -1,4 +1,11 @@
+2014-01-03  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/rep_write_json.m: improved the json file to write every type
+	of object.
+
 2014-01-02  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/ball.m: fixed bug.
 
 	* src/rep_write_json.m: added. Write a json file.
 
