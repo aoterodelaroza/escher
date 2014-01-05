@@ -138,10 +138,11 @@ Run
 
 to refresh your environment variables.
 
-Go to ``$ESCHER_HOME/escherpy/test/`` and run ``./test.py``
+Go to ``$ESCHER_HOME/escherpy/test/`` and run ``make test`` or
+``make testcoverage`` to see the module statements covered by the tests.
 
 Go to ``$ESCHER_HOME/escherpy/examples/`` and run ``./testall.py``, or
-idividually ``./testme.py``:
+individually ``./testme.py``:
 
 ::
 
