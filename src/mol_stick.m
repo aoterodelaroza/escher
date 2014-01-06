@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[255 0 0], tex="stick_default", LOG=0)
-% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[255 0 0], tex="stick_default", LOG=0)
+function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default", LOG=0)
+% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default", LOG=0)
 %
 % mol_stick - create sticks for a pair of atomic types given by their symbol.
 % Optionally, use a distance criterion to build all the covalent bonds
@@ -43,11 +43,21 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 %      (from 0 to 255) representing the rgb components. In addition, a fourth 
 %      component (filter) and a fifth component (transmit) control the transparency
 %      of the stick.
+%      If any of the components is negative, use the internal color scheme to
+%      color half the stick with one atom's color and half with the other.
 % tex: string identifier of the stick texture. This is interpreted (in subsequent calls
 %      to the rep routines, i.e., not immediately) as the texture of the stick by calling 
 %      the internal texture database.
 % {LOG}: verbose level (0=silent,1=verbose).
 %
+
+  global atdb
+  if (!exist("atdb","var") || isempty(atdb))
+    err = mol_dbstart();
+    if (err != 0)
+      error("mol_stick: the atomic database does not start right!");
+    endif
+  endif
 
   ## distance matrix
   nat = mol.nat;
@@ -116,22 +126,45 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
                 (mol.atnumber' * ones(1,nat) == z2) & (ones(nat,1) * mol.atnumber == z1));
   endif
 
+  dohalf = any(rgb < 0);
+
   ## add the sticks
   [inew,jnew] = find(isstick);
   nnew = length(inew);
-  newstick = cell(1,nnew);
+  newstick = cell(1,(dohalf+1) * nnew);
   [rep itex] = rep_registertexture(rep,tex);
+  l = 0;
   for k = 1:nnew
     i = inew(k); j = jnew(k);
-    newstick{k} = stick();
-    newstick{k}.name = strcat(mol.atname{i},"_",mol.atname{j});
-    newstick{k}.x0 = mol.atxyz(:,i)';
-    newstick{k}.x1 = mol.atxyz(:,j)';
-    newstick{k}.r = radius;
-    newstick{k}.rgb = rgb;
-    newstick{k}.tex = itex;
+    l++;
+    if (dohalf) 
+      xhalf = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
+      newstick{l} = stick();
+      newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_1");
+      newstick{l}.x0 = mol.atxyz(:,i)';
+      newstick{l}.x1 = xhalf;
+      newstick{l}.r = radius;
+      newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
+      newstick{l}.tex = itex;
+      l++;
+      newstick{l} = stick();
+      newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
+      newstick{l}.x0 = xhalf;
+      newstick{l}.x1 = mol.atxyz(:,j)';
+      newstick{l}.r = radius;
+      newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
+      newstick{l}.tex = itex;
+    else
+      newstick{l} = stick();
+      newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j});
+      newstick{l}.x0 = mol.atxyz(:,i)';
+      newstick{l}.x1 = mol.atxyz(:,j)';
+      newstick{l}.r = radius;
+      newstick{l}.rgb = rgb;
+      newstick{l}.tex = itex;
+    endif
   endfor
-  rep.nstick = rep.nstick + nnew;
+  rep.nstick = rep.nstick + (dohalf+1) * nnew;
   rep.stick = [rep.stick, newstick];
 
 endfunction

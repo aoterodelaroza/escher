@@ -1,3 +1,13 @@
+2014-01-06  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_stick.m: the default behavior now is to color the stick
+	half in the color of one atom and half in the other, using the
+	internal color database.
+
+2014-01-05  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/write_json.m: finished the implementation.
+
 2014-01-03  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/rep_write_json.m: improved the json file to write every type
