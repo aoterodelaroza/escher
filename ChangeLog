@@ -1,7 +1,12 @@
+2014-01-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_dbstart.m: ncp, bcp, rcp, and ccp are now elements 105
+	through 108.
+
 2014-01-19  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/cr_read_espresso.m: fixed potential bug in
-	cr_read_espresso. 
+	cr_read_espresso.
 
 2014-01-16  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
