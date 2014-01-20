@@ -131,7 +131,7 @@ function cr = cr_read_espresso(file, LOG=0)
     line = fgetl(fid);
   until (!ischar(line) && (line == -1))
 
-  cr.r = r;
+  cr.r = r';
   cr.g = r * r';
   cr.a = sqrt(diag(cr.g))';
   cr.b(1) = acos(cr.g(2,3) / (cr.a(2)*cr.a(3)));
