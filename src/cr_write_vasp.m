@@ -39,10 +39,14 @@ function cr_write_vasp(cr,file="",LOG=0)
   fprintf(lu,"%s ",cr.attyp{1:cr.ntyp});
   fprintf(lu,")\n");
   fprintf(lu,"%.5f\n",1);
-  r = cr.r';
+  r = cr.r;
   r = r * bohrtoans;
   fprintf(lu,"%.12f %.12f %.12f\n %.12f %.12f %.12f\n %.12f %.12f %.12f\n",r');
   
+  for i = 1:cr.ntyp
+    fprintf(lu,"%s ",mol_dbsymbol(cr.ztyp(i)));
+  endfor
+  fprintf(lu,"\n");
   for i = 1:cr.ntyp
     fprintf(lu,"%d ",sum(cr.typ == i));
   endfor

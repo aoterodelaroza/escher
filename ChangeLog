@@ -1,5 +1,8 @@
 2014-01-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
+	* src/cr_read_vasp.m, src/cr_write_vasp.m: consistency of the r/r'
+	checked. 
+
 	* src/mol_dbstart.m: ncp, bcp, rcp, and ccp are now elements 105
 	through 108.
 
