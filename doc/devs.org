@@ -50,12 +50,13 @@ v means variable (global)
 
 ** Crystal mask
 
-|   | Variable | Type   | Dim./Res. | Apropos                                    |
-|---+----------+--------+-----------+--------------------------------------------|
-| + | crmask   | fun    | mask      | Constructor                                |
-| x | nat      | scalar | integer   | Number of atoms in the mask                |
-| x | l        | array  | natx3     | Lattice vector to the position of the atom |
-| x | i        | array  | 1xnat     | Crystal index of the atom                  |
+|   | Variable   | Type   | Dim./Res. | Apropos                                    |
+|---+------------+--------+-----------+--------------------------------------------|
+| + | crmask     | fun    | mask      | Constructor                                |
+| x | nat        | scalar | integer   | Number of atoms in the mask                |
+| x | l          | array  | natx3     | Lattice vector to the position of the atom |
+| x | i          | array  | 1xnat     | Crystal index of the atom                  |
+| + | mask_merge | fun    | mask      | Merge two masks                            |
 
 * Molecule
 

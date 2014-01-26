@@ -1,7 +1,16 @@
+2014-01-25  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/cr_applymask.m: fixed missing r matrix.
+
+	* src/mask_merge.m: added, merge two masks.
+
+	* src/cr_molmotif.m: rewritten top to bottom. allmaincell
+	disappeared and now returns a proper mask.
+
 2014-01-20  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/cr_read_vasp.m, src/cr_write_vasp.m: consistency of the r/r'
-	checked. 
+	checked.
 
 	* src/mol_dbstart.m: ncp, bcp, rcp, and ccp are now elements 105
 	through 108.

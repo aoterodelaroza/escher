@@ -98,7 +98,7 @@ function cr = cr_read_espresso(file, LOG=0)
       for i = 1:cr.nat
         line = fgetl(fid);
         [dum atsym] = sscanf(line,"%d %s","C");
-        z = mol_dbatom(atsym); 
+        z = mol_dbatom(atsym);
         idx = find(cr.ztyp == z);
         if (idx > 0)
           cr.typ(i) = idx;

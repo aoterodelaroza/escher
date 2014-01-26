@@ -26,6 +26,8 @@ function [mol] = cr_applymask(cr, mask);
 
 bohr2angstrom = 0.52917720859;
 
+r = cr.r;
+
 mol = molecule();
 mol.atname = cell(1,mask.nat);
 mol.atnumber = zeros(1,mask.nat);
