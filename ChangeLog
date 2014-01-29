@@ -1,3 +1,7 @@
+2014-01-29  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/mol_dbstart.m: changed default colors for C and H.
+
 2014-01-25  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/cr_applymask.m: fixed missing r matrix.

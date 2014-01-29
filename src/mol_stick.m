@@ -39,7 +39,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 %         If strict is 2, use s1 and s2 as strings (compare with strcmp),
 %         not regular expressions.
 % radius: the stick radius. By default, 0.05.
-% rgb: the stick color. By default, red. rgb can be given as three integer numbers 
+% rgb: the stick color. By default, half and half. rgb can be given as three integer numbers 
 %      (from 0 to 255) representing the rgb components. In addition, a fourth 
 %      component (filter) and a fifth component (transmit) control the transparency
 %      of the stick.
