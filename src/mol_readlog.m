@@ -25,7 +25,7 @@ function [mol] = mol_readlog (filename)
   [fid,msg] = fopen(filename,"r");
   if (fid < 0 || ferror(fid)) 
     disp(msg)
-    error("mol_readxyz: Could not find -- %s",filename);
+    error("mol_readlog: Could not find -- %s",filename);
   endif
 
   ## get the last geometry
