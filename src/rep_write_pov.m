@@ -147,24 +147,35 @@ function rep_write_pov(rep,file="",LOG=0)
     error("empty camera: missing rep_setdefaultscene?");
   endif
   fprintf(fid,"camera {\n");
-  ## if (isfield(rep.cam,"persp"))
-  ##   if (rep.cam.persp == 1)
-  ##     fprintf(fid,"  perspective\n");
-  ##   else
-  ##     fprintf(fid,"  orthographic\n");
-  ##   endif
-  ## endif
-  fprintf(fid,"  location  <%.5f,%.5f,%.5f>\n",rep.cam.cop);
-  fprintf(fid,"  sky       <%.5f,%.5f,%.5f>\n",rep.cam.sky);
-  fprintf(fid,"  up        <%.5f,%.5f,%.5f>\n",rep.cam.vuv);
-  fprintf(fid,"  right     <%.5f,%.5f,%.5f>\n",rep.cam.rht);
-  fprintf(fid,"  direction <%.5f,%.5f,%.5f>\n",rep.cam.drt);
-  if (isfield(rep.cam,"angle"))
+  if (isfield(rep.cam,"persp") && !isempty(rep.cam.persp))
+    if (rep.cam.persp == 1)
+      fprintf(fid,"  perspective\n");
+    else
+      fprintf(fid,"  orthographic\n");
+    endif
+  endif
+  if (isfield(rep.cam,"cop") && !isempty(rep.cam.cop))
+    fprintf(fid,"  location  <%.5f,%.5f,%.5f>\n",rep.cam.cop);
+  endif
+  if (isfield(rep.cam,"sky") && !isempty(rep.cam.sky))
+    fprintf(fid,"  sky       <%.5f,%.5f,%.5f>\n",rep.cam.sky);
+  endif
+  if (isfield(rep.cam,"vuv") && !isempty(rep.cam.vuv))
+    fprintf(fid,"  up        <%.5f,%.5f,%.5f>\n",rep.cam.vuv);
+  endif
+  if (isfield(rep.cam,"rht") && !isempty(rep.cam.rht))
+    fprintf(fid,"  right     <%.5f,%.5f,%.5f>\n",rep.cam.rht);
+  endif
+  if (isfield(rep.cam,"drt") && !isempty(rep.cam.drt))
+    fprintf(fid,"  direction <%.5f,%.5f,%.5f>\n",rep.cam.drt);
+  endif
+  if (isfield(rep.cam,"angle") && !isempty(rep.cam.angle))
     fprintf(fid,"  angle   %.5f\n",rep.cam.angle);
   endif
-  if (isfield(rep.cam,"vrp"))
+  if (isfield(rep.cam,"vrp") && !isempty(rep.cam.vrp))
     fprintf(fid,"  look_at   <%.5f,%.5f,%.5f>\n",rep.cam.vrp);
-  elseif (!isempty(rep.cam.matrix))
+  endif
+  if (isfield(rep.cam,"matrix") && !isempty(rep.cam.matrix))
     ## I use the COP as the initial position of the camera, then translate
     ## away using the modelview matrix. But for this to work I need to translate the
     ## COP to the origin before applying the translation.
