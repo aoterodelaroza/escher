@@ -1,3 +1,14 @@
+2014-03-13  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
+
+	* src/camera.m: all fields are initialized as empty arrays.
+
+	* src/rep_addcamera_posdirup.m: added. Read the camera description
+	from the vanilla version of view3dscene.
+
+	* src/rep_write_pov.m: all entries in camera are now
+	optional. It's up to the rep_camera routines to set the correct
+	options.
+
 2014-03-11  Alberto Otero de la Roza  <aoterodelaroza@ucmerced.edu>
 
 	* src/mol_readlog.m: fixed typo.

@@ -1,4 +1,4 @@
-x% Copyright (C) 2011 Victor Lua~na and Alberto Otero-de-la-Roza
+% Copyright (C) 2011 Victor Lua~na and Alberto Otero-de-la-Roza
 %
 % This octave routine is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
