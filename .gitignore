@@ -5,6 +5,9 @@
 *tags
 *.db
 
+# icon
+!icon/*png
+
 # workaround camera placement with g3dviewer
 tools/
 
