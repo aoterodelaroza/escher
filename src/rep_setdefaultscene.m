@@ -10,50 +10,35 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1,LOG=0);
-% function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1,LOG=0);
+function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1);
+% function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1);
 %
 % rep_setdefaultscene - given a representation, set up a camera, lights
 % and background colors with reasonable default parameters.
 %
 % Input variables:
 % repi: input representation.
-% r: optional modelview matrix (4x3 or 4x4) or camangle vector (1x3).
-% angle: the camera field of view.
+% r: optional camangle vector (1x3) for use with rep_addcamera_tessel.
+% angle: the distance from the object in terms of camera angle.
 % persp: 1 for perspective, 0 for orthographic.
-% LOG: verbose level (0=silent,1=verbose).
 %
 % Output variables:
 % rep: output representation.
 
   rep = repi;
 
-  if (LOG > 0)
-    printf("Adopting default parameters for representation...\n");
-  endif
-
   ## add the camera, default placement
   if (isnumeric(r) && !isscalar(r))
-    if (size(r,1) > 1)
-      rep = rep_addcamera_modelview(rep,r,angle,persp,LOG);
-    else
-      rep = rep_addcamera(rep,r,angle,persp,LOG);
-      r = "";
-    endif
+    rep = rep_addcamera_tessel(rep,r,angle,persp);
   else
-    rep = rep_addcamera(rep,:,:,:,LOG);
-    r = "";
+    rep = rep_addcamera(rep);
   endif
 
   ## add the lights, default placement
-  rep = rep_addlight(rep,rep.cam.cop,r,:,:,LOG);
-  rep = rep_addlight(rep,rep.cam.sky*100,r,:,:,LOG);
+  rep = rep_addlight(rep,rep.cam.location,:,:);
+  rep = rep_addlight(rep,rep.cam.sky*100,:,:);
 
   ## set the background color to white
-  rep = rep_setbgcolor(rep,[255 255 255],LOG);
-
-  if (LOG > 0)
-    printf("\n");
-  endif
+  rep = rep_setbgcolor(rep,[255 255 255]);
 
 endfunction

@@ -143,7 +143,7 @@ function rep_write_pov(rep,file="",LOG=0)
   endfor
 
   ## camera
-  if (!isfield(rep.cam,"cop") || isempty(rep.cam.cop))
+  if (!isfield(rep,"cam") || isempty(rep.cam))
     error("empty camera: missing rep_setdefaultscene?");
   endif
   fprintf(fid,"camera {\n");
@@ -154,52 +154,12 @@ function rep_write_pov(rep,file="",LOG=0)
       fprintf(fid,"  orthographic\n");
     endif
   endif
-  if (isfield(rep.cam,"cop") && !isempty(rep.cam.cop))
-    fprintf(fid,"  location  <%.5f,%.5f,%.5f>\n",rep.cam.cop);
-  endif
-  if (isfield(rep.cam,"sky") && !isempty(rep.cam.sky))
-    fprintf(fid,"  sky       <%.5f,%.5f,%.5f>\n",rep.cam.sky);
-  endif
-  if (isfield(rep.cam,"vuv") && !isempty(rep.cam.vuv))
-    fprintf(fid,"  up        <%.5f,%.5f,%.5f>\n",rep.cam.vuv);
-  endif
-  if (isfield(rep.cam,"rht") && !isempty(rep.cam.rht))
-    fprintf(fid,"  right     <%.5f,%.5f,%.5f>\n",rep.cam.rht);
-  endif
-  if (isfield(rep.cam,"drt") && !isempty(rep.cam.drt))
-    fprintf(fid,"  direction <%.5f,%.5f,%.5f>\n",rep.cam.drt);
-  endif
-  if (isfield(rep.cam,"angle") && !isempty(rep.cam.angle))
-    fprintf(fid,"  angle   %.5f\n",rep.cam.angle);
-  endif
-  if (isfield(rep.cam,"vrp") && !isempty(rep.cam.vrp))
-    fprintf(fid,"  look_at   <%.5f,%.5f,%.5f>\n",rep.cam.vrp);
-  endif
-  if (isfield(rep.cam,"matrix") && !isempty(rep.cam.matrix))
-    ## I use the COP as the initial position of the camera, then translate
-    ## away using the modelview matrix. But for this to work I need to translate the
-    ## COP to the origin before applying the translation.
-    fprintf(fid,"  transform{\n");
-    fprintf(fid,"    translate <%.10f, %.10f, %.10f>\n",rep.cam.cop);
-    fprintf(fid,"  inverse }\n");
-    fprintf(fid,"  transform{\n");
-    fprintf(fid,"    matrix <\n");
-    fprintf(fid,"    %.10f, %.10f, %.10f,\n",rep.cam.matrix(1,1:3));
-    fprintf(fid,"    %.10f, %.10f, %.10f,\n",rep.cam.matrix(2,1:3));
-    fprintf(fid,"    %.10f, %.10f, %.10f,\n",rep.cam.matrix(3,1:3));
-    fprintf(fid,"    %.10f, %.10f, %.10f\n",rep.cam.matrix(4,1:3));
-    fprintf(fid,"    >\n");
-    fprintf(fid,"  inverse }\n");
-    fprintf(fid,"  transform{\n");
-    fprintf(fid,"    translate <%.10f, %.10f, %.10f>\n",rep.cam.cop);
-    fprintf(fid,"  }\n");
-  endif
-  if (isfield(rep.cam,"rot") && !isempty(rep.cam.rot))
-    fprintf(fid,"  rotate   <%.5f,%.5f,%.5f>\n",rep.cam.rot);
-  endif
-  if (isfield(rep.cam,"trans") && !isempty(rep.cam.trans))
-    fprintf(fid,"  translate   <%.5f,%.5f,%.5f>\n",rep.cam.trans);
-  endif
+  fprintf(fid,"  location  <%.5f,%.5f,%.5f>\n",rep.cam.location);
+  fprintf(fid,"  look_at   <%.5f,%.5f,%.5f>\n",rep.cam.lookat);
+  fprintf(fid,"  angle   %.5f\n",rep.cam.angle);
+  fprintf(fid,"  sky       <%.5f,%.5f,%.5f>\n",rep.cam.sky);
+  fprintf(fid,"  right     <%.5f,%.5f,%.5f>\n",rep.cam.right);
+  fprintf(fid,"  up       <%.5f,%.5f,%.5f>\n",rep.cam.up);
   fprintf(fid,"}\n");
   fprintf(fid,"\n");
 

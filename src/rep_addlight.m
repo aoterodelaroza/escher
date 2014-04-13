@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_addlight(repi,pos,r="",shadowless=0,intensity=1,LOG=0);
-% function rep = rep_addlight(repi,pos,r="",shadowless=0,intensity=1,LOG=0);
+function rep = rep_addlight(repi,pos,shadowless=0,intensity=1,LOG=0);
+% function rep = rep_addlight(repi,pos,shadowless=0,intensity=1,LOG=0);
 %
 % rep_addlight - add a light to the graphical representation
 %
@@ -20,7 +20,6 @@ function rep = rep_addlight(repi,pos,r="",shadowless=0,intensity=1,LOG=0);
 % pos: position of the light.
 %
 % Optional input variables (all have default values):
-% r: modelview transformation matrix.
 % {LOG}: verbose level (0=silent,1=verbose).
 %
 % Required output variables:
@@ -38,9 +37,6 @@ function rep = rep_addlight(repi,pos,r="",shadowless=0,intensity=1,LOG=0);
   rep.light{rep.nlight}.color = [255 255 255];
   rep.light{rep.nlight}.shadowless = shadowless;
   rep.light{rep.nlight}.intensity = intensity;
-  if (!isempty(r))
-    rep.light{rep.nlight}.matrix = r;
-  endif
 
   if (LOG>0) 
     printf("Added light number %d at <%.5f,%.5f,%.5f> angstrom, white\n",rep.nlight,pos)

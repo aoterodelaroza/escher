@@ -19,12 +19,15 @@ function cam = camera()
 % {cam}: the empty camera
 %
 
-  cam.cop = [];
+  cam.persp = 0;
+  cam.location = [];
   cam.sky = [];
-  cam.vuv = [];
-  cam.rht = [];
-  cam.drt = [];
+  cam.up = [];
+  cam.right = [];
   cam.angle = [];
+  cam.lookat = [];
+  cam.matrix = [];
   cam.rot = [];
   cam.trans = [];
+
 endfunction

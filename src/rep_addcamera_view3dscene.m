@@ -10,39 +10,37 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_addcamera(repi,pos=-1,angle=45,persp=1)
-% function rep = rep_addcamera(repi,pos,angle=45,persp=1)
+function rep = rep_addcamera_view3dscene(repi,pos,dir,up,angle=45,persp=1)
+% function rep = rep_addcamera_view3dscene(repi,pos,dir,up,angle=45,persp=1)
 %
-% rep_addcamera - add a camera to a graphical representation
-% with reasonable default values. pos is the camera location (by 
-% default, oriented in the [0 0 1] direction and at a 
-% distance to the object center. angle controls the distance to the
-% object (orthographic, persp=0) or the field of view (perspective,
-% persp=1). 
+% rep_addcamera_view3dscene - add a camera to a graphical representation
+% using the location, lookat, and sky vectors. These can be obtained
+% from the most recent version of view3dscene. They appear written on
+% the visualization window, under the names "pos", "dir", and "up",
+% respectively. The obtained povray plot is in the same orientation as
+% in view3dscene. angle controls the distance to the object
+% (orthographic, persp=0) or the field of view (perspective, persp=1).
 %
 % Input variables:
 % repi: input representation.
 % pos: position of the camera (3-element vector).
+% dir: direction of the camera (3-element vector).
+% up:  up vector of the camera (3-element vector).
 % angle: distance to the object in terms of camera angle.
 % persp: 1 for perspective, 0 for orthographic.
 %
 % Required output variables:
 % rep: output representation.
 
-  [xct xmin xmax xdel] = rep_getcm(repi);
-  if (length(pos) != 3)
-    pos = xct + [0 0 1] * xdel(3) * 2;
-  endif
-
   ## set the camera 
   rep = repi;
   rep.cam = camera();
   rep.cam.location = pos; # position
-  rep.cam.lookat = xct; # direction
+  rep.cam.lookat = pos + 10 * dir; # direction
   rep.cam.persp = persp; # perspective
   rep.cam.angle = angle; # field-of-view
   rep.cam.right = [1 0 0];
   rep.cam.up = [0 0 1];
-  rep.cam.sky = [0 0 1];
+  rep.cam.sky = up;
 
 endfunction
