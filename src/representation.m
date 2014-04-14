@@ -43,5 +43,6 @@ function rep = representation()
 
   rep.load = struct();
   rep.load.shapes = 0;
+  rep.load.shapes3 = 0;
 
 endfunction

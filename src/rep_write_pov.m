@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep_write_pov(rep,file="",LOG=0)
-% function rep_write_pov(rep,file,LOG=0)
+function rep_write_pov(rep,file="")
+% function rep_write_pov(rep,file)
 %
 % rep_write_pov - write a representation to a povray (pov) file.
 %
@@ -20,7 +20,6 @@ function rep_write_pov(rep,file="",LOG=0)
 % file: pov file. If no file is given, use standard output.
 %
 % Optional input variables (all have default values):
-% {LOG}: verbose level (0=silent,1=verbose).
 %
 
   bohrtoans = 0.52917720859;
@@ -46,6 +45,9 @@ function rep_write_pov(rep,file="",LOG=0)
   if (rep.load.shapes)
     fprintf(fid,"#include \"shapes.inc\"\n");
   endif
+  if (rep.load.shapes3)
+    fprintf(fid,"#include \"shapes3.inc\"\n");
+  endif
 
   ## textures
   pigment = {};
@@ -59,14 +61,26 @@ function rep_write_pov(rep,file="",LOG=0)
   fprintf(fid,"#declare Mol1 = union {\n")
   for i = 1:rep.nball
     str = pigment{rep.ball{i}.tex};
-    s = sprintf("%s %s %s","  sphere{<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
+    if (!rep.ball{i}.wire)
+      s = sprintf("%s %s %s","  sphere{<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
+    else
+      s = sprintf("%s %s %s","  object{ Ring_Sphere(%.9f,%.9f,0.01,0.01,16,16) translate <%.9f,%.9f,%.9f> texture {%s",str,"}}\n");
+    endif
     n = sum(str == "%");
     rgb = fillrgb(rep.ball{i}.rgb) / 255;
     rgb = rgb(1:n);
     if (!isempty(rgb))
-      fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex},rgb);
+      if (!rep.ball{i}.wire)
+        fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex},rgb);
+      else
+        fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.texlib{rep.ball{i}.tex},rgb);
+      endif
     else
-      fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex});
+      if (!rep.ball{i}.wire)
+        fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex});
+      else
+        fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.texlib{rep.ball{i}.tex});
+      endif
     endif
   endfor
 
@@ -203,9 +217,6 @@ function rep_write_pov(rep,file="",LOG=0)
     root = strrep(file,".pov","");
     fprintf(fid,"//runme: povray -D -UV +I%s +O%s.png +W1000 +H1000 +A\n",file,root);
     fclose(fid);
-  endif
-  if (LOG > 0)
-    printf("rep_write_pov: Writing %s\n", file);
   endif
 
 endfunction

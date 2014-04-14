@@ -141,6 +141,7 @@ v means variable (global)
 | x | bgcolor                   | array          | 1x3         | Background color rgb                                      |
 | x | load                      | struct         |             | List of packages to load                                  |
 | x | load.shapes               | bool           | scalar      | Load shapes.inc                                           |
+| x | load.shapes3              | bool           | scalar      | Load shapes3.inc                                          |
 | + | rep_read_basin            | fun            | rep         | Read a rep from a basin file                              |
 | + | rep_setbgcolor            | fun            | rep         | Set the background color                                  |
 | + | rep_getcm                 | fun            | array(4)    | Get the rep center-of-mass and other geometric parameters |
@@ -172,6 +173,7 @@ v means variable (global)
 | x | r        | scalar | real      | Radius (angstrom)          |
 | x | rgb      | array  | 1x3,4,5   | Color                      |
 | x | tex      | string |           | Texture                    |
+| x | wire     | bool   |           | Wireframe in povray        |
 
 ** Stick
 

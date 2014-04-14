@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
-% function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1 -1 -1], tex="ball_default", LOG=0)
+function rep = mol_ball(mol,addto="",symb=".+",strict=0,radius=-0.6,rgb=[-1 -1 -1],tex="ball_default",wire=0)
+% function rep = mol_ball(mol,addto="",symb=".+",strict=0,radius=-0.6,rgb=[-1 -1 -1],tex="ball_default",wire=0)
 %
 % mol_ball - create balls for an atomic type given by its symbol.
 %
@@ -39,7 +39,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
 % tex: string identifier of the ball texture. This is interpreted (in subsequent calls
 %      to the rep routines, i.e., not immediately) as the texture of the ball by calling 
 %      the internal texture database.
-% {LOG}: verbose level (0=silent,1=verbose).
+% wire: use wireframe in the povray output (requires shapes3.inc)
 %
 
   ## number of atoms
@@ -60,7 +60,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
     if (strcmp(symb,".+"))
       zz = -1;
     else
-      zz = mol_dbatom(symb,LOG);
+      zz = mol_dbatom(symb);
     endif
   endif
   [rep itex] = rep_registertexture(rep,tex);
@@ -77,7 +77,7 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
       rep.ball{n} = ball();
       rep.ball{n}.x = mol.atxyz(:,i)';
       rep.ball{n}.name = mol.atname{i};
-      [dum, atom] = mol_dbsymbol(mol.atnumber(i),LOG);
+      [dum, atom] = mol_dbsymbol(mol.atnumber(i));
       if (radius>0) 
         rep.ball{n}.r = radius;
       else
@@ -89,7 +89,13 @@ function rep = mol_ball(mol, addto="", symb=".+", strict=0, radius=-0.6, rgb=[-1
         rep.ball{n}.rgb = [atom.color 0 0];
       endif
       rep.ball{n}.tex = itex;
+      rep.ball{n}.wire = wire;
     endif
   endfor
+
+  ## register shapes3.inc for loading if using rounded cylinders
+  if (wire)
+    rep.load.shapes3 = 1;
+  endif
 
 endfunction
