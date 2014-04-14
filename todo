@@ -1,3 +1,6 @@
+(!) fix the examples in escher_data
+(!) fix the examples in the webpage
+
 * add stick fancy representation similar to mercury
 * add orientation along crystallographic axes
 * add routine to plot the crystallographic axes
@@ -40,7 +43,6 @@ surface_() -- constructor (update me!)
   6. Re-write write_obj to take into account the number of edges,
      or to write a mesh directly.
 * triangles in obj files
-* Kabsch algorithm?
 * Problem with cartesian coordinates not being consistent with critic2's.
 * BUG: orthographic camera does not play well with the moldelview matrix distance parameter.
 * Improve the file readers to make escher go faster.
@@ -66,7 +68,6 @@ surface_() -- constructor (update me!)
 * mol_merge comprueba si hay atomos repetidos.
 * mol_getfragment acepta cell array con simbolos + regexp.
 * mapeados en povray.
-* pintar los ejes de referencia
 * construir una supercelda.
 * opciones para los sticks.
 * lector de offs
