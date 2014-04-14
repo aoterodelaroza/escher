@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_lighting(repi,model="",ifac=1)
-% function rep = rep_lighting(repi,model)
+function rep = rep_lightmodel(repi,model="",ifac=1)
+% function rep = rep_lightmodel(repi,model)
 %
-% rep_lighting - given a representation, position the lights relative
+% rep_lightmodel - given a representation, position the lights relative
 % to the location of the camera using one of the known "models". 
 %
 % Input variables:
@@ -58,7 +58,7 @@ function rep = rep_lighting(repi,model="",ifac=1)
     rep = rep_addlight(rep,x,1,ifac*0.5);
 
     ## the rim light, opposite to the camera, no shadows
-    x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu
+    x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu;
     rep = rep_addlight(rep,x,1,2*ifac);
 
   elseif (strcmp(model,"3point"))
@@ -80,7 +80,7 @@ function rep = rep_lighting(repi,model="",ifac=1)
     rep = rep_addlight(rep,x,1,ifac*0.6);
 
     ## the rim light, opposite to the camera, no shadows
-    x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu
+    x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu;
     rep = rep_addlight(rep,x,1,2*ifac);
 
   else
