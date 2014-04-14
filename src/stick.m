@@ -25,5 +25,6 @@ function st = stick()
   st.r = 0;
   st.rgb = [0 0 0 0 0];
   st.tex = 0;
+  st.round = 0;
 
 endfunction

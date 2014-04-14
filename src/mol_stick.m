@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default", LOG=0)
-% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default", LOG=0)
+function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default",round=0)
+% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default",round=0)
 %
 % mol_stick - create sticks for a pair of atomic types given by their symbol.
 % Optionally, use a distance criterion to build all the covalent bonds
@@ -48,7 +48,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 % tex: string identifier of the stick texture. This is interpreted (in subsequent calls
 %      to the rep routines, i.e., not immediately) as the texture of the stick by calling 
 %      the internal texture database.
-% {LOG}: verbose level (0=silent,1=verbose).
+% round: use rounded cylinders in povray (requires shapes.inc).
 %
 
   global atdb
@@ -97,12 +97,12 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
     if (strcmp(s1,".+"))
       z1 = -1;
     else
-      z1 = mol_dbatom(s1,LOG);
+      z1 = mol_dbatom(s1);
     endif
     if (strcmp(s1,".+"))
       z2 = -1;
     else
-      z2 = mol_dbatom(s2,LOG);
+      z2 = mol_dbatom(s2);
     endif
   endif
   if (strict == 2) 
@@ -131,29 +131,76 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
   ## add the sticks
   [inew,jnew] = find(isstick);
   nnew = length(inew);
-  newstick = cell(1,(dohalf+1) * nnew);
+  if (round && dohalf)
+    ifac = 4;
+  elseif (dohalf)
+    ifac = 2;
+  else
+    ifac = 1;
+  endif
+  newstick = cell(1,ifac * nnew);
   [rep itex] = rep_registertexture(rep,tex);
   l = 0;
   for k = 1:nnew
     i = inew(k); j = jnew(k);
     l++;
     if (dohalf) 
-      xhalf = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
-      newstick{l} = stick();
-      newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_1");
-      newstick{l}.x0 = mol.atxyz(:,i)';
-      newstick{l}.x1 = xhalf;
-      newstick{l}.r = radius;
-      newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
-      newstick{l}.tex = itex;
-      l++;
-      newstick{l} = stick();
-      newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
-      newstick{l}.x0 = xhalf;
-      newstick{l}.x1 = mol.atxyz(:,j)';
-      newstick{l}.r = radius;
-      newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
-      newstick{l}.tex = itex;
+      if (!round)
+        xhalf = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
+        newstick{l} = stick();
+        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_1");
+        newstick{l}.x0 = mol.atxyz(:,i)';
+        newstick{l}.x1 = xhalf;
+        newstick{l}.r = radius;
+        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
+        newstick{l}.tex = itex;
+        newstick{l}.round = round;
+        l++;
+        newstick{l} = stick();
+        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
+        newstick{l}.x0 = xhalf;
+        newstick{l}.x1 = mol.atxyz(:,j)';
+        newstick{l}.r = radius;
+        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
+        newstick{l}.tex = itex;
+        newstick{l}.round = round;
+      else
+        newstick{l} = stick();
+        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_1");
+        newstick{l}.x0 = mol.atxyz(:,i)';
+        newstick{l}.x1 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
+        newstick{l}.r = radius;
+        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
+        newstick{l}.tex = itex;
+        newstick{l}.round = round;
+        l++;
+        newstick{l} = stick();
+        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
+        newstick{l}.x0 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
+        newstick{l}.x1 = mol.atxyz(:,j)';
+        newstick{l}.r = radius;
+        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
+        newstick{l}.tex = itex;
+        newstick{l}.round = round;
+        l++;
+        newstick{l} = stick();
+        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
+        newstick{l}.x0 = 0.6 * mol.atxyz(:,i)' + 0.4 * mol.atxyz(:,j)';
+        newstick{l}.x1 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
+        newstick{l}.r = radius;
+        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
+        newstick{l}.tex = itex;
+        newstick{l}.round = 0;
+        l++;
+        newstick{l} = stick();
+        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
+        newstick{l}.x0 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
+        newstick{l}.x1 = 0.4 * mol.atxyz(:,i)' + 0.6 * mol.atxyz(:,j)';
+        newstick{l}.r = radius;
+        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
+        newstick{l}.tex = itex;
+        newstick{l}.round = 0;
+      endif
     else
       newstick{l} = stick();
       newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j});
@@ -162,9 +209,15 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
       newstick{l}.r = radius;
       newstick{l}.rgb = rgb;
       newstick{l}.tex = itex;
+      newstick{l}.round = round;
     endif
   endfor
-  rep.nstick = rep.nstick + (dohalf+1) * nnew;
+  rep.nstick = rep.nstick + ifac * nnew;
   rep.stick = [rep.stick, newstick];
+
+  ## register shapes.inc for loading if using rounded cylinders
+  if (round)
+    rep.load.shapes = 1;
+  endif
 
 endfunction

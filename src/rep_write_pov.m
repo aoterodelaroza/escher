@@ -36,16 +36,16 @@ function rep_write_pov(rep,file="",LOG=0)
   endif
 
   ## pov header
-##  fprintf(fid,"#include \"colors.inc\"\n");
-##  fprintf(fid,"#include \"glass.inc\"\n");
-##  fprintf(fid,"#include \"textures.inc\"\n");
-##  fprintf(fid,"#include \"woods.inc\"\n");
-##  fprintf(fid,"#include \"stones.inc\"\n");
   fprintf(fid,"// Model created MolWare, adapted from tessel's writepov.f \n");
   if (isfield(rep,"name") && !isempty(rep.name))
     fprintf(fid,"// Name: %s \n",rep.name);
   endif
   fprintf(fid,"// \n\n");
+
+  ## includes
+  if (rep.load.shapes)
+    fprintf(fid,"#include \"shapes.inc\"\n");
+  endif
 
   ## textures
   pigment = {};
@@ -77,7 +77,11 @@ function rep_write_pov(rep,file="",LOG=0)
       continue
     endif
     str = pigment{rep.stick{i}.tex};
-    s = sprintf("%s %s %s","   cylinder{<%.9f,%.9f,%.9f>,<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
+    if (!rep.stick{i}.round)
+      s = sprintf("%s %s %s","   cylinder{<%.9f,%.9f,%.9f>,<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
+    else
+      s = sprintf("%s %s %s","   object{ Round_Cylinder(<%.9f,%.9f,%.9f>,<%.9f,%.9f,%.9f>,%.9f,0.1,1) texture {%s",str,"}}\n");
+    endif
     n = sum(str == "%");
     rgb = fillrgb(rep.stick{i}.rgb) / 255;
     rgb = rgb(1:n);

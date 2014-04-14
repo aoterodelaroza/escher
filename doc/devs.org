@@ -98,9 +98,9 @@ v means variable (global)
 | + | mol_transform        | fun          | mol            | Rotate and translate a molecule                             |
 | + | mol_classify         | fun          | mol            | Group the atoms in the molecule into classes                |
 | + | mol_addatom          | fun          | mol            | Add an atom to a molecule                                   |
-| + | mol_isplanar         | fun          | logical,array  | True if the molecule is planar (and the perp vector)        |
-| + | mol_islinear         | fun          | logical,array  | True if the molecule is linear (and parallel vector)        |
-| + | mol_isnew            | fun          | logical        | True if the given atom is identical to one in the molecule  |
+| + | mol_isplanar         | fun          | bool,array     | True if the molecule is planar (and the perp vector)        |
+| + | mol_islinear         | fun          | bool,array     | True if the molecule is linear (and parallel vector)        |
+| + | mol_isnew            | fun          | bool           | True if the given atom is identical to one in the molecule  |
 | + | mol_geom             | fun          | void           | Print distances, angles, and dihedrals of a molecule        |
 | + | mol_2molsgeometry    | fun          | void           | Calculate distances between atoms in two different mols     |
 | + | mol_internalgeometry | fun          | void           | Calculate and print information about the geoemtry of a mol |
@@ -139,6 +139,8 @@ v means variable (global)
 | x | nlight                    | scalar         | integer     | Number of lights in the scene                             |
 | x | light                     | cell(light)    | 1xnlight    | Light cell array                                          |
 | x | bgcolor                   | array          | 1x3         | Background color rgb                                      |
+| x | load                      | struct         |             | List of packages to load                                  |
+| x | load.shapes               | bool           | scalar      | Load shapes.inc                                           |
 | + | rep_read_basin            | fun            | rep         | Read a rep from a basin file                              |
 | + | rep_setbgcolor            | fun            | rep         | Set the background color                                  |
 | + | rep_getcm                 | fun            | array(4)    | Get the rep center-of-mass and other geometric parameters |
@@ -182,6 +184,7 @@ v means variable (global)
 | x | r        | scalar | real      | Radius (angstrom)           |
 | x | rgb      | array  | 1x3,4,5   | Color                       |
 | x | tex      | string |           | Texture                     |
+| x | round    | bool   | 1         | Rounded stick?              |
 
 ** Triangle
 
@@ -215,7 +218,7 @@ v means variable (global)
 | + | camera   | fun    |    camera | Constructor                           |
 | x | location | array  |       1x3 | Location of the camera (angstrom)     |
 | x | lookat   | array  |       1x3 | Point the camera points at (angstrom) |
-| x | persp    | scalar |   logical | 1=perspective, 0=orthographic         |
+| x | persp    | scalar |      bool | 1=perspective, 0=orthographic         |
 | x | up       | array  |       1x3 | up camera vector (angstrom)           |
 | x | right    | array  |       1x3 | right camera vector (angstrom)        |
 | x | sky      | array  |       1x3 | sky camera vector (angstrom)          |
@@ -229,7 +232,7 @@ v means variable (global)
 | x | x          | array  | 1x3       | Position (angstrom)  |
 |   | color      | array  | 1x3       | Color (rgb)          |
 | x | intensity  | scalar | real      | Intensity (1=normal) |
-| x | shadowless | scalar | logical   | Cast shadows?        |
+| x | shadowless | scalar | bool      | Cast shadows?        |
 | x | matrix     | array  | 3x3,4x3   | modelview matrix     |
 
 ** Texture

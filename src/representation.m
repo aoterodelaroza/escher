@@ -41,4 +41,7 @@ function rep = representation()
   rep.bgcolor = zeros(1,3);
   rep.texlib = {};
 
+  rep.load = struct();
+  rep.load.shapes = 0;
+
 endfunction
