@@ -18,6 +18,8 @@ function rep = rep_addlight(repi,pos,shadowless=0,intensity=1,LOG=0);
 % Required input variables:
 % repi: input representation.
 % pos: position of the light.
+% shadowless: the lights do not cast shadows in the povray scene.
+% intensity: light intensity factor.
 %
 % Optional input variables (all have default values):
 % {LOG}: verbose level (0=silent,1=verbose).

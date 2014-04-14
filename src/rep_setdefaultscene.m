@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1);
-% function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1);
+function rep = rep_setdefaultscene(repi,r="",lighting="3point",ifac=1,angle=45,persp=1);
+% function rep = rep_setdefaultscene(repi,r="",lighting="3point",ifac=1,angle=45,persp=1);
 %
 % rep_setdefaultscene - given a representation, set up a camera, lights
 % and background colors with reasonable default parameters.
@@ -19,6 +19,8 @@ function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1);
 % Input variables:
 % repi: input representation.
 % r: optional camangle vector (1x3) for use with rep_addcamera_tessel.
+% lighting: the lighting model.
+% ifac: global light intensity factor
 % angle: the distance from the object in terms of camera angle.
 % persp: 1 for perspective, 0 for orthographic.
 %
@@ -35,8 +37,7 @@ function rep = rep_setdefaultscene(repi,r="",angle=45,persp=1);
   endif
 
   ## add the lights, default placement
-  rep = rep_addlight(rep,rep.cam.location,:,:);
-  rep = rep_addlight(rep,rep.cam.sky*100,:,:);
+  rep = rep_lightmodel(rep,lighting,ifac);
 
   ## set the background color to white
   rep = rep_setbgcolor(rep,[255 255 255]);

@@ -148,6 +148,7 @@ v means variable (global)
 | + | rep_addcamera_meshlab     | fun            | rep         | Add a camera using meshlab's info                         |
 | + | rep_addcamera_view3dscene | fun            | rep         | Add a camera using view3dscene's info                     |
 | + | rep_addlight              | fun            | rep         | Add a light to the scene                                  |
+| + | rep_lighting              | fun            | rep         | Add a light model to the scene                            |
 | + | rep_setdefaultscene       | fun            | rep         | Set the scene with default cameras, light and bg color    |
 | + | rep_transform             | fun            | rep         | Rotate and translate balls, sticks and vertices of a rep  |
 | + | rep_surface               | fun            | rep         | Create the representation of a parametric surface         |
