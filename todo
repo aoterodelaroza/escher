@@ -1,7 +1,6 @@
 (!) fix the examples in escher_data
 (!) fix the examples in the webpage
 
-* add stick fancy representation similar to mercury
 * add orientation along crystallographic axes
 * add routine to plot the crystallographic axes
 
@@ -44,11 +43,8 @@ surface_() -- constructor (update me!)
      or to write a mesh directly.
 * triangles in obj files
 * Problem with cartesian coordinates not being consistent with critic2's.
-* BUG: orthographic camera does not play well with the moldelview matrix distance parameter.
-* Improve the file readers to make escher go faster.
 * routine to build crystal from scratch. Clean up r/g/a,b descriptions.
 * adapt shmueli symmetry builder.
-* camera from meshlab copy shot!!
 * surfaces in the obj file.
 * use crystal() for all the object construction -> simpler idiom for if(isfield(bleh))
 * molecular template on crystal: mol+cr -> cryst. positions
@@ -57,7 +53,7 @@ surface_() -- constructor (update me!)
 * convertir ball{:}.x en ballx[:] en algunas rutinas para 
   las operaciones de algebra lineal.
 * modificar rep_surface para consistencia con rep_read_basin.
-* sticks con los colores de los atomos, enlaces dobles, a rayas, etc.
+* sticks para enlaces dobles, a rayas, etc.
 * similar to cr_molmotif but reads a mol and returns a cell array of connected molecules. 
   To be used with cr_crystalbox.
 * define functions for color scales
@@ -69,11 +65,7 @@ surface_() -- constructor (update me!)
 * mol_getfragment acepta cell array con simbolos + regexp.
 * mapeados en povray.
 * construir una supercelda.
-* opciones para los sticks.
 * lector de offs
 * simetria 
-* molmotif, etc. -> mas eficiente
 * mol_readxyz detects automatically whether it's atomic name or
   atomic symbol.
-
-
