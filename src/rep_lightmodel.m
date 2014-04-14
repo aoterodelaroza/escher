@@ -44,7 +44,11 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     xc = rep.cam.lookat - x0;
     dc = norm(xc); xc = xc / dc;
     xu = rep.cam.sky; xu = xu / norm(xu);
-    xd = cross(xc,xu); xd = xd / norm(xd);
+    xd = cross(xc,xu); 
+    if (norm(xd) < 1e-14)
+      xd = cross(xc,rep.cam.right); 
+    endif
+    xd = xd / norm(xd);
     
     ## fill light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
@@ -66,7 +70,11 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     xc = rep.cam.lookat - x0;
     dc = norm(xc); xc = xc / dc;
     xu = rep.cam.sky; xu = xu / norm(xu);
-    xd = cross(xc,xu); xd = xd / norm(xd);
+    xd = cross(xc,xu); 
+    if (norm(xd) < 1e-14)
+      xd = cross(xc,rep.cam.right); 
+    endif
+    xd = xd / norm(xd);
     
     ## the key light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;

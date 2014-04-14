@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_setdefaultscene(repi,r="",lighting="3point",ifac=1,angle=45,persp=1);
-% function rep = rep_setdefaultscene(repi,r="",lighting="3point",ifac=1,angle=45,persp=1);
+function rep = rep_setdefaultscene(repi,r="",lighting="direct",ifac=1,angle=45,persp=1);
+% function rep = rep_setdefaultscene(repi,r="",lighting="direct",ifac=1,angle=45,persp=1);
 %
 % rep_setdefaultscene - given a representation, set up a camera, lights
 % and background colors with reasonable default parameters.
