@@ -123,45 +123,47 @@ v means variable (global)
 
 * Representation
 
-|   | Variable                  | Type           | Dim./Res.   | Apropos                                                   |
-|---+---------------------------+----------------+-------------+-----------------------------------------------------------|
-| + | representation            | fun            | rep         | Constructor                                               |
-| o | name                      | string         |             | Name of the rep                                           |
-| x | nball                     | scalar         | integer     | Number of balls                                           |
-| x | ball                      | cell(ball)     | 1xnball     | Ball cell array                                           |
-| x | nstick                    | scalar         | integer     | Number of sticks                                          |
-| x | stick                     | cell(stick)    | 1xnstick    | Stick cell array                                          |
-| x | ntriangle                 | scalar         | integer     | Number of triangles                                       |
-| x | triangle                  | cell(triangle) | 1xntriangle | Triangle cell array                                       |
-| x | nvertex                   | scalar         | integer     | Number of vertices                                        |
-| x | vertex                    | cell(vertex)   | 1xnvertex   | Vertex cell array                                         |
-| x | cam                       | camera         |             | Camera for the scene                                      |
-| x | nlight                    | scalar         | integer     | Number of lights in the scene                             |
-| x | light                     | cell(light)    | 1xnlight    | Light cell array                                          |
-| x | bgcolor                   | array          | 1x3         | Background color rgb                                      |
-| x | load                      | struct         |             | List of packages to load                                  |
-| x | load.shapes               | bool           | scalar      | Load shapes.inc                                           |
-| x | load.shapes3              | bool           | scalar      | Load shapes3.inc                                          |
-| + | rep_read_basin            | fun            | rep         | Read a rep from a basin file                              |
-| + | rep_setbgcolor            | fun            | rep         | Set the background color                                  |
-| + | rep_getcm                 | fun            | array(4)    | Get the rep center-of-mass and other geometric parameters |
-| + | rep_merge                 | fun            | rep         | Merge two or more representations                         |
-| + | rep_refaxes               | fun            | rep         | Create sticks for the reference frame                     |
-| + | rep_addcamera             | fun            | rep         | Add a camera with reasonable parameters                   |
-| + | rep_addcamera_tessel      | fun            | rep         | Add a camera using tessel's three-angle system            |
-| + | rep_addcamera_meshlab     | fun            | rep         | Add a camera using meshlab's info                         |
-| + | rep_addcamera_view3dscene | fun            | rep         | Add a camera using view3dscene's info                     |
-| + | rep_addlight              | fun            | rep         | Add a light to the scene                                  |
-| + | rep_lighting              | fun            | rep         | Add a light model to the scene                            |
-| + | rep_setdefaultscene       | fun            | rep         | Set the scene with default cameras, light and bg color    |
-| + | rep_transform             | fun            | rep         | Rotate and translate balls, sticks and vertices of a rep  |
-| + | rep_surface               | fun            | rep         | Create the representation of a parametric surface         |
-| + | rep_polygon               | fun            | rep         | Add a polygon to the representation                       |
-| + | rep_write_off             | fun            | stdout      | Write the rep to a geomview file                          |
-| + | rep_write_coff            | fun            | stdout      | Write the rep to a geomview file with colored vertices    |
-| + | rep_write_obj             | fun            | stdout      | Write the rep to a wavefront obj file (plus mtl)          |
-| + | rep_write_pov             | fun            | stdout      | Write the rep to a povray input file                      |
-| + | rep_registertexture       | fun            | rep,integer | Register a texture in a representation.                   |
+|   | Variable                        | Type           | Dim./Res.   | Apropos                                                   |
+|---+---------------------------------+----------------+-------------+-----------------------------------------------------------|
+| + | representation                  | fun            | rep         | Constructor                                               |
+| o | name                            | string         |             | Name of the rep                                           |
+| x | nball                           | scalar         | integer     | Number of balls                                           |
+| x | ball                            | cell(ball)     | 1xnball     | Ball cell array                                           |
+| x | nstick                          | scalar         | integer     | Number of sticks                                          |
+| x | stick                           | cell(stick)    | 1xnstick    | Stick cell array                                          |
+| x | ntriangle                       | scalar         | integer     | Number of triangles                                       |
+| x | triangle                        | cell(triangle) | 1xntriangle | Triangle cell array                                       |
+| x | nvertex                         | scalar         | integer     | Number of vertices                                        |
+| x | vertex                          | cell(vertex)   | 1xnvertex   | Vertex cell array                                         |
+| x | cam                             | camera         |             | Camera for the scene                                      |
+| x | nlight                          | scalar         | integer     | Number of lights in the scene                             |
+| x | light                           | cell(light)    | 1xnlight    | Light cell array                                          |
+| x | bgcolor                         | array          | 1x3         | Background color rgb                                      |
+| x | load                            | struct         |             | List of packages to load                                  |
+| x | load.shapes                     | bool           | scalar      | Load shapes.inc                                           |
+| x | load.shapes3                    | bool           | scalar      | Load shapes3.inc                                          |
+| + | rep_read_basin                  | fun            | rep         | Read a rep from a basin file                              |
+| + | rep_setbgcolor                  | fun            | rep         | Set the background color                                  |
+| + | rep_getcm                       | fun            | array(4)    | Get the rep center-of-mass and other geometric parameters |
+| + | rep_merge                       | fun            | rep         | Merge two or more representations                         |
+| + | rep_refaxes                     | fun            | rep         | Create sticks for the reference frame                     |
+| + | rep_addcamera                   | fun            | rep         | Add a camera with reasonable parameters                   |
+| + | rep_addcamera_tessel            | fun            | rep         | Add a camera using tessel's three-angle system            |
+| + | rep_addcamera_meshlab           | fun            | rep         | Add a camera using meshlab's info                         |
+| + | rep_addcamera_view3dscene       | fun            | rep         | Add a camera using view3dscene's info                     |
+| + | rep_addlight                    | fun            | rep         | Add a light to the scene                                  |
+| + | rep_lighting                    | fun            | rep         | Add a light model to the scene                            |
+| + | rep_setdefaultscene_tessel      | fun            | rep         | Set the scene with tessel camera, light and bg color      |
+| + | rep_setdefaultscene_view3dscene | fun            | rep         | Set the scene with view3dscene camera, light and bg color |
+| + | rep_setdefaultscene_meshlab     | fun            | rep         | Set the scene with meshlab camera, light and bg color     |
+| + | rep_transform                   | fun            | rep         | Rotate and translate balls, sticks and vertices of a rep  |
+| + | rep_surface                     | fun            | rep         | Create the representation of a parametric surface         |
+| + | rep_polygon                     | fun            | rep         | Add a polygon to the representation                       |
+| + | rep_write_off                   | fun            | stdout      | Write the rep to a geomview file                          |
+| + | rep_write_coff                  | fun            | stdout      | Write the rep to a geomview file with colored vertices    |
+| + | rep_write_obj                   | fun            | stdout      | Write the rep to a wavefront obj file (plus mtl)          |
+| + | rep_write_pov                   | fun            | stdout      | Write the rep to a povray input file                      |
+| + | rep_registertexture             | fun            | rep,integer | Register a texture in a representation.                   |
 
 ** Ball
 

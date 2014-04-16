@@ -10,15 +10,16 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_setdefaultscene(repi,r="",lighting="direct",ifac=1,angle=45,persp=1);
-% function rep = rep_setdefaultscene(repi,r="",lighting="direct",ifac=1,angle=45,persp=1);
+function rep = rep_setdefaultscene_view3dscene(repi,pos,dir,up,lighting="direct",ifac=1,angle=45,persp=1);
+% function rep = rep_setdefaultscene_view3dscene(repi,pos,dir,up,lighting="direct",ifac=1,angle=45,persp=1);
 %
-% rep_setdefaultscene - given a representation, set up a camera, lights
-% and background colors with reasonable default parameters.
+% rep_setdefaultscene - given a representation, set up the camera
+% using view3dscene's positioning method, lights and background colors with 
+% reasonable default parameters.
 %
 % Input variables:
 % repi: input representation.
-% r: optional camangle vector (1x3) for use with rep_addcamera_tessel.
+% r: optional camangle vector (1x3) for use with rep_addcamera_view3dscene.
 % lighting: the lighting model.
 % ifac: global light intensity factor
 % angle: the distance from the object in terms of camera angle.
@@ -30,11 +31,7 @@ function rep = rep_setdefaultscene(repi,r="",lighting="direct",ifac=1,angle=45,p
   rep = repi;
 
   ## add the camera, default placement
-  if (isnumeric(r) && !isscalar(r))
-    rep = rep_addcamera_tessel(rep,r,angle,persp);
-  else
-    rep = rep_addcamera(rep);
-  endif
+  rep = rep_addcamera_view3dscene(rep,pos,dir,up,angle,persp);
 
   ## add the lights, default placement
   rep = rep_lightmodel(rep,lighting,ifac);
