@@ -38,7 +38,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     rep = rep_addlight(rep,rep.cam.sky*10,0,ifac);
   elseif (strcmp(model,"direct"))
     ## one at the camera
-    rep = rep_addlight(rep,rep.cam.location,0,ifac);
+    rep = rep_addlight(rep,rep.cam.location,0,1.0*ifac);
 
     x0 = rep.cam.location;
     xc = rep.cam.lookat - x0;
@@ -63,7 +63,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
 
     ## the rim light, opposite to the camera, no shadows
     x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu;
-    rep = rep_addlight(rep,x,1,2*ifac);
+    rep = rep_addlight(rep,x,1,ifac);
 
   elseif (strcmp(model,"3point"))
     x0 = rep.cam.location;
