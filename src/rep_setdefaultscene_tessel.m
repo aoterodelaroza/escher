@@ -13,7 +13,7 @@
 function rep = rep_setdefaultscene_tessel(repi,r=[0 0 45],lighting="direct",ifac=1,angle=45,persp=1);
 % function rep = rep_setdefaultscene_tessel(repi,r=[0 0 45],lighting="direct",ifac=1,angle=45,persp=1);
 %
-% rep_setdefaultscene - given a representation, set up the camera
+% rep_setdefaultscene_tessel - given a representation, set up the camera
 % using tessel's positioning method, lights and background colors with 
 % reasonable default parameters.
 %
