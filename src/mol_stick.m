@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default",round=0)
-% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default",round=0)
+function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default",round=0,stipple=0)
+% function rep = mol_stick(mol, addto="", s1="", s2="", dist=0, strict=0, radius=0.05, rgb=[-1 -1 -1], tex="stick_default",round=0,stipple=0)
 %
 % mol_stick - create sticks for a pair of atomic types given by their symbol.
 % Optionally, use a distance criterion to build all the covalent bonds
@@ -49,6 +49,8 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 %      to the rep routines, i.e., not immediately) as the texture of the stick by calling 
 %      the internal texture database.
 % round: use rounded cylinders in povray (requires shapes.inc).
+% stipple: if not zero, use a stippled stick, with the stipple length given by the
+%      argument value, in angstrom. half overrides this option.
 %
 
   global atdb
@@ -145,74 +147,35 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
     i = inew(k); j = jnew(k);
     l++;
     if (dohalf) 
+      xhalf = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
       if (!round)
-        xhalf = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
-        newstick{l} = stick();
-        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_1");
-        newstick{l}.x0 = mol.atxyz(:,i)';
-        newstick{l}.x1 = xhalf;
-        newstick{l}.r = radius;
-        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
-        newstick{l}.tex = itex;
-        newstick{l}.round = round;
-        l++;
-        newstick{l} = stick();
-        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
-        newstick{l}.x0 = xhalf;
-        newstick{l}.x1 = mol.atxyz(:,j)';
-        newstick{l}.r = radius;
-        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
-        newstick{l}.tex = itex;
-        newstick{l}.round = round;
+        newstick{l} = __add_stick(mol.atxyz(:,i)',xhalf,mol.atname{i},mol.atname{j},radius,mol.atnumber(i),itex,round);
+        newstick{++l} = __add_stick(xhalf,mol.atxyz(:,j)',mol.atname{i},mol.atname{j},radius,mol.atnumber(j),itex,round);
       else
-        newstick{l} = stick();
-        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_1");
-        newstick{l}.x0 = mol.atxyz(:,i)';
-        newstick{l}.x1 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
-        newstick{l}.r = radius;
-        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
-        newstick{l}.tex = itex;
-        newstick{l}.round = round;
-        l++;
-        newstick{l} = stick();
-        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
-        newstick{l}.x0 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
-        newstick{l}.x1 = mol.atxyz(:,j)';
-        newstick{l}.r = radius;
-        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
-        newstick{l}.tex = itex;
-        newstick{l}.round = round;
-        l++;
-        newstick{l} = stick();
-        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
-        newstick{l}.x0 = 0.6 * mol.atxyz(:,i)' + 0.4 * mol.atxyz(:,j)';
-        newstick{l}.x1 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
-        newstick{l}.r = radius;
-        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(i))');
-        newstick{l}.tex = itex;
-        newstick{l}.round = 0;
-        l++;
-        newstick{l} = stick();
-        newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j},"_2");
-        newstick{l}.x0 = (mol.atxyz(:,i)' + mol.atxyz(:,j)') / 2;
-        newstick{l}.x1 = 0.4 * mol.atxyz(:,i)' + 0.6 * mol.atxyz(:,j)';
-        newstick{l}.r = radius;
-        newstick{l}.rgb = fillrgb(atdb.color(1:3,mol.atnumber(j))');
-        newstick{l}.tex = itex;
-        newstick{l}.round = 0;
+        newstick{l} = __add_stick(mol.atxyz(:,i)',xhalf,mol.atname{i},mol.atname{j},radius,mol.atnumber(i),itex,round);
+        newstick{++l} = __add_stick(xhalf,mol.atxyz(:,j)',mol.atname{i},mol.atname{j},radius,mol.atnumber(j),itex,round);
+        newstick{++l} = __add_stick(0.6 * mol.atxyz(:,i)' + 0.4 * mol.atxyz(:,j)',xhalf,mol.atname{i},mol.atname{j},radius,mol.atnumber(i),itex,0);
+        newstick{++l} = __add_stick(xhalf,0.6 * mol.atxyz(:,j)' + 0.4 * mol.atxyz(:,i)',mol.atname{i},mol.atname{j},radius,mol.atnumber(j),itex,0);
       endif
     else
-      newstick{l} = stick();
-      newstick{l}.name = strcat(mol.atname{i},"_",mol.atname{j});
-      newstick{l}.x0 = mol.atxyz(:,i)';
-      newstick{l}.x1 = mol.atxyz(:,j)';
-      newstick{l}.r = radius;
-      newstick{l}.rgb = rgb;
-      newstick{l}.tex = itex;
-      newstick{l}.round = round;
+      if (!stipple)
+        newstick{l} = __add_stick(mol.atxyz(:,i)',mol.atxyz(:,j)',mol.atname{i},mol.atname{j},radius,rgb,itex,round);
+      else
+        dd = norm(mol.atxyz(:,i)-mol.atxyz(:,j));
+        num = ceil(dd / stipple);
+        if (mod(num,2) == 0)
+          num++;
+        endif
+        l--;
+        for n = 0:2:num-1
+          x0 = (n/num) * mol.atxyz(:,i)' + (1-n/num) * mol.atxyz(:,j)';
+          x1 = ((n+1)/num) * mol.atxyz(:,i)' + (1-(n+1)/num) * mol.atxyz(:,j)';
+          newstick{++l} = __add_stick(x0,x1,mol.atname{i},mol.atname{j},radius,rgb,itex,round);
+        endfor
+      endif
     endif
   endfor
-  rep.nstick = rep.nstick + ifac * nnew;
+  rep.nstick = rep.nstick + l;
   rep.stick = [rep.stick, newstick];
 
   ## register shapes.inc for loading if using rounded cylinders
@@ -220,4 +183,20 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
     rep.load.shapes = 1;
   endif
 
+endfunction
+function st = __add_stick(x0,x1,s1,s2,r,iz,itex,round)
+  global atdb
+
+  st = stick();
+  st.name = strcat(s1,"_",s2);
+  st.x0 = x0;
+  st.x1 = x1;
+  st.r = r;
+  if (isscalar(iz))
+    st.rgb = fillrgb(atdb.color(1:3,iz)');
+  else
+    st.rgb = iz;
+  endif
+  st.tex = itex;
+  st.round = round;
 endfunction
