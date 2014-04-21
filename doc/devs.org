@@ -153,6 +153,7 @@ v means variable (global)
 | + | rep_addcamera_view3dscene       | fun            | rep         | Add a camera using view3dscene's info                     |
 | + | rep_addlight                    | fun            | rep         | Add a light to the scene                                  |
 | + | rep_lighting                    | fun            | rep         | Add a light model to the scene                            |
+| + | rep_setdefaultscene             | fun            | rep         | Set the scene with using position and sky                 |
 | + | rep_setdefaultscene_tessel      | fun            | rep         | Set the scene with tessel camera, light and bg color      |
 | + | rep_setdefaultscene_view3dscene | fun            | rep         | Set the scene with view3dscene camera, light and bg color |
 | + | rep_setdefaultscene_meshlab     | fun            | rep         | Set the scene with meshlab camera, light and bg color     |
