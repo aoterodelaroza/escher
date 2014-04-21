@@ -293,6 +293,7 @@ v means variable (global)
 | op_rotz(angle)                 | a 3x3 matrix representing a rotation of angle around the z- axis                       |
 | op_rot3D(a1,a2,a3,mode)        | construct a 3d rotation matrix given three angles, several modes supported.            |
 | zmat_step(x0,x1,x2,d,ang,dieh) | stepper to build cartesian coordinates from z-matrix                                   |
+| run_povray(name,crop)          | run povray on a pov file, possibly cropping the margins                                |
 
 * Global variables
 
