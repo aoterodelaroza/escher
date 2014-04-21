@@ -1,6 +1,7 @@
 (!) fix the examples in escher_data
 (!) fix the examples in the webpage
 
+* add type checking for arguments -> isrepresentation, iscrystal, etc.
 * add orientation along crystallographic axes
 * add routine to plot the crystallographic axes
 
