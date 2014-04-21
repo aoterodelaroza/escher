@@ -10,19 +10,22 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_addcamera(repi,pos=-1,angle=45,persp=1)
-% function rep = rep_addcamera(repi,pos,angle=45,persp=1)
+function rep = rep_addcamera(repi,pos=-1,sky=[0 0 1],angle=45,persp=1)
+% function rep = rep_addcamera(repi,pos,sky=[0 0 1],angle=45,persp=1)
 %
 % rep_addcamera - add a camera to a graphical representation
 % with reasonable default values. pos is the camera location (by 
 % default, oriented in the [0 0 1] direction and at a 
-% distance to the object center. angle controls the distance to the
+% distance to the object center) relative to the center of mass of the
+% representation. angle controls the distance to the
 % object (orthographic, persp=0) or the field of view (perspective,
-% persp=1). 
+% persp=1). sky is the sky vector (z by default).
 %
 % Input variables:
 % repi: input representation.
-% pos: position of the camera (3-element vector).
+% pos: position of the camera (3-element vector) relative to the
+% representation center of mass.
+% sky: direction of the sky vector.
 % angle: distance to the object in terms of camera angle.
 % persp: 1 for perspective, 0 for orthographic.
 %
@@ -32,6 +35,8 @@ function rep = rep_addcamera(repi,pos=-1,angle=45,persp=1)
   [xct xmin xmax xdel] = rep_getcm(repi);
   if (length(pos) != 3)
     pos = xct + [0 0 1] * xdel(3) * 2;
+  else
+    pos = xct + pos;
   endif
 
   ## set the camera 
@@ -43,6 +48,6 @@ function rep = rep_addcamera(repi,pos=-1,angle=45,persp=1)
   rep.cam.angle = angle; # field-of-view
   rep.cam.right = [1 0 0];
   rep.cam.up = [0 0 1];
-  rep.cam.sky = [0 0 1];
+  rep.cam.sky = sky;
 
 endfunction
