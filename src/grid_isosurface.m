@@ -120,7 +120,7 @@ function [rep surf] = grid_isosurface(g,addto="",iso,frgb=[51 160 255 0 0],ergb=
     rep.nstick += ne;
     [rep ietex] = rep_registertexture(rep,etex);
     empty = struct("name","","x0",[0 0 0],"x1",[0 0 0],"r",erad,...
-                   "rgb",ergb,"tex",ietex);
+                   "rgb",ergb,"tex",ietex,"round",0);
     rep.stick(n+1:rep.nstick) = {empty};
     ## fill edges -> this is the hard part
     for i = n+1:rep.nstick
