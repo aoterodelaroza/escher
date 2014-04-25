@@ -71,34 +71,6 @@ function [rep surf] = grid_isosurface(g,addto="",iso,frgb=[51 160 255 0 0],ergb=
   rep.nsurf += 1;
   rep.surf{rep.nsurf} = surf;
 
-#  if (!isempty(frgb))
-#    frgb = fillrgb(frgb);
-#
-#    ## pre-allocate vertices
-#    nv = rep.nvertex;
-#    rep.nvertex += size(v,1);
-#    empty = struct("x",[0 0 0],"rgb",frgb);
-#    rep.vertex(nv+1:rep.nvertex) = {empty};
-#    ## fill
-#    for i = nv+1:rep.nvertex
-#      rep.vertex{i}.x = v(i-nv,:);
-#    endfor
-#
-#    ## pre-allocate triangles
-#    n = rep.ntriangle;
-#    rep.ntriangle += size(f,1);
-#    [rep iftex] = rep_registertexture(rep,ftex);
-#    empty = struct("idx",[0 0 0],"rgb",[0 0 0 0 0],"tex",iftex);
-#    rep.triangle(n+1:rep.ntriangle) = {empty};
-#    ## fill triangles
-#    for i = n+1:rep.ntriangle
-#      rep.triangle{i}.idx = nv + f(i-n,:);
-#      rep.triangle{i}.rgb = (rep.vertex{rep.triangle{i}.idx(1)}.rgb +...
-#                             rep.vertex{rep.triangle{i}.idx(2)}.rgb +...
-#                             rep.vertex{rep.triangle{i}.idx(3)}.rgb) /3;
-#    endfor
-#  endif
-
   ## edges
   if (!isempty(ergb))
     ## pre-determine the edge pairs 

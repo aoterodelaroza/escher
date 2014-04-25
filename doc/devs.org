@@ -139,6 +139,7 @@ v means variable (global)
 | x | nlight                          | scalar         | integer     | Number of lights in the scene                             |
 | x | light                           | cell(light)    | 1xnlight    | Light cell array                                          |
 | x | bgcolor                         | array          | 1x3         | Background color rgb                                      |
+| x | texlib                          | cell(string)   | 1xn         | Internal library of texture strings                       |
 | x | load                            | struct         |             | List of packages to load                                  |
 | x | load.shapes                     | bool           | scalar      | Load shapes.inc                                           |
 | x | load.shapes3                    | bool           | scalar      | Load shapes3.inc                                          |

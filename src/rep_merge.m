@@ -73,6 +73,13 @@ function [rep] = rep_merge(varargin);
         rep.triangle{rep.ntriangle}.idx += nv0;
       endfor
 
+      ## surfaces
+      n1 = rep1.nsurf; 
+      for j = 1:n1
+        rep.nsurf += 1;
+        rep.surf{rep.nsurf} = rep1.surf{j};
+      endfor
+
       ## lights
       n1 = rep1.nlight; 
       for j = 1:n1
@@ -90,6 +97,16 @@ function [rep] = rep_merge(varargin);
       ## camera and background color
       rep.cam = rep1.cam;
       rep.bgcolor = rep1.bgcolor;
+
+      ## registered textures
+      n1 = length(rep1.texlib);
+      for j = 1:n1
+        rep = rep_registertexture(rep,rep1.texlib{j});
+      endfor
+
+      ## load packages
+      rep.load.shapes = rep.load.shapes || rep1.load.shapes;
+      rep.load.shapes3 = rep.load.shapes3 || rep1.load.shapes3;
     endfor
   endfor
 
