@@ -201,13 +201,16 @@ v means variable (global)
 | x | tex      | string |           | Texture                 |
 
 ** Surface
-|   | Variable | Type   | Dim./Res. | Apropos                 |
-|---+----------+--------+-----------+-------------------------|
-| x | v        | array  | nvx3      | Vertices of the surface |
-| x | n        | array  | nvx3      | Normals at the vertices |
-| x | f        | array  | nfx3      | Faces                   |
-| x | ftex     | scalar | integer   | Texture index           |
-| x | frgb     | array  | 1x5       | Color vector (integer)  |
+|   | Variable | Type   | Dim./Res. | Apropos                          |
+|---+----------+--------+-----------+----------------------------------|
+| x | name     | string |           | Name of the surface              |
+| x | v        | array  | nvx3      | Vertices of the surface          |
+| x | n        | array  | nvx3      | Normals at the vertices          |
+| x | f        | array  | nfx3      | Faces                            |
+| x | ftex     | scalar | integer   | Texture index for faces          |
+| x | frgb     | array  | 1x5       | Color vector for faces (integer) |
+| x | etex     | scalar | integer   | Texture index for edges          |
+| x | ergb     | array  | 1x5       | Color vector for edges (integer) |
 
 ** Vertex
 

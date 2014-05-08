@@ -2,27 +2,13 @@
 (!) fix the examples in escher_data
 (!) fix the examples in the webpage
 
+* CSD criteria: atom size: 1/4 of rvdw, spacefill style: 1 of rvdw, 
+  contacts within an additive range.
+* Modify mol_ball and mol_stick to use rvdw or rcov.
 * add type checking for arguments -> isrepresentation, iscrystal, etc.
 * add orientation along crystallographic axes
 * add routine to plot the crystallographic axes
-
 * surfaces: update the other routines.
-* surfaces: update the documentation.
-Added to rep:
-nsurf
-surf{:}
-
-Object surface:
-name -- string
-v -- vertices 
-f -- faces
-frgb -- face color
-ftex -- face texture
-ergb -- edge color
-etex -- edge texture
-n -- normals
-
-surface_() -- constructor (update me!)
 * surfaces: implement obj writer.
 * surfaces to vertex and face representation
 * surfaces to edge representation
