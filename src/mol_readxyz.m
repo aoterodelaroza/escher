@@ -106,7 +106,8 @@ function [mol] = mol_readxyz (filename, LOG=0)
           continue
        elseif (count==4)
           xyz = cellfun('str2num',g(2:4));
-          if (!isempty(str2num(g{1})))
+          aa = str2num(g{1});
+          if (!isempty(aa) && !iscomplex(aa))
              columns = "nxyz";
              atnumber = str2num(g{1});
              [atsymbol,atprop] = mol_dbsymbol(atnumber);
