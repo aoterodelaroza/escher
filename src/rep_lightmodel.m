@@ -20,6 +20,12 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
 % repi: input representation.
 % model: 
 %   "tessel" - one light at the camera poistion, one in the sky
+%   "tessel-noshadow" - same as tessel but lights do not cast shadows.
+%   "direct" - one light at the camera, one to the side and above,
+%              one to the other side and above, one behind
+%   "direct-noshadow" - same as direct but no shadows.
+%   "3point" - one at the side, one at the other side, one behind.
+%   "3point-noshadow" - same as 3point but no shadows.
 % ifac: light intensity factor.
 %
 % Output variables:
@@ -31,14 +37,23 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     error("no light model given!")
   endif
 
-  if (strcmp(model,"tessel"))
+  if (strcmp(model,"tessel") || strcmp(model,"tessel-noshadow"))
+    if (strcmp(model,"tessel"))
+      ## one at the camera
+      rep = rep_addlight(rep,rep.cam.location,0,ifac);
+      ## one in the sky
+      rep = rep_addlight(rep,rep.cam.sky*10,0,ifac);
+    else
+      rep = rep_addlight(rep,rep.cam.location,1,ifac);
+      rep = rep_addlight(rep,rep.cam.sky*10,1,ifac);
+    endif
+  elseif (strcmp(model,"direct") || strcmp(model,"direct-noshadow"))
     ## one at the camera
-    rep = rep_addlight(rep,rep.cam.location,1,ifac);
-    ## one in the sky
-    rep = rep_addlight(rep,rep.cam.sky*10,1,ifac);
-  elseif (strcmp(model,"direct"))
-    ## one at the camera
-    rep = rep_addlight(rep,rep.cam.location,0,0.5*ifac);
+    if (strcmp(model,"direct")) 
+      rep = rep_addlight(rep,rep.cam.location,0,0.5*ifac);
+    else
+      rep = rep_addlight(rep,rep.cam.location,1,0.5*ifac);
+    endif
 
     x0 = rep.cam.location;
     xc = rep.cam.lookat - x0;
@@ -53,7 +68,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     ## fill light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
     x = x0 + dc * tan(thk) * xd + dc * tan(thk) * xu;
-    rep = rep_addlight(rep,x,0,ifac*0.3);
+    rep = rep_addlight(rep,x,1,ifac*0.3);
 
     ## the fill light, 20 degrees to the other side and 10 above
     ## half brightness, no shadows
@@ -65,7 +80,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu;
     rep = rep_addlight(rep,x,1,0.5*ifac);
 
-  elseif (strcmp(model,"3point"))
+  elseif (strcmp(model,"3point") || strcmp(model,"3point-noshadow"))
     x0 = rep.cam.location;
     xc = rep.cam.lookat - x0;
     dc = norm(xc); xc = xc / dc;
@@ -79,7 +94,13 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     ## the key light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
     x = x0 + dc * tan(thk) * xd + dc * tan(thk) * xu;
-    rep = rep_addlight(rep,x,0,ifac*0.5);
+    if (strcmp(model,"3point")) 
+      rep = rep_addlight(rep,x,0,ifac*0.5);
+      rep = rep_addlight(rep,x,0,ifac*0.5);
+    else
+      rep = rep_addlight(rep,x,1,ifac*0.5);
+      rep = rep_addlight(rep,x,1,ifac*0.5);
+    endif
 
     ## the fill light, 20 degrees to the other side and 10 above
     ## half brightness, no shadows
