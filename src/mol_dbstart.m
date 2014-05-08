@@ -10,7 +10,7 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol_dbstart(color="csd",rcov="csd",rvdw="csd")
+function mol_dbstart(color="csd",rcov="tessel",rvdw="csd")
 % function mol_dbstart(color="csd",rcov="csd",rvdw="csd")
 %
 % mol_dbstart - initialize the database of atomic properties.
@@ -175,9 +175,9 @@ function mol_dbstart(color="csd",rcov="csd",rvdw="csd")
        000,220,220, 230,010,010, 140,255,140,... #115-117 YX, YZ, ZX
        112,112,255, 127,050,000, 127,000,050 ... #118-120 ZY, TT, WW
                  ];
-   atdb.csd_color = [ ... # from mercury (CSD)
-       255,255,255, 217,255,255, 204,128,255,... #001-003 H,  He, Li
-       194,255,000, 255,181,181, 145,145,145,... #004-006 Be, B,  C
+   atdb.csd_color = [ ... # from mercury (CSD) except H and C (jmol)
+       225,225,225, 217,255,255, 204,128,255,... #001-003 H,  He, Li
+       194,255,000, 255,181,181, 025,025,025,... #004-006 Be, B,  C
        143,143,255, 240,000,000, 194,255,000,... #007-009 N,  O,  F
        173,227,242, 171,092,242, 135,255,000,... #010-012 Ne, Na, Mg
        207,166,166, 209,214,140, 255,128,000,... #013-015 Al, Si, P
