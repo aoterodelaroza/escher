@@ -33,12 +33,12 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
 
   if (strcmp(model,"tessel"))
     ## one at the camera
-    rep = rep_addlight(rep,rep.cam.location,0,ifac);
+    rep = rep_addlight(rep,rep.cam.location,1,ifac);
     ## one in the sky
-    rep = rep_addlight(rep,rep.cam.sky*10,0,ifac);
+    rep = rep_addlight(rep,rep.cam.sky*10,1,ifac);
   elseif (strcmp(model,"direct"))
     ## one at the camera
-    rep = rep_addlight(rep,rep.cam.location,0,1.0*ifac);
+    rep = rep_addlight(rep,rep.cam.location,0,0.5*ifac);
 
     x0 = rep.cam.location;
     xc = rep.cam.lookat - x0;
@@ -53,17 +53,17 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     ## fill light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
     x = x0 + dc * tan(thk) * xd + dc * tan(thk) * xu;
-    rep = rep_addlight(rep,x,1,ifac*0.5);
+    rep = rep_addlight(rep,x,0,ifac*0.3);
 
     ## the fill light, 20 degrees to the other side and 10 above
     ## half brightness, no shadows
     thf = 10 * pi / 180;
     x = x0 - dc * tan(thk) * xd + dc * tan(thf) * xu;
-    rep = rep_addlight(rep,x,1,ifac*0.5);
+    rep = rep_addlight(rep,x,1,ifac*0.3);
 
     ## the rim light, opposite to the camera, no shadows
     x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu;
-    rep = rep_addlight(rep,x,1,ifac);
+    rep = rep_addlight(rep,x,1,0.5*ifac);
 
   elseif (strcmp(model,"3point"))
     x0 = rep.cam.location;
@@ -79,17 +79,17 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     ## the key light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
     x = x0 + dc * tan(thk) * xd + dc * tan(thk) * xu;
-    rep = rep_addlight(rep,x,0,ifac*1.0);
+    rep = rep_addlight(rep,x,0,ifac*0.5);
 
     ## the fill light, 20 degrees to the other side and 10 above
     ## half brightness, no shadows
     thf = 10 * pi / 180;
     x = x0 - dc * tan(thk) * xd + dc * tan(thf) * xu;
-    rep = rep_addlight(rep,x,1,ifac*0.6);
+    rep = rep_addlight(rep,x,1,ifac*0.3);
 
     ## the rim light, opposite to the camera, no shadows
     x = x0 + 2 * dc * xc - 2 * (xc * xu') * dc * xu;
-    rep = rep_addlight(rep,x,1,2*ifac);
+    rep = rep_addlight(rep,x,1,ifac);
 
   else
     error("unknown model!")

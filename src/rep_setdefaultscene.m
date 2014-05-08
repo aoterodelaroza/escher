@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="direct",ifac=1,angle=45,persp=1);
-% function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="direct",ifac=1,angle=45,persp=1);
+function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="3point",ifac=1,angle=45,persp=1);
+% function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="3point",ifac=1,angle=45,persp=1);
 %
 % rep_setdefaultscene - given a representation, set up the camera
 % using the camera position relative to the center of mass of the 
