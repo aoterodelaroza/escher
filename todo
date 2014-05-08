@@ -1,3 +1,5 @@
+(!) the scene looks darker when there are many carbons (black).
+    See kb65 in test number 2.
 (!) fix the problem with cr_read_espresso (see gold surfaces example)
 (!) fix the examples in escher_data
 (!) fix the examples in the webpage
