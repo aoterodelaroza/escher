@@ -37,10 +37,7 @@ global atdb
 %% initialize
 bohr2angstrom = 0.52917720859;
 if (!exist("atdb","var") || isempty(atdb))
-   err = mol_dbstart(LOG);
-   if (err != 0)
-      error("mol_dbatom: the atomic database does not start right!");
-   endif
+  mol_dbstart();
 endif
 
 %% Add the ilist vectors

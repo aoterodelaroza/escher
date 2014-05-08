@@ -55,10 +55,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
 
   global atdb
   if (!exist("atdb","var") || isempty(atdb))
-    err = mol_dbstart();
-    if (err != 0)
-      error("mol_stick: the atomic database does not start right!");
-    endif
+    mol_dbstart();
   endif
 
   ## distance matrix

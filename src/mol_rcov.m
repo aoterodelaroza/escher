@@ -25,10 +25,7 @@ function rcov = mol_rcov(z)
   global atdb
 
   if (!exist("atdb","var") || isempty(atdb))
-    err = mol_dbstart(LOG);
-    if (err != 0)
-      error("mol_dbatom: the atomic database does not start right!");
-    endif
+    mol_dbstart();
   endif
   
   if (z < 1 || z > length(atdb.rcov))

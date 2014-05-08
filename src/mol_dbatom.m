@@ -10,19 +10,14 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [Z,atom] = mol_dbatom (symbol,LOG=0)
-% function [Z,atom] = mol_dbatom (symbol,LOG=0)
+function [Z,atom] = mol_dbatom (symbol)
+% function [Z,atom] = mol_dbatom (symbol)
 %
 % mol_dbatom - given an atomic symbol, return the atomic number and
 % properties.
 %
 % Required input variables:
 % symbol: name of the element to be identified.
-%
-% Optional input variables (all have default values):
-% {LOG = 1}: print information about the data read in if LOG>0.
-%            LOG = 0  no output.
-%            LOG = 1  debug information.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
@@ -33,10 +28,7 @@ global atdb
 
 % Check if the database has been initialized:
 if (!exist("atdb","var") || isempty(atdb))
-   err = mol_dbstart(LOG);
-   if (err != 0)
-      error("mol_dbatom: the atomic database does not start right!");
-   endif
+   mol_dbstart();
 endif
 
 % Now get the atom and its properties:

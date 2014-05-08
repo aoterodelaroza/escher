@@ -10,19 +10,14 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [symbol,atom] = mol_dbsymbol (Z,LOG=0)
-% function [symbol,atom] = mol_dbsymbol (Z,LOG=0)
+function [symbol,atom] = mol_dbsymbol (Z)
+% function [symbol,atom] = mol_dbsymbol (Z)
 %
 % mol_dbsymbol - given an atomic number, return the atomic name and
 % properties.
 %
 % Required input variables:
 % Z: atomic number of the element to be identified.
-%
-% Optional input variables (all have default values):
-% {LOG = 1}: print information about the data read in if LOG>0.
-%            LOG = 0  no output.
-%            LOG = 1  debug information.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
@@ -31,13 +26,8 @@ function [symbol,atom] = mol_dbsymbol (Z,LOG=0)
    global atdb
 
 %  Check if the database has been initialized:
-   %%%if (!exist("atdb","var")  ||  atdb.defined!=true)
-   %%%if (exist("atdb","var")!=1 | dbdefined!=1)
    if (!exist("atdb","var") || isempty(atdb))
-     err = mol_dbstart(LOG);
-     if (err != 0)
-       error("mol_dbatom: the atomic database does not start right!");
-     endif
+     mol_dbstart();
    endif
 
    atom = atom();
