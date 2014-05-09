@@ -1,5 +1,0 @@
-include LICENSE.txt
-include INSTALL.rst
-include README.rst
-include TODO.rst
-recursive-include doc/source *

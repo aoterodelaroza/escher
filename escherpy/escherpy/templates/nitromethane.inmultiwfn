@@ -1,7 +1,0 @@
-5                    # 3D plot
-1                    # density
-6                    # set plot paramters
--2.74,2.3320,0.03    # xm, ym, zm (angstrom)
-125,121,116          # npx, npy, npz
-8.2846,8.5970,8.2376 # Delta_x/2, Delta_y/2, Delta_z/2 (bohr)
-2                    # output .cube
