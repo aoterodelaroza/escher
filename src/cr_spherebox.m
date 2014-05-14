@@ -11,8 +11,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol = cr_spherebox(cr, x0, rad0, LOG=0)
-% function mol = cr_spherebox(cr, x0, rad0, LOG=0)
+function mol = cr_spherebox(cr, x0, rad0)
+% function mol = cr_spherebox(cr, x0, rad0)
 %
 % cr_spherebox - create a molecule (mol) by cutting the piece of the crystal
 % contained within a sphere of radius r centered around x0 (cryst. coords.)
@@ -23,9 +23,6 @@ function mol = cr_spherebox(cr, x0, rad0, LOG=0)
 % {rad0}: radius of the sphere (bohr). If an array [r0 r1] is provided,
 %         restrict the selection to the region between the r0-sphere and
 %         the r1-sphere.
-%
-% Optional input variables (all have default values):
-% {LOG}: verbose flag.
 %
 % Required output variables:
 % {mol}: the molecular description.
@@ -89,7 +86,7 @@ for i = 1:cr.nat
     endif
   endfor
 endfor
-mol.nat = n
+mol.nat = n;
 if (n > 0)
   mol.atnumber = mol.atnumber(1:n);
   mol.atxyz = mol.atxyz(:,1:n) * bohr2angstrom;
