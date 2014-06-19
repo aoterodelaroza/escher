@@ -84,8 +84,6 @@ function [spow S dmax dav delta] = cr_compare(cr1, cr2)
   i1 = i1 / trapz(t1,i1);
   [t2 i2 pinfo] = cr_xrd(cr2);
   i2 = i2 / trapz(t2,i2);
-  plot(t1,i1,t2,i2);
-  pause();
   idif = abs(cumtrapz(t1,i1-i2));
   spow = trapz(t1,idif) / (t1(end)-t1(1));
 
