@@ -47,6 +47,7 @@ v means variable (global)
 | + | cr_qewald         | fun      | number    | calculate electrostatic energy by Ewald (qtyp)  |
 | + | cr_vdwewald       | fun      | number    | calculate vdw energy by Ewald                   |
 | + | cr_xrd            | fun      |           | calculate the powder x-ray diffraction pattern  |
+| + | cr_compare        | fun      | 2xcr      | compare two crystal structures                  |
 
 ** Crystal mask
 
