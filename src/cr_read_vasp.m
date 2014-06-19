@@ -30,7 +30,7 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
 %          VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 % Created: Nov. 2012
 
-  bohrtoans = 0.52917720859;
+  bohrtoang = 0.52917720859;
 
   cr = struct();
   if (!exist(file,"file"))
@@ -48,7 +48,7 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
   if (fac < 0) 
     fac = (abs(fac / det(r)))^(1/3);
   endif
-  r = r * fac / bohrtoans;
+  r = r * fac / bohrtoang;
 
   cr.r = r;
   cr.g = cr.r * cr.r';
@@ -83,9 +83,15 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
   dum = fgetl(fid);
   if (strcmp(lower(substr(dum,1,1)),"s"))
     dum = fgetl(fid);
-    if (!strcmp(lower(substr(dum,1,1)),"d"))
-      error("Cartesian coordinates not supported. Maybe it is a good time to implement it.")
-    endif
+  endif
+  iscart = 0;
+  if (strcmp(lower(substr(dum,1,1)),"d"))
+    iscart = 0;
+  elseif (strcmp(lower(substr(dum,1,1)),"c") || strcmp(lower(substr(dum,1,1)),"k"))
+    iscart = 1;
+    ri = inv(r * bohrtoang);
+  else
+    error("Unknown cartesian/direct option");
   endif
 
   ## read crystallographic coordinates
@@ -93,6 +99,9 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
   for i = 1:tat
     line = fgetl(fid);
     cr.x(i,1:3) = sscanf(line,"%f %f %f");
+    if (iscart) 
+      cr.x(i,1:3) = cr.x(i,1:3) * ri;
+    endif
   endfor
   fclose(fid);
 
