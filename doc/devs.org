@@ -48,6 +48,7 @@ v means variable (global)
 | + | cr_vdwewald       | fun      | number    | calculate vdw energy by Ewald                   |
 | + | cr_xrd            | fun      |           | calculate the powder x-ray diffraction pattern  |
 | + | cr_compare        | fun      | 2xcr      | compare two crystal structures                  |
+| + | cr_fill_rg        | fun      | cr        | fill the r and g matrices                       |
 
 ** Crystal mask
 
