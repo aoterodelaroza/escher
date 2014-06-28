@@ -25,19 +25,24 @@ function tex_dbstart();
   texdb{n} = texture();
   texdb{n}.typ = "pov";
   texdb{n}.name = "tdefault";
-  texdb{n}.string = "finish {phong 0.2 diffuse 0.5 ambient 0.3 reflection 0.03 brilliance 1.0}";
+  texdb{n}.string = "finish {phong 0.3 phong_size 5 diffuse 0.5 ambient 0.3 reflection 0.03 brilliance 1.0}";
   texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
-  ## default for balls, sticks and opaque triangles
+  ## default for balls, sticks
   n = 2; 
   texdb{n} = texdb{1}; 
   texdb{n}.name = "ball_default";
   n = 3; 
   texdb{n} = texdb{1}; 
   texdb{n}.name = "stick_default";
+
+  ## default for surfaces
   n = 4; 
-  texdb{n} = texdb{1}; 
+  texdb{n}.typ = "pov";
   texdb{n}.name = "opaque_triangle_default";
+  texdb{n}.name = "tdefault";
+  texdb{n}.string = "finish {ambient 0.1 diffuse 0.7 brilliance 1.5 reflection 0.05 specular 0.7}";
+  texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
 
   ## povray textures, other
   n = 5;
