@@ -190,7 +190,11 @@ function st = __add_stick(x0,x1,s1,s2,r,iz,itex,round)
   st.x1 = x1;
   st.r = r;
   if (isscalar(iz))
-    st.rgb = fillrgb(atdb.color(1:3,iz)');
+    if (iz > 0)
+      st.rgb = fillrgb(atdb.color(1:3,iz)');
+    else
+      st.rgb = [0 0 0];
+    endif
   else
     st.rgb = iz;
   endif
