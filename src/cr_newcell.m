@@ -45,7 +45,7 @@ function cr = cr_newcell(cr0, v1, v2, v3);
   cr.ntyp = cr0.ntyp;
   cr.ztyp = cr0.ztyp;
   cr.attyp = cr0.attyp;
-  if (isfield(cr,"zvaltyp"))
+  if (isfield(cr0,"zvaltyp"))
     cr.zvaltyp = cr0.zvaltyp;
   endif
 
