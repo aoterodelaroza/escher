@@ -64,7 +64,9 @@ function cr = cr_newcell(cr0, v1, v2, v3);
 
                 ifound = 0;
                 for i0 = 1:cr.nat
-                  if (norm(xnew - cr.x(i0,:)) < 1e-10)
+                  dx = xnew - cr.x(i0,:);
+                  dx = abs(dx - round(dx));
+                  if (all(dx < 1e-10))
                     ifound = 1;
                     break
                   endif
