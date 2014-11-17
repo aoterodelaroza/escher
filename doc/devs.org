@@ -91,7 +91,6 @@ v means variable (global)
 | + | mol_writenw          | fun          | stdout         | Write a nwchem template file                                |
 | + | mol_writexyz         | fun          | stdout         | Write a xyz file                                            |
 | + | mol_writezmat        | fun          | stdout         | Write the molecular geometry as z-matrix (see zmat_step)    |
-| + | mol_angle            | fun          | number         | Calculate the angle between three atoms                     |
 | + | mol_dbstart          | fun          | number         | Initialize the internal atomic constants table              |
 | + | mol_dbatom           | fun          | number,atom    | Return atomic info from the atomic symbol                   |
 | + | mol_dbsymbol         | fun          | string,atom    | Return atomic info from the atomic number                   |
