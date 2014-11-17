@@ -10,21 +10,25 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function a = mol_angle(mol, at1, at2, at3)
-% function a = mol_angle(mol, at1, at2, at3)
+function dh = mol_dihedral(mol, at1, at2, at3, at4)
+% function dh = mol_dihedral(mol, at1, at2, at3, at4)
 %
-% mol_angle - returns the angle (in degrees) between three atoms in the molecule. 
+% mol_dihedral - returns the dihedral angle (in degrees) between four
+% atoms in the molecule.
 %
 % Required input variables:
 % mol: structure containing the molecule.
-% at1, at2, at3: return the at1-at2-at3 angle.
+% at1, at2, at3, at4: return the at1-at2-at3-at4 dihedral angle (in degrees).
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: Nov 2012
 
-  x21 = mol.atxyz(:,at1) - mol.atxyz(:,at2);
-  x23 = mol.atxyz(:,at3) - mol.atxyz(:,at2);
-  a = acos(dot(x21,x23) / norm(x21) / norm(x23)) * 180 / pi;
+  b1 = mol.atxyz(:,at2)-mol.atxyz(:,at1); 
+  b2 = mol.atxyz(:,at3)-mol.atxyz(:,at2); 
+  b3 = mol.atxyz(:,at4)-mol.atxyz(:,at3); 
+  b12 = cross(b1, b2);
+  b23 = cross(b2, b3);
+  dh = atan2(norm(b2) * dot(b1, b23), dot(b12, b23)) * (180/pi);
 
 endfunction

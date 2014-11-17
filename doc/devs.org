@@ -80,6 +80,9 @@ v means variable (global)
 | + | mol_ball             | fun          | rep            | Create a rep of the atoms as balls                          |
 | + | mol_stick            | fun          | rep            | Create a rep of the bonds as sticks                         |
 | + | mol_distmatrix       | fun          | array(nat,nat) | Calculate the distance matrix                               |
+| + | mol_distance         | fun          | number         | Calculate the distance between two atoms                    |
+| + | mol_angle            | fun          | number         | Calculate the angle between three atoms                     |
+| + | mol_dihedral         | fun          | number         | Calculate the dihedral between four atoms                   |
 | + | mol_cmass            | fun          | array(1x3)     | Calculate the center of mass                                |
 | + | mol_burst            | fun          | cell(mol)      | Partition a mol into a cell array of connected submolecules |
 | + | mol_getfragment      | fun          | mol            | Create a mol from a subset of atoms of another mol          |
