@@ -30,7 +30,10 @@ function molout = mol_transform (molin, op, t=[0 0 0]')
 % Created: June 2011
 
   mol = molin;
-  mol.atxyz = op * mol.atxyz + t;
+  if (size(t) == [1 3])
+    t = t';
+  endif
+  mol.atxyz = op * mol.atxyz + t * ones(1,mol.nat);
   molout = mol;
 
 endfunction
