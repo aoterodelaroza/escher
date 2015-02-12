@@ -39,10 +39,10 @@ function mol = mol_transform (mol0, op, t=[0 0 0], local=0)
   if (local)
     cm = mol_cmass(mol,1);
     mol.atxyz = mol.atxyz - cm * ones(1,mol.nat);
-    mol.atxyz = op * mol.atxyz
+    mol.atxyz = op * mol.atxyz;
     mol.atxyz = mol.atxyz + cm * ones(1,mol.nat);
   else
-    mol.atxyz = op * mol.atxyz
+    mol.atxyz = op * mol.atxyz;
   endif
   mol.atxyz = mol.atxyz + t * ones(1,mol.nat);
 
