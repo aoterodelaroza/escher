@@ -10,30 +10,40 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function molout = mol_transform (molin, op, t=[0 0 0]')
-% function molout = mol_transform (molin, op, t=[0 0 0]')
+function mol = mol_transform (mol0, op, t=[0 0 0], local=0)
+% function mol = mol_transform (molin, op, t=[0 0 0], local=0)
 %
-% mol_transform - apply the "op" rotation (3x3) and the t translation (3x1) to the coordinates of "molin".
+% mol_transform - apply the "op" rotation (3x3) and the t translation
+% (3x1) to the coordinates of the input molecule.
 %
 % Required input variables:
-% molin: structure with the input molecular description. 
+% mol0: input molecule
 % op: 3x3 matrix containing the rotation.
 % t: 3x1 translation vector
+% local: if true, apply the rotation at the molecular center of mass
+% and not at the global coordinate origin.
 %
 % Optional input variables (all have default values):
 %
 % Required output variables:
-% molout: structure with the input molecular description. 
+% mol: output molecule.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: June 2011
 
-  mol = molin;
+  mol = mol0;
   if (size(t) == [1 3])
     t = t';
   endif
-  mol.atxyz = op * mol.atxyz + t * ones(1,mol.nat);
-  molout = mol;
+  if (local)
+    cm = mol_cmass(mol,1);
+    mol.atxyz = mol.atxyz - cm * ones(1,mol.nat);
+    mol.atxyz = op * mol.atxyz
+    mol.atxyz = mol.atxyz + cm * ones(1,mol.nat);
+  else
+    mol.atxyz = op * mol.atxyz
+  endif
+  mol.atxyz = mol.atxyz + t * ones(1,mol.nat);
 
 endfunction
