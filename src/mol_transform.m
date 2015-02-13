@@ -33,7 +33,7 @@ function mol = mol_transform (mol0, op, t=[0 0 0], local=0)
 % Created: June 2011
 
   mol = mol0;
-  if (size(t) == [1 3])
+  if (all(size(t) == [1 3]))
     t = t';
   endif
   if (local)

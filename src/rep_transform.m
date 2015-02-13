@@ -30,7 +30,7 @@ function rep = rep_transform(repi, rot=[1 0 0; 0 1 0; 0 0 1], tr=[0 0 0]);
 % Created: December 2011
 
   rep = repi;
-  if (size(tr) == [3 1]) 
+  if (all(size(tr) == [3 1]))
     tr = tr';
   endif
 

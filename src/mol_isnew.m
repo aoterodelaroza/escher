@@ -34,9 +34,9 @@ function isnew = mol_isnew(mol, xyz, eps=1e-8, LOG=1)
 j = 1;
 isnew = true;
 while (j<=mol.nat && isnew)
-   if (size(xyz)==[3,1])
+   if (all(size(xyz)==[3,1]))
       x = xyz - mol.atxyz(1:3,j);
-   elseif (size(xyz)==[3,1])
+   elseif (all(size(xyz)==[3,1]))
       x = xyz' - mol.atxyz(1:3,j);
    else
       error('mol_isuniq: wrong xyz dimensions!');

@@ -63,9 +63,9 @@ elseif (strcmpi(mode,"axis"))
    # We check the normalization of the a2 vector and its row/column format:
    # p is the normalized column vector defining the rotation axis.
    st = sin(a2*pi/180); ct = cos(a2*pi/180); ct1 = 1 - ct;
-   if (prod(size(a1)==[3,1]) == 1)
+   if (all(size(a1)==[3,1]))
       p = a1 / (a1'*a1);
-   elseif (prod(size(a1)==[1,3]) == 1)
+   elseif (all(size(a1)==[1,3]))
       p = a1' / (a1*a1');
    else
       error('rot_3D/axis: a1 should be a 3x1 unit vector!',
