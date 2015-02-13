@@ -108,7 +108,7 @@ v means variable (global)
 | + | mol_geom             | fun          | void           | Print distances, angles, and dihedrals of a molecule        |
 | + | mol_2molsgeometry    | fun          | void           | Calculate distances between atoms in two different mols     |
 | + | mol_internalgeometry | fun          | void           | Calculate and print information about the geoemtry of a mol |
-| + | mol_align            | fun          | mol,array      | Rotate and translet a mol to match a different mol          |
+| + | mol_align            | fun          | mol,array      | Rotate and translate a mol to match a different mol         |
 | + | mol_align_kabsch     | fun          | mol,array      | Similar to mol_align but using Kabsch algorithm             |
 | + | mol_opt_align        | fun          | mol,array      | Translate and rotate a mol for best alignment with another  |
 | + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol      |

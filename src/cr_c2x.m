@@ -28,7 +28,7 @@ function x = cr_c2x(cr,c)
   rinv = inv(cr.r);
 
   ## works for row and column
-  if (size(cz,2) > 1)
+  if (size(c,2) > 1)
     x = c * rinv;
   else
     x = rinv' * c;
