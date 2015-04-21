@@ -35,6 +35,7 @@ v means variable (global)
 | + | cr_insertvacuum   | fun      | cr        | insert vacuum in one of the crystal directions  |
 | + | cr_moveorigin     | fun      | cr        | translate the origin of the unit cell           |
 | + | cr_newcell        | fun      | cr        | transform to a different unit cell              |
+| + | cr_addatom        | fun      | cr        | add an atom to the crystal                      |
 | + | cr_rmatom         | fun      | cr        | remove atoms from the crystal                   |
 | + | cr_molmotif       | fun      | mol,mask  | create mol by molecular completion in main cell |
 | + | cr_crystalbox     | fun      | mol,mask  | create mol by cutting a parallelepiped from cr  |
@@ -102,6 +103,7 @@ v means variable (global)
 | + | mol_transform        | fun          | mol            | Rotate and translate a molecule                             |
 | + | mol_classify         | fun          | mol            | Group the atoms in the molecule into classes                |
 | + | mol_addatom          | fun          | mol            | Add an atom to a molecule                                   |
+| + | mol_rmatom           | fun          | mol            | Remove a list of atoms from a molecule                      |
 | + | mol_isplanar         | fun          | bool,array     | True if the molecule is planar (and the perp vector)        |
 | + | mol_islinear         | fun          | bool,array     | True if the molecule is linear (and parallel vector)        |
 | + | mol_isnew            | fun          | bool           | True if the given atom is identical to one in the molecule  |
