@@ -89,7 +89,7 @@ function rep_write_coff(rep,file="",ndiv=1,nbase=16,LOG=0)
   npad_bal = nwri;
   for i = 1:rep.nball
     for j = 1:nvsph
-      fprintf(fid,"%.9f %.9f %.9f %.5f %.5f %.5f 0.5\n",\
+      fprintf(fid,"%.9f %.9f %.9f %.5f %.5f %.5f 0.5\n",...
 	      rep.ball{i}.x+rep.ball{i}.r*vsph(j,:),rep.ball{i}.rgb(1:3)/255);
     endfor
   endfor
@@ -115,7 +115,7 @@ function rep_write_coff(rep,file="",ndiv=1,nbase=16,LOG=0)
     
     ## cylinder scaled using the local coordinates
     for j = 1:nvstk
-      fprintf(fid,"%.9f %.9f %.9f %.5f %.5f %.5f 0.5\n",\
+      fprintf(fid,"%.9f %.9f %.9f %.5f %.5f %.5f 0.5\n",...
 	      rep.stick{i}.x0+vstk(j,1)*v1+vstk(j,2)*v2+vstk(j,3)*rr,rep.stick{i}.rgb(1:3)/255);
     endfor
   endfor
