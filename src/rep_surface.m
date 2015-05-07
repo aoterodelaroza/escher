@@ -10,11 +10,11 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[0 0],\
-                           rgb0=[255 0 0],tex="opaque_triangle_default",\
+function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[0 0],...
+                           rgb0=[255 0 0],tex="opaque_triangle_default",...
                            grid=0,grrad=0.005,grrgb=[255 0 0],grtex="stick_default")
-% function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[0 0],\
-%                            rgb0=[255 0 0],tex="opaque_triangle_default",\
+% function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[0 0],...
+%                            rgb0=[255 0 0],tex="opaque_triangle_default",...
 %                            grid="",grrad=0.005,grrgb=[255 0 0],grtex="stick_default")
 %
 % rep_surface - surface
@@ -102,15 +102,15 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
       n++;
       rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(1) idx(2) idx(4)];
-      rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
-                             rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
+      rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + ...
+                             rep.vertex{rep.triangle{n}.idx(2)}.rgb + ...
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
       rep.triangle{n}.tex = itex;
       n++;
       rep.triangle{n} = triangle();
       rep.triangle{n}.idx = nv0 + [idx(4) idx(2) idx(3)];
-      rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + \
-                             rep.vertex{rep.triangle{n}.idx(2)}.rgb + \
+      rep.triangle{n}.rgb = (rep.vertex{rep.triangle{n}.idx(1)}.rgb + ...
+                             rep.vertex{rep.triangle{n}.idx(2)}.rgb + ...
                              rep.vertex{rep.triangle{n}.idx(3)}.rgb)/3;
       rep.triangle{n}.tex = itex;
 
