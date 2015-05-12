@@ -78,24 +78,24 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz")
     sy = mol_dbsymbol(iz);
     if (strcmpi(mode, "axyz"))
       fprintf(fid," %-2s  ", sy);
-      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid," %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
       fprintf(fid,"\n");
     elseif (strcmpi(mode, "anxyz"))
       fprintf(fid," %-2s  ", sy);
       fprintf(fid," %-2d  ", iz);
-      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid," %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
       fprintf(fid,"\n");
     elseif (strcmpi(mode, "naxyz"))
       fprintf(fid," %-2d  ", iz);
       fprintf(fid," %-2s  ", sy);
-      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid," %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
       fprintf(fid,"\n");
     elseif (strcmpi(mode, "nxyz"))
       fprintf(fid," %-2d  ", iz);
-      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid," %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
       fprintf(fid,"\n");
     elseif (strcmpi(mode, "xyz"))
-      fprintf(fid," %+15.9f %+15.9f %+15.9f", mol.atxyz(1:3,i));
+      fprintf(fid," %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
       fprintf(fid,"\n");
     else
       error("mol_writexyz", "Unknown write format!");
