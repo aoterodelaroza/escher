@@ -50,7 +50,7 @@ function [x0, nx, dx] = mol_cuberange (mol, qual=6, marg=1, cube=0, LOG=1)
    else
       error("cuberange: unkown quality option - %d\n", quality);
    endif
-   dx = 1.0/nx;
+   dx = 1.0/(nx-1);
    margin = [marg,marg,marg]';
 
    x0 = min(mol.atxyz(1:3,:)')' - margin;
