@@ -10,11 +10,11 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
-% function void = mol_internalgeometry (mol,bondfactor=1.15,LOG=1)
+function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=2)
+% function [mol] = mol_internalgeometry (mol,bondfactor=1.15,LOG=1)
 %
 % mol_internalgeometry - determines the internal geometry of the molecule
-% or molecular fragment, i.e. the atoms bonded, bond distances, angles
+% or molecular fragmente, i.e. the atoms bonded, bond distances, angles
 % and dihedral angles. The algorithm assumes two atoms to be bonded if
 % their distance is smaller or equal to the sum of the atomic radii
 % multiplied by a correction factor (the "bondfactor" parameter).
@@ -37,26 +37,37 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: July 2011
 
-   # Create the connection matrix:
-   nat = mol.nat;
-   dist = conn = zeros(nat,nat);
-   for i = 1:nat
-      dist(i,i) = 0.0;
+   global dbdefined
+   global atdb
+   bohrtoans = 0.52917720859;
+#   DEBUG = 1;
+
+   # Compute the matrix of distances and the connectivity matrix:
+   M = mol.nat;
+   dist = conn = zeros(M);
+   for i = 1:M
+      dist(i,:) = norm(mol.atxyz - mol.atxyz(:,i) * ones(1,M),2,"columns");
+   endfor
+   for i = 1:M-1
       zi = mol.atnumber(i);
       conn(i,i) = 0;
-      for j = 1:i-1
-         x = mol.atxyz(1:3,i) - mol.atxyz(1:3,j);
-         dist(i,j) = dist(j,i) = sqrt(x' * x);
+      for j = i+1:M
          zj = mol.atnumber(j);
-         dconn = bondfactor * (mol_rcov(zi) + mol_rcov(zj));
-         conn(i,j) = conn(j,i) = (dist(i,j) <= dconn);
+         dconn = bondfactor * (atdb.rcov(zi) + atdb.rcov(zj));
+         conn(i,j) = conn(j,i) = (dist(i,j)<=dconn);
+#         if (DEBUG>0)
+#            printf('%s-%d,%s-%d ', mol.atname{i}, i, mol.atname{j}, j);
+#            printf('%10.5f %10.5f ', dist(i,j), dconn);
+#            printf('conn:%d\n', conn(i,j));
+#         endif
       endfor
    endfor
+   mol.conn = conn;
 
    # Check for unconnected fragments in the molecule:
-   taken = zeros(1,nat);
+   taken = zeros(1,M);
    nfrag = 0;
-   for i = 1:nat
+   for i = 1:M
       if (taken(i) == 0)
          taken(i) = 1;
          nfrag = nfrag + 1;
@@ -64,7 +75,7 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
          frag.iat{nfrag}(1) = i;
          do
             inew = 0;
-            for j = i+1 : nat
+            for j = i+1 : M
                if (taken(j) == 0)
                   isinfrag = 0;
                   for k = 1 : frag.nat(nfrag)
@@ -84,6 +95,8 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
          until (inew == 0)
       endif
    endfor
+   mol.nfrag = nfrag;
+   mol.ifrag = frag.iat;
 
    # Determine cm of each fragment:
    for i = 1 : nfrag
@@ -92,21 +105,23 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
       cm = x * mass' / sum(mass);
       frag.cm{i} = cm;
    endfor
+   mol.cmfrag = frag.cm;
 
    if (LOG > 0)
       printf("(Coordinates in Angstrom)\n");
-      printf("    Atom  number       x              y              z\n");
-      for i = 1:nat
+      printf("    Atom  number  cn       x              y              z\n");
+      for i = 1:M
          ni = cell2mat(mol.atname(i));
+         cni = sum(conn(i,:));
          zi = mol.atnumber(i);
          x = mol.atxyz(1:3,i);
-         printf("%3d %-6s%4d  %15.10f%15.10f%15.10f\n", i, ni, zi, x);
+         printf("%3d %-6s%4d%4d  %15.10f%15.10f%15.10f\n", i, ni, zi, cni, x);
       endfor
 
       #
       # Print distances between bonded atoms:
       printf("\nBond distances (Angstrom):\n");
-      for i = 1:nat
+      for i = 1:M
          si = sprintf("%s(%d)", cell2mat(mol.atname(i)), i);
          for j = 1:i-1
             if (conn(i,j))
@@ -121,7 +136,7 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
       #
       # Print angles between bonds:
       printf("\nBond angles (degrees):\n");
-      for i = 1:nat
+      for i = 1:M
          for j = 1:i-1
             for k = 1:j-1
                if (conn(i,j) & conn(j,k))
@@ -152,7 +167,7 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
       #
       # Print dihedral angles between bonds:
       printf("\nDihedral angles (degrees):\n");
-      for i = 1:nat
+      for i = 1:M
          for j = 1:i-1
             for k = 1:j-1
                for l = 1:k-1
@@ -229,7 +244,7 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
       # Check if the molecule is linear or planar (or approximately):
       # --- xxx
 
-      if (nat > 100)
+      if (M > 100)
          printf("Identification of ring structures skipped due to the\n");
          printf("big number of atoms. The search could take ages!\n");
          return
@@ -242,45 +257,45 @@ function void = mol_internalgeometry (mol, bondfactor=1.15, LOG=1)
       # using recursivity.
       nring = 0;
       nsupring = 0;
-      for i1 = 1:nat
-         for i2 = i1+1:nat
+      for i1 = 1:M
+         for i2 = i1+1:M
             if (!conn(i1,i2)) continue endif
-            for i3 = i2+1:nat
+            for i3 = i2+1:M
                if (!conn(i2,i3)) continue endif
                if (conn(i2,i3) && conn(i3,i1))
                   # A 3-ring
                   ring{++nring} = [i1, i2, i3];
                   continue
                endif
-               for i4 = i3+1:nat
+               for i4 = i3+1:M
                   if (!conn(i3,i4)) continue endif
                   if (conn(i3,i4) && conn(i4,i1))
                      # A 4-ring
                      ring{++nring} = [i1, i2, i3, i4];
                      continue
                   endif
-                  for i5 = i4+1:nat
+                  for i5 = i4+1:M
                      if (!conn(i4,i5)) continue endif
                      if (conn(i4,i5) && conn(i5,i1))
                         # A 5-ring
                         ring{++nring} = [i1, i2, i3, i4, i5];
                         continue
                      endif
-                     for i6 = i5+1:nat
+                     for i6 = i5+1:M
                         if (!conn(i5,i6)) continue endif
                         if (conn(i5,i6) && conn(i6,i1))
                            # A 6-ring
                            ring{++nring} = [i1, i2, i3, i4, i5, i6];
                            continue
                         endif
-                        for i7 = i6+1:nat
+                        for i7 = i6+1:M
                            if (!conn(i6,i7)) continue endif
                            if (conn(i6,i7) && conn(i7,i1))
                               # A 7-ring
                               ring{++nring} = [i1, i2, i3, i4, i5, i6, i7];
                               continue
                            endif
-                           for i8 = i7+1:nat
+                           for i8 = i7+1:M
                               if (!conn(i7,i8)) continue endif
                               if (conn(i7,i8) && conn(i8,i1))
                                  # A 8-ring
