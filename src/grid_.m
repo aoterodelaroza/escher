@@ -1,4 +1,4 @@
-% Copyright (C) 2011 Victor Lua~na and Alberto Otero-de-la-Roza
+% Copyright (C) 2011 Alberto Otero-de-la-Roza and Victor Lua~na
 %
 % This octave routine is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -13,18 +13,20 @@
 function g = grid_()
 % function g = grid_()
 %
-% grid - create an empty grid structure.
+% grid - create an empty 3D grid structure. This is the grid constructor.
+%        The structure corresponds to the cube format definition in gaussian
+%        and it could correspond, in principle, to non-orthogonal grids.
 %
 % Output:
 % {g}: the empty grid structure with all the fields defined.
 %
-
-  grid.name = "";
-  g.x0 = [0 0 0];
-  g.dx = zeros(3,3);
-  g.a = zeros(3,3);
-  g.n = [0 0 0];
-  g.f = [];
-  g.omega = 0;
+% Description of the fields:
+  g.name = "";
+  g.x0 = [0 0 0];    # Origin coordinates for the grid points
+  g.dx = zeros(3,3); # interval sizes
+  g.a = zeros(3,3);  # range (diag(g.n) .* g.dx)
+  g.n = [0 0 0];     # Number of points in each of the 3D directions
+  g.omega = 0;       # Volume of a voxel element: abs(det(g.dx))
+  g.f = [];          # Scalar field values at the grid points
 
 endfunction
