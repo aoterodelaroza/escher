@@ -8,7 +8,7 @@ v means variable (global)
 
 |   | Variable          | Type     | Dim./Res. | Apropos                                         |
 |---+-------------------+----------+-----------+-------------------------------------------------|
-| + | crystal           | fun      | cr        | Constructor                                     |
+| + | crystal_          | fun      | cr        | Constructor                                     |
 | o | name              | string   |           | Name of the crystal                             |
 | x | a                 | array    | 1x3       | Cell lengths (bohr)                             |
 | x | b                 | array    | 1x3       | Cell angles (degrees)                           |
@@ -115,6 +115,7 @@ v means variable (global)
 | + | mol_opt_align        | fun          | mol,array      | Translate and rotate a mol for best alignment with another  |
 | + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol      |
 | + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)           |
+| + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box              |
 
 ** Atom
 
