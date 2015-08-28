@@ -10,20 +10,22 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol = molecule()
-% function mol = molecule()
+function mol = molecule_()
+% function mol = molecule_()
 %
-% molecule - create an empty molecule structure and initialize mol.nat.
+% molecule - Coonstructor. Create an empty molecule structure and initialize mol.nat.
 %
 % Output:
 % {mol}: the empty molecule structure with all the fields defined.
+%        This can be the content of a unit cell in a crystal, a portion of the cell,
+%        an isolated molecule, or even a fragment exceeding a unit cell.
 %
 
   mol.nat = 0;
   mol.name = "";
-  mol.atname = cell();
-  mol.atnumber = [];
-  mol.atmass = [];
-  mol.atxyz = [];
+  mol.atname = cell(); # List of the atom symbols in the molecule
+  mol.atnumber = [];   # List of the Z atomic numbers
+  mol.atmass = [];     # Atomic masses (gr/mol)
+  mol.atxyz = [];      # Cartesian coordinates
 
 endfunction

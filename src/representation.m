@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = representation()
-% function rep = representation()
+function rep = representation_()
+% function rep = representation_()
 %
-% representation - create an empty rep structure.
+% representation_ - Vonstructor: create an empty rep structure.
 %
 % Output:
 % {rep}: the empty representation.
@@ -21,30 +21,20 @@ function rep = representation()
 
   rep.name = "";
 
-  rep.nball = 0;
-  rep.ball = cell();
+  rep.nball = 0;      # number of balls
+  rep.ball = cell();  # Read the ball rep in mol_ball.m
 
-  rep.nstick = 0;
-  rep.stick = cell();
+  rep.nstick = 0;     # number of sticks
+  rep.stick = cell(); # Raed the stick rep in mol_stick.m
 
-  rep.ntriangle = 0;
+  rep.ntriangle = 0;  # Triangles in polyhedra (See mol_polyhedron.m)
   rep.nvertex = 0;
   rep.triangle = cell();
   rep.vertex = cell();
 
-  rep.nsurf = 0;
-  rep.surf = cell();
-
-  rep.cam = camera();
-  rep.nlight = 0;
-  rep.light = cell();
-  rep.bgcolor = zeros(1,3);
-  rep.texlib = {};
-
-  rep.texlib ={};
-
-  rep.load = struct();
-  rep.load.shapes = 0;
-  rep.load.shapes3 = 0;
+  rep.cam = struct();        # Definition of the camera
+  rep.nlight = 0;            # Number of lights in the scene
+  rep.light = cell();        # Definition for each light
+  rep.bgcolor = zeros(1,3);a # color in the backgound
 
 endfunction

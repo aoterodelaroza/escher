@@ -14,7 +14,7 @@ function cr = crystal_()
 % function cr = crystal_()
 %
 % crystal - create an empty crystal structure and initialize the number
-% of atoms to zero. Cell array constructor for an empty crystal.
+% of atoms to zero. Cell array constructor of an empty crystal.
 %
 % Output:
 % {cr}: the empty crystal structure with all the fields defined.
@@ -25,19 +25,23 @@ function cr = crystal_()
   cr.ntyp = 0;              # Number of atom types
   cr.attyp = cell();        # Atomic symbols
   cr.rvdwtyp = cr.c6typ = cr.zvaltyp = cr.qtyp = cr.ztyp = [];
-     # Parameters for each atomic type
+     # Pointers to the parameters for each atom in the unit cell
      # cr.rvdwtyp .... van der Waals radius (bohr)
      # cr.c6typ ...... virial C6 coeficient
      # cr.zvaltyp .... number of valence electrons
      # cr.qtyp ....... Atomic charge
-     # cr.ztyp ....... Atomic number (Z)
+     # cr.ztyp ....... Stomic number (Z)
   cr.typ = [];              # Atom type indexes (1..ntyp). The symbol of typ 1
                             # would reside in cr.attyp(cr.typ(1))
   cr.x = [];                # Atom crystal coordinates
   cr.a = cr.b = zeros(1,3); # unit cell lengths (a,bohr) and angles (b,radians)
                             # That's the basic definition of the crytal parallelepiped
   cr.g = zeros(3);          # Real space metric matrix
-  cr.r = zeros(3);          # Crystallographic to cartesian matrix (bohr)
+  cr.r = zeros(3);          # Equivalent to diag(cr.a)
+    # cr.r is the lattice vectors array referred to the cartesian axes.
+    # Therefore cr.a is the norm of the cr.r rows. the metric tensor (cr.g)
+    # is obtained by cr.r * cr.r' and the cell volume (cr.omega) can be
+    # determined as sqrt(det(cr.g)).
   cr.omega = 0;             # Unit cell volume
 
 endfunction
