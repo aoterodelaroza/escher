@@ -285,6 +285,8 @@ v means variable (global)
 | + | grid_mesh       | fun    | 3x(nx,ny,nz) | Calculate three grids with the (x,y,z)-coordinates. ngrid equivalent |
 | + | grid_readcube   | fun    | grid         | Read a gaussian cube file                                            |
 | + | grid_isosurface | fun    | rep          | Create an isosurface rep from a grid                                 |
+| + | grid_fragdim    | fun    | array(4)     | Get the bounding box of a grid or molecule                           |
+| + | grid_subgrid    | fun    | grid         | Slice a orthogonal section of a grid                                 |
 
 * Miscellaneous functions
 
