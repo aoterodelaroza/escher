@@ -10,10 +10,10 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function g = mol_empirical (mol, LOG=1)
-% function g = mol_empirical (mol, LOG=1)
+function [form, mass] = mol_formula (mol, LOG=1)
+% function [form, mass] = mol_formula (mol, LOG=1)
 %
-% mol_empirical - determine the empirical formula of mol
+% mol_formula - determine the molecular formula of mol
 %
 % Required input variables:
 % mol: cell array with the molecular structure data.
@@ -25,17 +25,18 @@ function g = mol_empirical (mol, LOG=1)
 % mol.atname .... cell array with the atom names
 % mol.atnumber .. array with the integer atomic numbers
 %
-mol.attyname = unique(mol.atname);
-nt = length(mol.attname);
-mol.attypen = zeros(nt);
-g = '';
-for t = 1:nt
-   for k = 1:length(mol.atname)
-      if (mol.attype(t) == mol.atname(k))
-         mol.attypen(t) += 1;
-      endif
-   endfor
-   g = sprintf('%s%d', mol.attype(t) , mol.attypen(t));
-endfor
+  [at_types at_typ_num j] = unique(mol.atname);
+  g = '';
+  for k = length(at_types):-1:1
+    g = sprintf("%s%s%d",g,mol.atname{at_typ_num(k)},sum(j == k));
+  endfor
+  form = g;
+
+  mass = 0;
+  for k = 1:length(at_types)
+    symb = at_types(k);
+    [Z,at] = mol_dbatom(symb);
+    mass += at_typ_num(k) * at.mass;
+  endfor
 
 endfunction
