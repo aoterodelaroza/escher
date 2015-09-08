@@ -116,7 +116,7 @@ v means variable (global)
 | + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol      |
 | + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)           |
 | + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box              |
-| + | mol_empirical        | fun          | string         | Determine the empirical formula of mol                      |
+| + | mol_formula          | fun          | string         | Determine the empirical/molecular formula of mol            |
 ** Atom
 
 |   | Variable | Type   | Dim./Res. | Apropos         |
