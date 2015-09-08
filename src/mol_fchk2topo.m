@@ -94,7 +94,7 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
 
    if (cdn.rho > 0)
       fprintf(fid, "cat << EOF | ");
-      fprintf(fid, "cubegen 0 density=%s %s.fchk %s-rho.cube -1 h\n", \
+      fprintf(fid, "cubegen 0 density=%s %s.fchk %s-rho.cube -1 h\n", ...
               cdn.ctype, name, name);
       fprintf(fid, "%5d %12.6f %12.6f %12.6f\n", -6, x0);
       fprintf(fid, "%5d %12.6f %12.6f %12.6f\n", nx(1), dx(1), 0.0, 0.0);
@@ -114,7 +114,7 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
 
    if (cdn.mep > 0)
       fprintf(fid, "cat << EOF | ");
-      fprintf(fid, "cubegen 0 potential=%s %s.fchk %s-mep.cube -1 h\n", \
+      fprintf(fid, "cubegen 0 potential=%s %s.fchk %s-mep.cube -1 h\n", ...
               cdn.ctype, name, name);
       fprintf(fid, "%5d %12.6f %12.6f %12.6f\n", -6, x0);
       fprintf(fid, "%5d %12.6f %12.6f %12.6f\n", nx(1), dx(1), 0.0, 0.0);
