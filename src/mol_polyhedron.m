@@ -56,7 +56,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(molc,"name") && !isempty(molc.name))
       rep.name = molc.name;
     endif

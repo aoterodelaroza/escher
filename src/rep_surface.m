@@ -40,7 +40,7 @@ function rep = rep_surface(addto="",f,uv0=[-1 -1],uv1=[1 1],nuv=[41 41],closed=[
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
   endif
 
   ## calculate function values

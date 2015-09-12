@@ -37,7 +37,7 @@ function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     rep.name = "basin";
   endif
 

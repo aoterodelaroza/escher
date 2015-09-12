@@ -39,7 +39,7 @@ function [rep surf] = grid_isosurface(g,addto="",iso,frgb=[51 160 255 0 0],ergb=
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(g,"name") && !isempty(g.name))
       rep.name = g.name;
     endif

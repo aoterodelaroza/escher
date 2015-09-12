@@ -49,7 +49,7 @@ function rep = mol_ball(mol,addto="",symb=".+",strict=0,radius=-0.6,rgb=[-1 -1 -
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(mol,"name") && !isempty(mol.name))
       rep.name = mol.name;
     endif

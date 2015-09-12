@@ -66,7 +66,7 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(mol,"name") && !isempty(mol.name))
       rep.name = mol.name;
     endif

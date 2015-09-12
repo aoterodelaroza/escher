@@ -37,7 +37,7 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(mol,"name") && !isempty(mol.name))
       rep.name = mol.name;
     endif

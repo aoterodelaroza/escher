@@ -36,7 +36,7 @@ function rep  = rep_addcube(addto="", x0=[0 0 0], x1=[1 1 1], frgb=[0 0 128 115 
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(molc,"name") && !isempty(molc.name))
       rep.name = molc.name;
     endif

@@ -26,7 +26,7 @@ function [rep] = rep_merge(varargin);
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2011
 
-  rep = representation();
+  rep = representation_();
   rep.name = "merged: ";
 
   n = 0;

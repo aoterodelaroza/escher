@@ -41,7 +41,7 @@ function rep = cr_unitcell(cr, addto="", i0=[0 0 0], i1=[0 0 0], radius=0.03, rg
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(cr,"name") && !isempty(cr.name))
       rep.name = cr.name;
     endif

@@ -34,7 +34,7 @@ function rep  = rep_addsphere(addto="", x0=[0 0 0], rad=1, wire=1,...
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
     if (isfield(molc,"name") && !isempty(molc.name))
       rep.name = molc.name;
     endif

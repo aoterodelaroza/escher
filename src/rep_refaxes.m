@@ -28,7 +28,7 @@ function rep = rep_refaxes(addto="",scale=1,srad=1)
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
-    rep = representation();
+    rep = representation_();
   endif
 
   ## center of mass
