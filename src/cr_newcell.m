@@ -34,7 +34,7 @@ function cr = cr_newcell(cr0, v1, v2, v3);
     error("Unit cell with zero or negative volume. Check axes");
   endif
   
-  cr = crystal();
+  cr = crystal_();
   cr.r = mat' * r;
   cr.g = cr.r * cr.r';
   cr.a = sqrt(diag(cr.g))';
