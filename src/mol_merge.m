@@ -25,7 +25,7 @@ function [mol] = mol_merge(varargin);
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: December 2011
 
-mol = molecule();
+mol = molecule_();
 mol.name = "merged: ";
 n = 0;
 for i = 1:length(varargin)

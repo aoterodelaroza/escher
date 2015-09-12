@@ -63,7 +63,7 @@ endfor
 
 ## build the molecule, assume that cells on the border contribute 1/4
 ## of the atoms in the unit cell to save memory.
-mol = molecule();
+mol = molecule_();
 mol.atname = cell();
 mol.atnumber = zeros(1,nvecsm1*cr.nat+nvecs*cr.nat/4);
 mol.atxyz = zeros(3,nvecsm1*cr.nat+nvecs*cr.nat/4);
@@ -94,7 +94,7 @@ mol = mol_fillatmass(mol);
 
 if (nmol > 0)
   [smol idxmol] = mol_burst(mol);
-  mol = molecule();
+  mol = molecule_();
   amask = crmask();
   for i = 1:length(smol)
     if (smol{i}.nat >= nmol)

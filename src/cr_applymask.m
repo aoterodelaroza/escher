@@ -28,7 +28,7 @@ bohr2angstrom = 0.52917720859;
 
 r = cr.r;
 
-mol = molecule();
+mol = molecule_();
 mol.atname = cell(1,mask.nat);
 mol.atnumber = zeros(1,mask.nat);
 mol.atxyz = zeros(3,mask.nat);

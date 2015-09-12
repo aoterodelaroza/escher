@@ -36,7 +36,7 @@ function mol = mol_readcube (cubefile, LOG=0)
     error("mol_readcube: Could not open -- %s",cubefile);
   endif
 
-  mol = molecule();
+  mol = molecule_();
 
   ## title lines in the cube file
   mol.name = fgetl(fqub);

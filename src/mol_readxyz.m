@@ -58,7 +58,7 @@ function [mol] = mol_readxyz (filename, LOG=0)
   endif
 
   natoms = 0;
-  mol = molecule();
+  mol = molecule_();
 
   ## Read in data file:
   columns = "axyz";

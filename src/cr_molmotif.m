@@ -41,7 +41,7 @@ if (!exist("atdb","var") || isempty(atdb))
 endif
 
 %% Add the ilist vectors
-mol = molecule();
+mol = molecule_();
 mask = crmask();
 if (isempty(ilist))
    ilist = 1:cr.nat;
@@ -56,7 +56,7 @@ for i = ilist
 endfor
 
 %% build the big molecule
-mol0 = molecule();
+mol0 = molecule_();
 mask0 = crmask();
 for j = [0 -1 1]
   for k = [0 -1 1]

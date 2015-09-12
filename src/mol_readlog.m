@@ -41,7 +41,7 @@ function [mol] = mol_readlog (filename)
   endif
 
   ## read the orientation block
-  mol = molecule();
+  mol = molecule_();
   fseek(fid,ipos);
   fskipl(fid,4);
   while (1)

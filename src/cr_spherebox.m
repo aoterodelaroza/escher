@@ -67,7 +67,7 @@ nvecs = size(lvecs,1);
 
 ## build the molecule, assume that cells on the border contribute 1/4
 ## of the atoms in the unit cell to save memory.
-mol = molecule();
+mol = molecule_();
 mol.atname = cell();
 mol.atnumber = zeros(1,nvecs*cr.nat+nvecs*cr.nat/4);
 mol.atxyz = zeros(3,nvecs*cr.nat+nvecs*cr.nat/4);

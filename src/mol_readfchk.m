@@ -35,7 +35,7 @@ function [mol] = mol_readfchk(rootfile, LOG=1)
    endif
    fid = fopen(fchkfile,"r");
 
-   mol=molecule();
+   mol=molecule_();
 
    nline=0;
    again = 1;
