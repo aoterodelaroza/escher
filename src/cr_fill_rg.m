@@ -23,12 +23,12 @@ function cr = cr_fill_rg(cr)
 %
 
   ## crystal to cartesian
-  if (isfield(cr,"r"))
-    if (!isfield(cr,"g"))
+  if (isfield(cr,"r") && !isempty(cr.r))
+    if (!isfield(cr,"g") || isempty(cr.g))
       cr.g = cr.r * cr.r';
     endif
   else
-    if (!isfield(cr,"g"))
+    if (!isfield(cr,"g") || isempty(cr.g))
       cc = cos(cr.b);
       g = cr.a' * cr.a;
       g(1,2) = g(2,1) = g(1,2) * cc(3);

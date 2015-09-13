@@ -32,9 +32,17 @@ function rep = representation_()
   rep.triangle = cell();
   rep.vertex = cell();
 
+  rep.nsurf = 0;
+  rep.surf = cell();
+
   rep.cam = struct();        # Definition of the camera
   rep.nlight = 0;            # Number of lights in the scene
   rep.light = cell();        # Definition for each light
-  rep.bgcolor = zeros(1,3);a # color in the backgound
+  rep.bgcolor = zeros(1,3);  # color in the backgound
+  rep.texlib = {};
+
+  rep.load = struct();
+  rep.load.shapes = 0;
+  rep.load.shapes3 = 0;
 
 endfunction
