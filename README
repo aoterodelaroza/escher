@@ -1,23 +1,19 @@
-% escher README
-% August 13, 2013
-
 Overview
 --------
 
-Escher is a collection of octave and python routines for the
-visualization and plotting of molecules and crystals. The emphasis in
-escher is, first, making the plots as pretty and artsy as possible
-and, second, providing a very flexible framework to create plots that
-are outside the capacities that traditional GUIs provide.
+Escher is a collection of octave routines for the visualization and
+plotting of molecules and crystals. The emphasis in escher is in i)
+making the plots as pretty and artsy as possible and, ii) providing a
+very flexible framework to create plots that are outside the
+capacities that traditional GUIs provide.
 
-The original idea in escher was to modernize
-[tessel](http://azufre.quimica.uniovi.es/software.html#tessel), a
-program for the representation of crystal structures (and more). Via
-an interface to [POV-Ray](http://www.povray.org/), tessel is able to
-generate very high quality representations of periodic and finite
-molecular structures, which is good, because we are not particularly
-satisfied with the state of (free) visualization software at the
-moment.
+The original idea in escher was to modernize tessel
+(http://azufre.quimica.uniovi.es/software.html#tessel), a program for
+the representation of crystal structures (and more). Via an interface
+to povray (http://www.povray.org/), tessel is able to generate very
+high quality representations of periodic and finite molecular
+structures, which is good, because we are not particularly satisfied
+with the state of (free) visualization software at the moment.
 
 We now know, however, that tessel has some annoying drawbacks: i) for
 most condensed matter applications it is difficult to set the camera
@@ -39,69 +35,31 @@ contained in the representation is then rendered to generate the
 plot. Consequently, in order to create a figure, one has to write a
 script using the functions in the escher library.
 
-The perceptive reader will probably have noticed that instead of
-solving the drawbacks in tessel we have made two of them worse: you
-now have to write a script instead of an input file and there is still
-no way of setting the camera orientation. Although this kind of things
-tends to happen to the authors when they get carried away, this time,
-however, it is not as bad as it sounds. A few octave lines are usually
-enough to generate a very reasonable plot with current default options
-and we provide a hack of the [g3dviewer
-program](http://automagically.de/g3dviewer/) that permits setting the
-camera using an obj file.
+The perceptive reader will have noticed that instead of solving the
+problems in tessel we have made two of them worse: you now have to
+write a script instead of an input file and there is still no way of
+setting the camera orientation. These things tend to happen to the
+authors when they get carried away. This time, however, it is not as
+bad as it sounds. A few octave lines are usually enough to generate a
+very reasonable plot with current default options and we provide
+routines that make placing the camera very easy using programs like
+view3dscene.
 
-A more permanent solution would be to create a graphical interface,
-and this comprises the second part of escher: the python GUI. This
-part is, however, still under heavy development and presently not
-functional.
-
-Experimental does not even begin to describe the current state of
-escher so... beware ye who enter here!! We usually implement new
-features as requests for plots come up in our everyday work (which is
-computational chemistry, and in no way related to software development
-itself), so escher naturally reflects these inclinations.
-Contributions in any other direction, comments and suggestions are
-greatly appreciated.
-
-Download
---------
-
-Because of the size of the examples directory, the escher distribution
-is split in two parts. The source code itself can be downloaded from:
-
-**Source code**:
-[tar.bz2](http://gatsby.ucmerced.edu/downloads/escher/escher.tar.bz2), 
-[tar.gz](http://gatsby.ucmerced.edu/downloads/escher/escher.tar.gz),
-[zip](http://gatsby.ucmerced.edu/downloads/escher/escher.zip)
-
-The examples are:
-
-**Examples**:
-[tar.bz2](http://gatsby.ucmerced.edu/downloads/escher/escher_data.tar.bz2), 
-[tar.gz](http://gatsby.ucmerced.edu/downloads/escher/escher_data.tar.gz),
-[zip](http://gatsby.ucmerced.edu/downloads/escher/escher_data.zip)
-
-We still don't have a clear idea of how we want to organize the
-examples directory, so it will probably change in the future. In order
-to set the orientation of the camera, our slightly-hacked version of
-g3dviewer comes in useful:
-
-**g3dviewer**: [tar.bz2](http://gatsby.ucmerced.edu/downloads/escher/g3dviewer.tar.bz2), 
-
-**Recent changes**: [ChangeLog](http://gatsby.ucmerced.edu/downloads/escher/ChangeLog)
-
-**Contact**:
-Alberto Otero de la Roza [mailto:aoterodelaroza@ucmerced.edu aoterodelaroza@ucmerced.edu] 
-Daniel Menéndez [mailto:danielmail7@gmail.com danielmail7@gmail.com] 
-Víctor Luaña Cabal [mailto:victor@carbono.quimica.uniovi.es victor@carbono.quimica.uniovi.es] 
+Escher is still experimental. The syntax may change at any time, and
+it's probably riddled with bugs and inconsistencies. So beware.  We
+usually implement new features as requests for plots come up in our
+everyday work (which is computational chemistry, and in no way related
+to software development itself), so escher naturally reflects these
+inclinations.  Contributions in any other direction, comments and
+suggestions are greatly appreciated.
 
 Installation
 ------------
 
 In order to use escher, you will need
-[octave](http://www.gnu.org/software/octave/), which these days comes
-in the package distribution system of most linux distros. To install
-escher, uncompress the package:   
+(http://www.gnu.org/software/octave/), which these days comes in the
+package distribution system of most linux distros. To install escher,
+uncompress the package:
 
     tar xjvf escher.tar.bz2
 
@@ -112,25 +70,6 @@ and then add the following line to your .octaverc:
 replacing the string with your particular path. Once this is done, you
 can check that your installation is working by opening octave and
 trying to call some of the functions in escher (e.g. molecule()).
-
-To install our version of g3dviewer, you'll first have to resolve the
-dependencies for it. In debian-based systems, this is done using apt:
-
-    sudo apt-get build-dep g3dviewer
-
-which will install all the required packages. Then, uncompress the
-g3dviewer package:
-
-    tar xjvf g3dviewer.tar.bz2
-
-and compile it:
-
-    ./configure --prefix=/opt/g3dviewer
-    make
-    sudo make install
-
-where /opt/g3dviewer is to be replaced by a target directory of your
-choice. The g3dviewer executable is in /opt/g3dviewer/bin.
 
 Use
 ---
@@ -180,50 +119,16 @@ the default parameters for the camera and lights
 
     povray -D -UV +Icrystal.pov +Ocrystal.png +W1000 +H1000 +A
 
-Our version of g3dviewer can be used to orient the camera via the
-rep_setdefaultscene() function. To do that, write an obj file:
-
-    rep_write_obj(rep,"crystal.obj");
-
-Then open it with g3dviewer:
-
-    g3dviewer crystal.obj
-
-Our little tweak to the program makes g3dviewer write a matrix to the
-output:
-
-    r = [
-       0.9752922654  0.1395401061 0.1712704897 0.0000000000
-      -0.2208531201  0.6347193718 0.7405099869 0.0000000000
-      -0.0053778365 -0.7600393295 0.6498547792 0.0000000000
-       0.0000000000  0.0000000000 0.0000000000 1.0000000000
-    ];
-
-that can be subsequently used like this:
-
-    rep = rep_setdefaultscene(rep,r);
-
-to reproduce the same orientation of the camera in g3dviewer with
-POV-Ray. The (1:3,1:3) is the rotation matrix, (4,1:3) is the
-translation from the center of projection. Usually, it is useful to
-modify the r provided by g3dviewer to make the (4,1:3) block something
-like [0 0 -20], where -20 is a measure of the distance to the point
-the camera is pointing at. The (1:3,4) block is the actual position of
-the center of projection. If set to [0; 0; 0], which we strongly
-recommend, then it is taken as the center of mass of the system.
-
 Examples
 --------
 
 You can find several examples of escher plots in the examples
-directory (escher_data) and also in the [[Image gallery|Image Gallery]] and in the
-[[Anthology_of_interest|Anthology of Interest]].
+directory (escher_data), which should come in a separate repository.
 
 Copyright notice
 ----------------
 
-Copyright (c) 2013 Alberto Otero de la Roza, Daniel Menéndez, and
-Víctor Luaña Cabal.
+Copyright (c) 2013-2015 Alberto Otero de la Roza, and Víctor Luaña Cabal. 
 
 escher is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
