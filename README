@@ -71,6 +71,13 @@ replacing the string with your particular path. Once this is done, you
 can check that your installation is working by opening octave and
 trying to call some of the functions in escher (e.g. molecule()).
 
+Documentation
+-------------
+
+The only valid documentation file is doc/devs.org, which contains a
+list of all the routines with an apropos entry. The documentation
+inside each m script should also be up to date. 
+
 Use
 ---
 
