@@ -1,4 +1,0 @@
-Test: quantum espresso calculation of a water clathrate hosting
-a methane molecule. The output is read with cr_read_espresso and then
-the geomview plot is created. 
-
