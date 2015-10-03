@@ -56,10 +56,14 @@ suggestions are greatly appreciated.
 Installation
 ------------
 
-In order to use escher, you will need
+In order to use escher, you will need octave
 (http://www.gnu.org/software/octave/), which these days comes in the
 package distribution system of most linux distros. To install escher,
-uncompress the package:
+clone the repository from:
+
+https://github.com/aoterodelaroza/escher
+
+or uncompress the package:
 
     tar xjvf escher.tar.bz2
 
