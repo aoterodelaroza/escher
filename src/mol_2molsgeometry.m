@@ -43,14 +43,14 @@ if (LOG>0)
       endfor
       [dm,jm] = min(dist);
       printf('%4d %-5s ', i, cell2mat(mol1.atname(i)));
-      printf('%4d %-5s %10.4f %10.4f %10.4f %10.4f', \
+      printf('%4d %-5s %10.4f %10.4f %10.4f %10.4f', ...
              jm, cell2mat(mol2.atname(jm)), dm, mol2.atxyz(1:3,jm));
       printf('\n');
       [ds,js] = sort(dist,2,'ascend');
       if (LOG > 1)
          for j = 2:min([LOG,n2,4])
             jm = js(j); dm = ds(j);
-            printf('           %4d %-5s %10.4f %10.4f %10.4f %10.4f', \
+            printf('           %4d %-5s %10.4f %10.4f %10.4f %10.4f', ...
                    jm, cell2mat(mol2.atname(jm)), dm, mol2.atxyz(1:3,jm));
             printf('\n');
          endfor

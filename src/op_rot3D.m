@@ -56,8 +56,8 @@ elseif (strcmpi(mode,"cwlh"))
    c1 = cos(a1*pi/180); s1 = sin(a1*pi/180);
    c2 = cos(a2*pi/180); s1 = sin(a2*pi/180);
    c3 = cos(a3*pi/180); s1 = sin(a3*pi/180);
-   m = [ c2*c3, -c1*s3+s1*s2*c3,  s1*s3+c1*c2*c3; \
-         c2*s3,  c1*c3+s1*s2*s3, -s1*c3+c1*s2*s3; \
+   m = [ c2*c3, -c1*s3+s1*s2*c3,  s1*s3+c1*c2*c3; ...
+         c2*s3,  c1*c3+s1*s2*s3, -s1*c3+c1*s2*s3; ...
         -s2,     s1*c2,           c1*c2           ];
 elseif (strcmpi(mode,"axis"))
    # We check the normalization of the a2 vector and its row/column format:
@@ -70,9 +70,9 @@ elseif (strcmpi(mode,"axis"))
    else
       error('rot_3D/axis: a1 should be a 3x1 unit vector!',
    endif
-   m = (p * p') * ct1 + \
-     [ +ct,      +p(3)*st, -p(2)*st; \
-       -p(3)*st, +ct,      +p(1)*st; \
+   m = (p * p') * ct1 + ...
+     [ +ct,      +p(3)*st, -p(2)*st; ...
+       -p(3)*st, +ct,      +p(1)*st; ...
        +p(2)*st, -p(1)*st, +ct       ];
 else
    error('op_rot3D: Unknown 3 angles rotation mode!');

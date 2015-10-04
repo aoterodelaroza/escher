@@ -137,14 +137,14 @@ function ene = cr_vdwewald(cr,eps,idamp=0,iparam=[])
   rcut2 = 2 / SGROW;
   do
     rcut2 = rcut2 * SGROW;
-    err_real = pi^(3/2) * c6sum * eta / omega * \
-        (1/rcut2^4 + 1/rcut2^2/eta^2 + 0.5/eta^4) *\
+    err_real = pi^(3/2) * c6sum * eta / omega * ...
+        (1/rcut2^4 + 1/rcut2^2/eta^2 + 0.5/eta^4) * ...
         erfc(rcut2/eta);
   until(err_real < eps)
   while(rcut2-rcut1 > EPSCUT)
     rcut = 0.5*(rcut1+rcut2);
-    err_real = pi^(3/2) * c6sum * eta / omega * \
-        (1/rcut^4 + 1/rcut^2/eta^2 + 0.5/eta^4) *\
+    err_real = pi^(3/2) * c6sum * eta / omega * ...
+        (1/rcut^4 + 1/rcut^2/eta^2 + 0.5/eta^4) * ...
         erfc(rcut/eta);
     if (err_real > eps)
       rcut1 = rcut;
@@ -177,14 +177,14 @@ function ene = cr_vdwewald(cr,eps,idamp=0,iparam=[])
   hcut2 = 2 / SGROW;
   do
     hcut2 = hcut2 * SGROW;
-    err_rec = c6sum / 6 / sqpi / eta^6 * \
-        (hcut2 * eta * exp(-(hcut2 * eta / 2)^2) + \
+    err_rec = c6sum / 6 / sqpi / eta^6 * ...
+        (hcut2 * eta * exp(-(hcut2 * eta / 2)^2) + ...
          sqpi * erfc(hcut2 * eta / 2));
   until(err_rec < eps)
   while(hcut2-hcut1 > EPSCUT)
     hcut = 0.5*(hcut1+hcut2);
-    err_rec = c6sum / 6 / sqpi / eta^6 * \
-        (hcut * eta * exp(-(hcut * eta / 2)^2) + \
+    err_rec = c6sum / 6 / sqpi / eta^6 * ...
+        (hcut * eta * exp(-(hcut * eta / 2)^2) + ...
          sqpi * erfc(hcut * eta / 2));
     if (err_rec > eps)
       hcut1 = hcut;
@@ -216,7 +216,7 @@ function ene = cr_vdwewald(cr,eps,idamp=0,iparam=[])
               continue
             endif
             if (idamp > 0)
-              sum_damp += c6(typ(i),typ(j)) / d2^3 * \
+              sum_damp += c6(typ(i),typ(j)) / d2^3 * ...
                   (1-fdamp(sqrt(d2),rvdw(typ(i)),rvdw(typ(j))));
             endif
 

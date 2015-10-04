@@ -10,9 +10,9 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], \
+function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], ...
                            ftex="opaque_triangle_default", etex="stick_default", erad=0.025)
-% function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 255], \
+% function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 255], ...
 %                            ftex="opaque_triangle_default", etex="stick_default", erad=0.025)
 %
 % rep_polygon - draw a polygon by calculating the barycenter of the vertices in the input

@@ -299,7 +299,7 @@ function [mol] = mol_internalgeometry (mol, bondfactor=1.15, LOG=2)
                               if (!conn(i7,i8)) continue endif
                               if (conn(i7,i8) && conn(i8,i1))
                                  # A 8-ring
-                                 ring{++nring} = \
+                                 ring{++nring} = ...
                                      [i1, i2, i3, i4, i5, i6, i7, i8];
                                  continue
                               endif

@@ -10,9 +10,9 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 0 128], \
+function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 0 128], ...
                               ftex="opaque_triangle_default", etex="stick_default", erad=0.005)
-% function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 0 128], \
+% function rep = rep_read_basin(file, addto="", frgb=[255 128 128 0 128], ergb=[0 0 128], ...
 %                               ftex="opaque_triangle_default", etex="stick_default", erad=0.005)
 %
 % rep_read_basin - read a basin file and create a surface representation.
