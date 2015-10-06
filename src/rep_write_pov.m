@@ -61,7 +61,7 @@ function rep_write_pov(rep,file="")
   fprintf(fid,"#declare Mol1 = union {\n")
   for i = 1:rep.nball
     str = pigment{rep.ball{i}.tex};
-    if (!rep.ball{i}.wire)
+    if (!isfield(rep.ball{i},"wire") || !rep.ball{i}.wire)
       s = sprintf("%s %s %s","  sphere{<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
     else
       s = sprintf("%s %s %s","  object{ Ring_Sphere(%.9f,%.9f,0.01,0.01,16,16) translate <%.9f,%.9f,%.9f> texture {%s",str,"}}\n");
@@ -70,13 +70,13 @@ function rep_write_pov(rep,file="")
     rgb = fillrgb(rep.ball{i}.rgb) / 255;
     rgb = rgb(1:n);
     if (!isempty(rgb))
-      if (!rep.ball{i}.wire)
+      if (!isfield(rep.ball{i},"wire") || !rep.ball{i}.wire)
         fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex},rgb);
       else
         fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.texlib{rep.ball{i}.tex},rgb);
       endif
     else
-      if (!rep.ball{i}.wire)
+      if (!isfield(rep.ball{i},"wire") || !rep.ball{i}.wire)
         fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex});
       else
         fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.texlib{rep.ball{i}.tex});
