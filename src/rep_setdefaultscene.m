@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="3point",ifac=1,angle=45,persp=1);
-% function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="3point",ifac=1,angle=45,persp=1);
+function rep = rep_setdefaultscene(repi,pos=[],sky=[0 0 1],lighting="3point",ifac=1,angle=45,persp=1);
+% function rep = rep_setdefaultscene(repi,pos=[],sky=[0 0 1],lighting="3point",ifac=1,angle=45,persp=1);
 %
 % rep_setdefaultscene - given a representation, set up the camera
 % using the camera position relative to the center of mass of the 
@@ -29,6 +29,14 @@ function rep = rep_setdefaultscene(repi,pos,sky=[0 0 1],lighting="3point",ifac=1
 % Output variables:
 % rep: output representation.
 
+  ## If no arguments, call the tessel version with reasonable
+  ## angles for the camera
+  if (isempty(pos))
+    rep = rep_setdefaultscene_tessel(repi);
+    return
+  endif
+
+  ## Copy the representation
   rep = repi;
 
   ## add the camera, default placement
