@@ -55,10 +55,10 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
       rep = rep_addlight(rep,rep.cam.location,1,0.5*ifac);
     endif
 
-    x0 = rep.cam.location;
-    xc = rep.cam.lookat - x0;
+    x0 = rep.cam.location(:);
+    xc = rep.cam.lookat(:) - x0;
     dc = norm(xc); xc = xc / dc;
-    xu = rep.cam.sky; xu = xu / norm(xu);
+    xu = rep.cam.sky(:); xu = xu / norm(xu);
     xd = cross(xc,xu); 
     if (norm(xd) < 1e-14)
       xd = cross(xc,rep.cam.right); 
@@ -81,10 +81,10 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     rep = rep_addlight(rep,x,1,0.5*ifac);
 
   elseif (strcmp(model,"3point") || strcmp(model,"3point-noshadow"))
-    x0 = rep.cam.location;
-    xc = rep.cam.lookat - x0;
+    x0 = rep.cam.location(:);
+    xc = rep.cam.lookat(:) - x0;
     dc = norm(xc); xc = xc / dc;
-    xu = rep.cam.sky; xu = xu / norm(xu);
+    xu = rep.cam.sky(:); xu = xu / norm(xu);
     xd = cross(xc,xu); 
     if (norm(xd) < 1e-14)
       xd = cross(xc,rep.cam.right); 
