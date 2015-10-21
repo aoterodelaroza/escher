@@ -17,7 +17,7 @@ function run_povray(name,crop=1)
 % If crop=1, then use imagemagick's "convert" to crop the margins.
 %
 
-  system(sprintf("povray -D -UV +I%s.pov +O%s.png +W2000 +H2000 +A",name,name));
+  [s out] = system(sprintf("povray -D -UV +I%s.pov +O%s.png +W2000 +H2000 +A 2> /dev/null",name,name));
   if (crop)
     system(sprintf("convert -trim -bordercolor White -border 0x0 +repage %s.png %s_crop.png",name,name));
     system(sprintf("mv %s_crop.png %s.png",name,name));
