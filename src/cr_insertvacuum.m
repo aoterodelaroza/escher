@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function cr = cr_insertvacuum(cr0, ix, r0, chop="",center="");
-% function cr = cr_insertvacuum(cr0, ix, r0, chop="")
+function cr = cr_insertvacuum(cr0, ix, r0, chop="", center="");
+% function cr = cr_insertvacuum(cr0, ix, r0, chop="", center="")
 %
 % cr_insertvacuum - insert vacuum in one of the crystallographic directions. 
 % This is useful for surface design.
