@@ -61,7 +61,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     xu = rep.cam.sky(:); xu = xu / norm(xu);
     xd = cross(xc,xu); 
     if (norm(xd) < 1e-14)
-      xd = cross(xc,rep.cam.right); 
+      xd = cross(xc,rep.cam.right(:)); 
     endif
     xd = xd / norm(xd);
     
@@ -87,7 +87,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     xu = rep.cam.sky(:); xu = xu / norm(xu);
     xd = cross(xc,xu); 
     if (norm(xd) < 1e-14)
-      xd = cross(xc,rep.cam.right); 
+      xd = cross(xc,rep.cam.right(:)); 
     endif
     xd = xd / norm(xd);
     
