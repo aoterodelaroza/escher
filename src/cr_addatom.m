@@ -39,7 +39,7 @@ function [cr natnew typnew] = cr_addatom(cr0,x,zsy)
       nt = idx;
     else
       nt = ++cr.ntyp;
-      cr.attyp(nt) = zsy;
+      cr.attyp{nt} = zsy;
       cr.ztyp(nt) = mol_dbatom(zsy);
     endif
   else
@@ -48,7 +48,7 @@ function [cr natnew typnew] = cr_addatom(cr0,x,zsy)
     if (isempty(idx))
       nt = ++cr.ntyp;
       cr.ztyp(nt) = zsy;
-      cr.attyp(nt) = mol_dbsymbol(zsy);
+      cr.attyp{nt} = mol_dbsymbol(zsy);
     else
       nt = idx;
     endif
