@@ -50,6 +50,8 @@ v means variable (global)
 | + | cr_xrd            | fun      |           | calculate the powder x-ray diffraction pattern  |
 | + | cr_compare        | fun      | 2xcr      | compare two crystal structures                  |
 | + | cr_fill_rg        | fun      | cr        | fill the r and g matrices                       |
+| + | cr_dumpmol        | fun      | mol       | Write the unit cell atoms to a molecule         |
+| + | cr_readmol        | fun      | cr        | Replace the motif with the atoms from mol       |
 
 ** Crystal mask
 
