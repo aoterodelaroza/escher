@@ -44,12 +44,12 @@ function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
   d = sign(det(w * v'));
   mat = [1 0 0; 0 1 0; 0 0 d];
   u = w * mat * v';
-  rmsd = sum(sum((u * mol0.atxyz - mol1.atxyz).^2)) / 3 / mol0.nat
+  rmsd = sum(sum((u * mol0.atxyz - mol1.atxyz).^2)) / 3 / mol0.nat;
   
   if (allow_inversion)
     mat = [1 0 0; 0 1 0; 0 0 -d];
     u2 = w * mat * v';
-    rmsd2 = sum(sum((u * mol0.atxyz - mol1.atxyz).^2)) / 3 / mol0.nat
+    rmsd2 = sum(sum((u * mol0.atxyz - mol1.atxyz).^2)) / 3 / mol0.nat;
     if (rmsd2 < rmsd)
       rmsd = rmsd2
       u = u2
