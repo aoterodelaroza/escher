@@ -93,12 +93,12 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
   ## apply end-atom criteria
   z1 = z2 = -1;
   if (!strict)
-    if (strcmp(s1,".+"))
+    if (strcmpi(s1,".+"))
       z1 = -1;
     else
       z1 = mol_dbatom(s1);
     endif
-    if (strcmp(s1,".+"))
+    if (strcmpi(s1,".+"))
       z2 = -1;
     else
       z2 = mol_dbatom(s2);
@@ -107,16 +107,16 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
   if (strict == 2) 
     r1 = r2 = zeros(1,nat);
     for i = 1:nat
-      r1(i) = strcmp(mol.atname{i},s1);
-      r2(i) = strcmp(mol.atname{i},s2);
+      r1(i) = strcmpi(mol.atname{i},s1);
+      r2(i) = strcmpi(mol.atname{i},s2);
     endfor
     isstick &= ((r1' * ones(1,nat)) & (ones(nat,1) * r2) | ...
                 (r2' * ones(1,nat)) & (ones(nat,1) * r1));
   elseif (strict == 1)
     r1 = r2 = zeros(1,nat);
     for i = 1:nat
-      r1(i) = !isempty(regexp(mol.atname{i},s1));
-      r2(i) = !isempty(regexp(mol.atname{i},s2));
+      r1(i) = !isempty(regexp(tolower(mol.atname{i}),tolower(s1)));
+      r2(i) = !isempty(regexp(tolower(mol.atname{i}),tolower(s2)));
     endfor
     isstick &= ((r1' * ones(1,nat)) & (ones(nat,1) * r2) | ...
                 (r2' * ones(1,nat)) & (ones(nat,1) * r1));

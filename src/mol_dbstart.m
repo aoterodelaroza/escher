@@ -73,9 +73,9 @@ function mol_dbstart(color="csd",rcov="tessel",rvdw="csd")
       1.45, 1.46, 1.48, 1.40, 1.21, 1.50, 2.60, 2.21, 2.15, 2.06, ...
       2.00, 1.96, 1.90, 1.87, 1.80, 1.69, 1.54, 1.83, 1.50, 1.50, ...
       1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50];
-   if (strcmp(rcov,"csd"))
+   if (strcmpi(rcov,"csd"))
      atdb.rcov = atdb.rcov_csd;
-   elseif (strcmp(rcov,"tessel"))
+   elseif (strcmpi(rcov,"tessel"))
      atdb.rcov = atdb.rcov_tessel;
    else
      error("Unknown covalent radii set")
@@ -108,9 +108,9 @@ function mol_dbstart(color="csd",rcov="tessel",rvdw="csd")
       2.00, 1.86, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, ...
       2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00];
    atdb.rvdw = atdb.rvdw_tessel;
-   if (strcmp(rvdw,"csd"))
+   if (strcmpi(rvdw,"csd"))
      atdb.rvdw = atdb.rvdw_csd;
-   elseif (strcmp(rvdw,"tessel"))
+   elseif (strcmpi(rvdw,"tessel"))
      atdb.rvdw = atdb.rvdw_tessel;
    else
      error("Unknown van der Waals radii set")
@@ -216,9 +216,9 @@ function mol_dbstart(color="csd",rcov="tessel",rvdw="csd")
        000,220,220, 230,010,010, 140,255,140,... #115-117 YX, YZ, ZX
        112,112,255, 127,050,000, 127,000,050 ... #118-120 ZY, TT, WW
                      ];
-   if (strcmp(color,"csd"))
+   if (strcmpi(color,"csd"))
      atdb.color = reshape(atdb.csd_color,3,120);
-   elseif (strcmp(color,"jmol") || strcmp(color,"tessel"))
+   elseif (strcmpi(color,"jmol") || strcmpi(color,"tessel"))
      atdb.color = reshape(atdb.jmol_color,3,120);
    else
      error("Unknown color set")

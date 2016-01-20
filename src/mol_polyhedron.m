@@ -86,7 +86,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
   ic1 = [];
   iv1 = [];
   for ic = 1:nc
-    useit = (ischar(at) && regexp(molc.atname{ic},at));
+    useit = (ischar(at) && regexp(tolower(molc.atname{ic}),tolower(at)));
     useit = useit || (isscalar(at) && molc.atnumber(ic) == at);
     useit = useit || (length(at)==3 && norm(molc.atxyz(:,ic)-at)<1e-10);
     if (useit)
@@ -95,10 +95,10 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         useit = 0;
         if (iscell(by))
           for k = 1:length(by)
-            useit = useit || regexp(molv.atname{iv},by{k});
+            useit = useit || regexp(tolower(molv.atname{iv}),tolower(by{k}));
           endfor
         elseif (ischar(by))
-          useit = useit || regexp(molv.atname{iv},by);
+          useit = useit || regexp(tolower(molv.atname{iv}),tolower(by));
         elseif (isscalar(by))
           useit = useit || (molv.atnumber(iv) == by);
         else

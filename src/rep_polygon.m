@@ -88,7 +88,7 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], .
 #  endif
 #
 #  for ic = 1:nc
-#    useit = (ischar(at) && regexp(molc.atname{ic},at));
+#    useit = (ischar(at) && regexp(tolower(molc.atname{ic}),tolower(at)));
 #    useit = useit || (isscalar(at) && molc.atnumber(ic) == at);
 #    useit = useit || (length(at)==3 && norm(molc.atxyz(:,ic)-at)<1e-10);
 #    if (useit)
@@ -97,12 +97,12 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], .
 #        useit = 0;
 #        if (iscell(by))
 #          for k = 1:length(by)
-#            useit = useit || regexp(molv.atname{iv},by{k});
+#            useit = useit || regexp(tolower(molv.atname{iv}),tolower(by{k}));
 #          endfor
 #        elseif (ischar(by))
-#          useit = useit || regexp(molv.atname{iv},by);
+#          useit = useit || regexp(tolower(molv.atname{iv}),tolower(by));
 #        elseif (isscalar(by))
-#          useit = useit || regexp(molv.atnumber(iv),by);
+#          useit = useit || regexp(tolower(molv.atnumber(iv)),tolower(by));
 #        else
 #          for k = 1:length(by)
 #            useit = useit || (molv.atnumber(iv) == by(k));

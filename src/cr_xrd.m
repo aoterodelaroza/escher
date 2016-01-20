@@ -161,7 +161,7 @@ function [t ih pinfo] = cr_xrd(cr,root="",lambda=1.5406,fpol=0,th2limits=[5 90],
             if (LOG)
               printf("2theta = %.15f   [%d %d %d]  I = %.15f\n",th2*180/pi,hvec,int)
             endif
-            if (strcmp(pprofile,"gaussian"))
+            if (strcmpi(pprofile,"gaussian"))
               ih += int * exp(-(t-th2*180/pi).^2 / 2 / sigma2);
               if (all(abs(th2p-th2) > theps))
                 peaks++;

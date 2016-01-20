@@ -81,13 +81,13 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
 
   ## ignore direct/selective dynamics line
   dum = fgetl(fid);
-  if (strcmp(lower(substr(dum,1,1)),"s"))
+  if (strcmpi(substr(dum,1,1),"s"))
     dum = fgetl(fid);
   endif
   iscart = 0;
-  if (strcmp(lower(substr(dum,1,1)),"d"))
+  if (strcmpi(substr(dum,1,1),"d"))
     iscart = 0;
-  elseif (strcmp(lower(substr(dum,1,1)),"c") || strcmp(lower(substr(dum,1,1)),"k"))
+  elseif (strcmpi(substr(dum,1,1),"c") || strcmpi(substr(dum,1,1),"k"))
     iscart = 1;
     ri = inv(r * bohrtoang);
   else

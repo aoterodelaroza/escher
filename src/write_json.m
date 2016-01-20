@@ -39,9 +39,9 @@ function write_json(obj,file="",nest=0)
   endif
 
   ## header
-  if (strcmp(class(obj),"char"))
+  if (strcmpi(class(obj),"char"))
     fprintf(fid,"%*s\"%s\"",nest,"",obj);
-  elseif (strcmp(class(obj),"double"))
+  elseif (strcmpi(class(obj),"double"))
     if (isscalar(obj))
       if (mod(abs(obj),1) == 0)
         fprintf(fid,"%*s%d",nest,"",obj);
@@ -70,7 +70,7 @@ function write_json(obj,file="",nest=0)
       endfor
       fprintf(fid,"]");
     endif
-  elseif (strcmp(class(obj),"struct"))
+  elseif (strcmpi(class(obj),"struct"))
     fprintf(fid,"{\n");
     a = fieldnames(obj);
     for i = 1:length(a)
@@ -82,7 +82,7 @@ function write_json(obj,file="",nest=0)
       endif
     endfor
     fprintf(fid,"}");
-  elseif (strcmp(class(obj),"cell"))
+  elseif (strcmpi(class(obj),"cell"))
     if (isempty(obj) || isvector(obj))
       fprintf(fid,"[");
       for i = 1:length(obj)

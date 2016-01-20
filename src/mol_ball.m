@@ -57,7 +57,7 @@ function rep = mol_ball(mol,addto="",symb=".+",strict=0,radius=-0.6,rgb=[-1 -1 -
 
   ## Create balls
   if (strict != 1 && strict != 2)
-    if (strcmp(symb,".+"))
+    if (strcmpi(symb,".+"))
       zz = -1;
     else
       zz = mol_dbatom(symb);
@@ -66,9 +66,9 @@ function rep = mol_ball(mol,addto="",symb=".+",strict=0,radius=-0.6,rgb=[-1 -1 -
   [rep itex] = rep_registertexture(rep,tex);
   for i = 1:nat
     if (strict == 2)
-      doit = strcmp(mol.atname{i},symb);
+      doit = strcmpi(mol.atname{i},symb);
     elseif (strict == 1)
-      doit = regexp(mol.atname{i},symb);
+      doit = regexp(tolower(mol.atname{i}),tolower(symb));
     else
       doit = (zz < 0) || (zz == mol.atnumber(i));
     endif

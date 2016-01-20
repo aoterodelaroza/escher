@@ -31,7 +31,7 @@ function [mol] = mol_order(moli, otype, mapfun="")
 % Created: January 2012
 
 if (ischar(otype)) 
-  if (strcmp(lower(otype),'atnumber'))
+  if (strcmpi(otype,'atnumber'))
     [s,i] = sort(moli.atnumber);
   endif
 else (isnumeric(otype))

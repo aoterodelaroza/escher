@@ -25,9 +25,9 @@ function tex = texture(typ="",name);
 
   global texdb
   
-  if (strcmp(lower(typ),"povray") || strcmp(lower(typ),"pov"))
+  if (strcmpi(typ,"povray") || strcmpi(typ,"pov"))
     typ = "pov";
-  elseif (strcmp(lower(typ),"obj"))
+  elseif (strcmpi(typ,"obj"))
     typ = "obj";
   else
     tex = struct();
@@ -50,7 +50,7 @@ function tex = texture(typ="",name);
   ## search for the texture in the database
   found = 0;
   for i = 1:length(texdb)
-    if (strcmp(texdb{i}.typ,typ) && strcmp(texdb{i}.name,lower(name)))
+    if (strcmpi(texdb{i}.typ,typ) && strcmpi(texdb{i}.name,lower(name)))
       tex = texdb{i}; 
       found = 1;
     endif

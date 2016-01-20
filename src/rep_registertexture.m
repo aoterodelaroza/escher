@@ -28,7 +28,7 @@ function [rep itex] = rep_registertexture(rep0,tex)
   rep = rep0;
   n = length(rep.texlib);
   for i = 1:n
-    if (strcmp(tex,rep.texlib{i}))
+    if (strcmpi(tex,rep.texlib{i}))
       itex = i;
       return
     endif
