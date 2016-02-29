@@ -73,7 +73,7 @@ and then add the following line to your .octaverc:
 
 replacing the string with your particular path. Once this is done, you
 can check that your installation is working by opening octave and
-trying to call some of the functions in escher (e.g. molecule()).
+trying to call some of the functions in escher (e.g. molecule_()).
 
 Documentation
 -------------
