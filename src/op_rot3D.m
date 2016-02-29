@@ -38,56 +38,44 @@ function m = op_rot3D (a1,a2,a3, mode="euler_yxz")
 %          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
 % Created: June 2011
 
-if (strcmpi(mode,"euler_xyz"))
-   m = op_rotz(a3) * op_roty(a2) * op_rotx(a1);
-elseif (strcmpi(mode,"euler_xzy"))
-   m = op_roty(a3) * op_rotz(a2) * op_rotx(a1);
-elseif (strcmpi(mode,"euler_yxz"))
-   m = op_rotz(a3) * op_rotx(a2) * op_roty(a1);
-elseif (strcmpi(mode,"euler_yzx"))
-   m = op_rotx(a3) * op_rotz(a2) * op_roty(a1);
-elseif (strcmpi(mode,"euler_zxy"))
-   m = op_roty(a3) * op_rotx(a2) * op_rotz(a1);
-elseif (strcmpi(mode,"euler_zyx"))
-   m = op_rotx(a3) * op_roty(a2) * op_rotz(a1);
-elseif (strcmpi(mode,"airplane") | strcmpi(mode,"ypw"))
-   m = op_rotx(a3) * op_roty(a2) * op_rotz(a1);
-elseif (strcmpi(mode,"cwlh"))
-   c1 = cos(a1*pi/180); s1 = sin(a1*pi/180);
-   c2 = cos(a2*pi/180); s1 = sin(a2*pi/180);
-   c3 = cos(a3*pi/180); s1 = sin(a3*pi/180);
-   m = [ c2*c3, -c1*s3+s1*s2*c3,  s1*s3+c1*c2*c3; ...
-         c2*s3,  c1*c3+s1*s2*s3, -s1*c3+c1*s2*s3; ...
-        -s2,     s1*c2,           c1*c2           ];
-elseif (strcmpi(mode,"axis"))
-   # We check the normalization of the a2 vector and its row/column format:
-   # p is the normalized column vector defining the rotation axis.
-   st = sin(a2*pi/180); ct = cos(a2*pi/180); ct1 = 1 - ct;
-   if (all(size(a1)==[3,1]))
+  if (strcmpi(mode,"euler_xyz"))
+    m = op_rotz(a3) * op_roty(a2) * op_rotx(a1);
+  elseif (strcmpi(mode,"euler_xzy"))
+    m = op_roty(a3) * op_rotz(a2) * op_rotx(a1);
+  elseif (strcmpi(mode,"euler_yxz"))
+    m = op_rotz(a3) * op_rotx(a2) * op_roty(a1);
+  elseif (strcmpi(mode,"euler_yzx"))
+    m = op_rotx(a3) * op_rotz(a2) * op_roty(a1);
+  elseif (strcmpi(mode,"euler_zxy"))
+    m = op_roty(a3) * op_rotx(a2) * op_rotz(a1);
+  elseif (strcmpi(mode,"euler_zyx"))
+    m = op_rotx(a3) * op_roty(a2) * op_rotz(a1);
+  elseif (strcmpi(mode,"airplane") | strcmpi(mode,"ypw"))
+    m = op_rotx(a3) * op_roty(a2) * op_rotz(a1);
+  elseif (strcmpi(mode,"cwlh"))
+    c1 = cos(a1*pi/180); s1 = sin(a1*pi/180);
+    c2 = cos(a2*pi/180); s1 = sin(a2*pi/180);
+    c3 = cos(a3*pi/180); s1 = sin(a3*pi/180);
+    m = [ c2*c3, -c1*s3+s1*s2*c3,  s1*s3+c1*c2*c3; ...
+          c2*s3,  c1*c3+s1*s2*s3, -s1*c3+c1*s2*s3; ...
+          -s2,     s1*c2,           c1*c2           ];
+  elseif (strcmpi(mode,"axis"))
+# We check the normalization of the a2 vector and its row/column format:
+# p is the normalized column vector defining the rotation axis.
+    st = sin(a2*pi/180); ct = cos(a2*pi/180); ct1 = 1 - ct;
+    if (all(size(a1)==[3,1]))
       p = a1 / (a1'*a1);
-   elseif (all(size(a1)==[1,3]))
+    elseif (all(size(a1)==[1,3]))
       p = a1' / (a1*a1');
-   else
-      error('rot_3D/axis: a1 should be a 3x1 unit vector!',
-   endif
-   m = (p * p') * ct1 + ...
-     [ +ct,      +p(3)*st, -p(2)*st; ...
-       -p(3)*st, +ct,      +p(1)*st; ...
-       +p(2)*st, -p(1)*st, +ct       ];
-else
-   error('op_rot3D: Unknown 3 angles rotation mode!');
-endif
-
-if (LOG > 0)
-   printf("op_rot3D: %s rotation\n", mode);
-   if (strcmpi(mode,"axis"))
-      printf("Rotation axis vector:", %.3f %.3f %.3f\n", a1);
-      printf("Rotation angle (deg):", %.3f\n", a2);
-   else
-      printf("Angles (deg) :", %.3f %.3f %.3f\n", a1, a2, a3);
-   endif
-   printf("Rotation matrix (Op * column_vector):\n");
-   printf("%12.5e %12.5e %12.5e %12.5e\n", m);
-endif
+    else
+      error('rot_3D/axis: a1 should be a 3x1 unit vector!')
+    endif
+    m = (p * p') * ct1 + ...
+        [ +ct,      +p(3)*st, -p(2)*st; ...
+          -p(3)*st, +ct,      +p(1)*st; ...
+          +p(2)*st, -p(1)*st, +ct       ];
+  else
+    error('op_rot3D: Unknown 3 angles rotation mode!');
+  endif
 
 endfunction
