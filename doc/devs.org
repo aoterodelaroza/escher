@@ -67,7 +67,7 @@ v means variable (global)
 
 |   | Variable             | Type         | Dim./Res.      | Apropos                                                     |
 |---+----------------------+--------------+----------------+-------------------------------------------------------------|
-| + | molecule             | fun          | mol            | Constructor                                                 |
+| + | molecule_            | fun          | mol            | Constructor                                                 |
 | o | name                 | string       |                | Name of the mol                                             |
 | x | nat                  | scalar       | integer        | Number of atoms                                             |
 | x | atname               | cell(string) | 1xnat          | Atomic names                                                |
@@ -134,7 +134,7 @@ v means variable (global)
 
 |   | Variable                        | Type           | Dim./Res.   | Apropos                                                   |
 |---+---------------------------------+----------------+-------------+-----------------------------------------------------------|
-| + | representation                  | fun            | rep         | Constructor                                               |
+| + | representation_                 | fun            | rep         | Constructor                                               |
 | o | name                            | string         |             | Name of the rep                                           |
 | x | nball                           | scalar         | integer     | Number of balls                                           |
 | x | ball                            | cell(ball)     | 1xnball     | Ball cell array                                           |
@@ -222,6 +222,7 @@ v means variable (global)
 | x | frgb     | array  | 1x5       | Color vector for faces (integer) |
 | x | etex     | scalar | integer   | Texture index for edges          |
 | x | ergb     | array  | 1x5       | Color vector for edges (integer) |
+| + | surface_ | fun    | texture   | Constructor                      |
 
 ** Vertex
 
