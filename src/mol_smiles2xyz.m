@@ -32,9 +32,17 @@ function [fxyz,mol] = mol_smiles2xyz (smiles="O=C(O)C(N)C Ala", code="ala", LOG=
 % Optional output arguments:
 % {mol}: molecular structure.
 %
-% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+% Examples:
+% # f="ala.xyz", Coordinates of alanine
+% [f,mol] = mol_smiles2xyz()
+% # Creates "benzene.xyz" with 3D coordinates
+% [f,mol] = mol_smiles2xyz('c1ccccc1','benzene',1)
+% # In https://en.wikipedia.org/ are found the smile codes
+%   for a huge number of molecules.
+%
+% Author: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
 % Created: Jan 2013
+% Updated: Mar 2016 (mostly documentation)
 
    bohrtoans = 0.52917720859;
 
