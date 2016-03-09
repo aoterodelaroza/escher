@@ -40,8 +40,8 @@ function [x0, nx, dx] = mol_cuberange (mol, qual=6, marg=1, cube=0, LOG=1)
 % {nx}: number of points in the grid.
 % {dx}: grid resolution.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Dec 2012
 
    qual = fix(qual);

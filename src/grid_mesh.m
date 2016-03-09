@@ -25,8 +25,8 @@ function [xx, yy, zz] = grid_mesh(g)
 % x coordinates.
 % yy, zz: same as above.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Jan 2012
 
   if (abs(g.a(1,2))+abs(g.a(1,3))+abs(g.a(2,3)+abs(g.a(2,1))+abs(g.a(3,1))+abs(g.a(3,2))) < 1e-14)

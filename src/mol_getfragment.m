@@ -25,8 +25,8 @@ function mol = mol_getfragment (moli, iat, LOG=0)
 % Required output variables:
 % {mol}: fragment description
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: January 2012
 
 if (length(iat) < 1)

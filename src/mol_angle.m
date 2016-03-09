@@ -19,8 +19,8 @@ function a = mol_angle(mol, at1, at2, at3)
 % mol: structure containing the molecule.
 % at1, at2, at3: return the at1-at2-at3 angle.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Nov 2012
 
   x21 = mol.atxyz(:,at1) - mol.atxyz(:,at2);

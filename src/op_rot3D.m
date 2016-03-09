@@ -34,8 +34,8 @@ function m = op_rot3D (a1,a2,a3, mode="euler_yxz")
 %       * "axis": perform a rotation of a2 degrees around the unit axis
 %         defined in the vector a1.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: June 2011
 
   if (strcmpi(mode,"euler_xyz"))

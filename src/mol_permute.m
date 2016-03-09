@@ -27,8 +27,8 @@ function [molout] = mol_permute(molin, iorder1, iorder2, LOG=0)
 % Required output variables:
 % {molout}: the output molecule.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: January 2012
 
 if (length(iorder1) != length(iorder2))

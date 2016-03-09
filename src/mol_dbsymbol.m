@@ -19,8 +19,8 @@ function [symbol,atom] = mol_dbsymbol (Z)
 % Required input variables:
 % Z: atomic number of the element to be identified.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: June 2011
 
    global atdb

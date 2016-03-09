@@ -32,8 +32,8 @@ function [fxyz,mol] = mol_smiles2xyz (smiles="O=C(O)C(N)C Ala", code="ala", LOG=
 % Optional output arguments:
 % {mol}: molecular structure.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Jan 2013
 
    bohrtoans = 0.52917720859;

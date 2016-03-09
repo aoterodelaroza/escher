@@ -29,8 +29,8 @@ function [check,vector] = mol_isplanar(mol, eps=1e-6, LOG=0)
 % Optional output variable:
 % {vector}: normalized vector describing the normal to the molecular plane.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: January 2012
 
 # Center of mass:

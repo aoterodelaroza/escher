@@ -22,8 +22,8 @@ function rgb = color(name)
 % Required output variables:
 % rgb: 8-bit integer triplet.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: June 2011
 % Modified: Jan 2012: (VLC) symbols can have a numerical label like C2 or C_2
 

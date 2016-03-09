@@ -24,8 +24,8 @@ function mol_dbstart(color="csd",rcov="tessel",rvdw="csd")
 % Side effect of the routine:
 % atdb: database of atomic properties.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: June 2011
 
    global atdb

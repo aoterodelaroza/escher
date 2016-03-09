@@ -45,8 +45,8 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
 %    *.cytpe}: type of gaussian calculation. Options: SCF, MP2, CI, QCI.
 % {LOG=1}: print information about the data read in if LOG>0.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Jan 2013
 
    bohrtoans = 0.52917720859;

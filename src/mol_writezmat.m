@@ -22,8 +22,8 @@ function mol_writezmat(mol,file="")
 % Optional input variables (all have default values):
 % {file}: write the z-matrix description to a file. Default: stdout.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: March 2012
 
   if (!isempty(file))

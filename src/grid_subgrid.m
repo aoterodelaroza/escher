@@ -42,8 +42,8 @@ function [newgrid] = grid_subgrid (grid, X0, X1, LOG=0)
 % Restriction: The new grid is a subset of the old one. Interpolation
 % would be a more powerful method.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Aug 2015
   #angtobohr = 1.88972613288564;
   #bohrtoans = 0.52917720859;

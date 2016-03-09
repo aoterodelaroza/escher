@@ -21,8 +21,8 @@ function cr_write_vasp(cr,file="",LOG=0)
 % file: name of the output file. If no file is given (default), then
 %       the POSCAR is written to the stdout.
 %
-% Authors: AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
-%          VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
+% Authors: AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
 % Created: Nov. 2012
 
   bohrtoans = 0.52917720859;

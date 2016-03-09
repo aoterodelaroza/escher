@@ -25,8 +25,8 @@ function rep = rep_transform(repi, rot=[1 0 0; 0 1 0; 0 0 1], tr=[0 0 0]);
 % Required output variables:
 % {rep}: output representation.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: December 2011
 
   rep = repi;

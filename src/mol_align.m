@@ -39,8 +39,8 @@ function [mol2new,R] = mol_align(mol1, iat1, mol2, iat2, LOG=1)
 %      cm2 to the origin, then apply R, then move cm2 to its final
 %      position.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: December 2011
 
 # Check input data, particularly iat1 and iat2.

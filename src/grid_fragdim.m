@@ -34,8 +34,8 @@ function [X0,X1,gridX0,gridX1] = grid_fragdim(mol, grid, frag, LOG=0)
 %   r1 = [1    2    3    4   13   14];  # the C atoms in the first ring
 %   [X0,X1,gX0,gX1] = mol_fragdim(mol,rho,r1);
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Aug 2015
 
   X0 = min(mol.atxyz(:,frag),[],2);

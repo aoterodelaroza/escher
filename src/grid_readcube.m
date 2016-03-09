@@ -24,8 +24,8 @@ function g = grid_readcube (cubefile, LOG=0)
 % Optional input variables (all have default values):
 % {LOG}: print the final result if LOG>0.
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: Jan 2012
 
   bohrtoans = 0.52917720859;

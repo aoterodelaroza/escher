@@ -29,8 +29,8 @@ function mol = mol_addatom (molin, atname, atxyz, LOG=0)
 % Required output variables:
 % mol: structure with the input molecular description. The format is:
 %
-% Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+% Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: June 2011
 
   angtobohr = 1.88972613288564;
