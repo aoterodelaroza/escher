@@ -116,9 +116,11 @@ v means variable (global)
 | + | mol_align_kabsch     | fun          | mol,array      | Similar to mol_align but using Kabsch algorithm             |
 | + | mol_opt_align        | fun          | mol,array      | Translate and rotate a mol for best alignment with another  |
 | + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol      |
+| + | mol_getsmiles        | fun          | mol            | Use openbabel to get a mol from a SMILES code               |
 | + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)           |
 | + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box              |
 | + | mol_formula          | fun          | string         | Determine the empirical/molecular formula of mol            |
+
 ** Atom
 
 |   | Variable | Type   | Dim./Res. | Apropos         |
