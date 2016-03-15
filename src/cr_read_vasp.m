@@ -113,7 +113,7 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
   for i = 1:length(cr.attyp)
     cr.attyp{i} = "Bq";
   endfor
-  if (exist(potcar,"file"))
+  if (ischar(potcar) && exist(potcar,"file"))
     fid = fopen(potcar,"r");
 
     ## read it
