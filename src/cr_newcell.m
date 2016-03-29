@@ -59,24 +59,22 @@ function cr = cr_newcell(cr0, v1, v2, v3);
             for l = 1:cr0.nat
               x = cr0.x(l,:) + [i j k];
               xnew = x * minv';
-              if (all(xnew > -0.1) && all(xnew < 1.1))
-                xnew = xnew - floor(xnew);
+              xnew = xnew - floor(xnew);
 
-                ifound = 0;
-                for i0 = 1:cr.nat
-                  dx = xnew - cr.x(i0,:);
-                  dx = abs(dx - round(dx));
-                  if (all(dx < 1e-10))
-                    ifound = 1;
-                    break
-                  endif
-                endfor
-
-                if (ifound == 0) 
-                  cr.nat += 1;
-                  cr.x(cr.nat,:) = xnew;
-                  cr.typ(cr.nat) = cr0.typ(l);
+              ifound = 0;
+              for i0 = 1:cr.nat
+                dx = xnew - cr.x(i0,:);
+                dx = abs(dx - round(dx));
+                if (all(dx < 1e-10))
+                  ifound = 1;
+                  break
                 endif
+              endfor
+
+              if (ifound == 0) 
+                cr.nat += 1;
+                cr.x(cr.nat,:) = xnew;
+                cr.typ(cr.nat) = cr0.typ(l);
               endif
             endfor
           endif
