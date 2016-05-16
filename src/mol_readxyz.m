@@ -25,14 +25,6 @@ function [mol] = mol_readxyz (filename, LOG=0)
 %            LOG = 1  number of points read in, volume and energy range.
 %            LOG = 2  like 1 plus a complete list of the points read in.
 %
-% Format of the xyz data file:
-% mode: Several xyz formats are used by different programs.
-%       This routine is designed to guess the correct format.
-%       Available possibilities are:
-%       "axyz" ----> atomic symbol + (x,y,z) coordinates    
-%       "nxyz" ----> atomic number + (x,y,z) coordinates    
-%       "anxyz" ---> atomic symbol + atomic number + (x,y,z) coordinates    
-%
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
 %          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
 % Created: June 2011
