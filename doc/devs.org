@@ -91,6 +91,7 @@ v means variable (global)
 | + | mol_getfragment      | fun          | mol            | Create a mol from a subset of atoms of another mol          |
 | + | mol_merge            | fun          | mol            | Merge two or more mols                                      |
 | + | mol_writeg09         | fun          | stdout         | Write a g09 template file                                   |
+| + | mol_writegjf         | fun          | stdout         | Write a g09 template file (simplified version)              |
 | + | mol_writenw          | fun          | stdout         | Write a nwchem template file                                |
 | + | mol_writexyz         | fun          | stdout         | Write a xyz file                                            |
 | + | mol_writezmat        | fun          | stdout         | Write the molecular geometry as z-matrix (see zmat_step)    |
