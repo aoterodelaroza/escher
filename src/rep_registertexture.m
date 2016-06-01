@@ -25,15 +25,38 @@ function [rep itex] = rep_registertexture(rep0,tex)
 % itex: integer index for the new texture.
 %
 
+  global texdb
+
+  ## See if we know this texture already
   rep = rep0;
-  n = length(rep.texlib);
-  for i = 1:n
-    if (strcmpi(tex,rep.texlib{i}))
-      itex = i;
+  anames = fieldnames(rep.texlib);
+  for i = 1:length(anames)
+    name = anames{i};
+    if (strcmpi(tex,name))
+      itex = name;
       return
     endif
   endfor
-  itex = n+1;
-  rep.texlib{n+1} = tex;
+
+  ## Initialize the texture library, if not initialized already
+  if (!exist("texdb","var") || isempty(texdb))
+    tex_dbstart();
+  endif
+
+  ## Search for the texture in the database
+  found = 0;
+  for i = 1:length(texdb)
+    if (strcmpi(tex,texdb{i}.name))
+      found = i;
+      break
+    endif
+  endfor
+
+  if (found > 0)
+    itex = tex;
+    rep.texlib = setfield(rep.texlib,tex,found);
+  else
+    error("texture not found")
+  endif
 
 endfunction

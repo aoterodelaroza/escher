@@ -24,8 +24,8 @@ function surf = surface_()
   surf.f = [];
   surf.n = [];
   surf.frgb = [0 0 0 0 0];
-  surf.ftex = 0;
+  surf.ftex = "";
   surf.ergb = [0 0 0 0 0];
-  surf.etex = 0;
+  surf.etex = "";
 
 endfunction

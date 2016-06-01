@@ -99,9 +99,9 @@ function [rep] = rep_merge(varargin);
       rep.bgcolor = rep1.bgcolor;
 
       ## registered textures
-      n1 = length(rep1.texlib);
-      for j = 1:n1
-        rep = rep_registertexture(rep,rep1.texlib{j});
+      anames = fieldnames(rep1.texlib);
+      for j = 1:length(anames)
+        rep = rep_registertexture(rep,anames{j});
       endfor
 
       ## load packages

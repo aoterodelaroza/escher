@@ -51,16 +51,17 @@ function rep_write_pov(rep,file="")
 
   ## textures
   pigment = {};
-  for i = 1:length(rep.texlib)
-    tex = texture("pov",rep.texlib{i});
-    pigment{i} = tex.pigment;
-    fprintf(fid,"#declare %s = texture {%s}\n",rep.texlib{i},tex.string);
+  anames = fieldnames(rep.texlib);
+  for i = 1:length(anames)
+    tex = texture("pov",anames{i});
+    pigment = setfield(pigment,anames{i},tex.pigment);
+    fprintf(fid,"#declare %s = texture {%s}\n",anames{i},tex.string);
   endfor
 
   ## write balls to the pov file
   fprintf(fid,"#declare Mol1 = union {\n")
   for i = 1:rep.nball
-    str = pigment{rep.ball{i}.tex};
+    str = getfield(pigment,rep.ball{i}.tex);
     if (!isfield(rep.ball{i},"wire") || !rep.ball{i}.wire)
       s = sprintf("%s %s %s","  sphere{<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
     else
@@ -71,15 +72,15 @@ function rep_write_pov(rep,file="")
     rgb = rgb(1:n);
     if (!isempty(rgb))
       if (!isfield(rep.ball{i},"wire") || !rep.ball{i}.wire)
-        fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex},rgb);
+        fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.ball{i}.tex,rgb);
       else
-        fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.texlib{rep.ball{i}.tex},rgb);
+        fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.ball{i}.tex,rgb);
       endif
     else
       if (!isfield(rep.ball{i},"wire") || !rep.ball{i}.wire)
-        fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.texlib{rep.ball{i}.tex});
+        fprintf(fid,s,rep.ball{i}.x,rep.ball{i}.r,rep.ball{i}.tex);
       else
-        fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.texlib{rep.ball{i}.tex});
+        fprintf(fid,s,rep.ball{i}.r,rep.ball{i}.r,rep.ball{i}.x,rep.ball{i}.tex);
       endif
     endif
   endfor
@@ -90,7 +91,7 @@ function rep_write_pov(rep,file="")
     if (norm(rep.stick{i}.x1 - rep.stick{i}.x0) < eps)
       continue
     endif
-    str = pigment{rep.stick{i}.tex};
+    str = getfield(pigment,rep.stick{i}.tex);
     if (!rep.stick{i}.round)
       s = sprintf("%s %s %s","   cylinder{<%.9f,%.9f,%.9f>,<%.9f,%.9f,%.9f>, %.9f texture {%s",str,"}}\n");
     else
@@ -100,14 +101,14 @@ function rep_write_pov(rep,file="")
     rgb = fillrgb(rep.stick{i}.rgb) / 255;
     rgb = rgb(1:n);
     if (!isempty(rgb))
-      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.texlib{rep.stick{i}.tex},rgb);
+      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.stick{i}.tex,rgb);
     else
-      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.texlib{rep.stick{i}.tex});
+      fprintf(fid,s,rep.stick{i}.x0,rep.stick{i}.x1,rep.stick{i}.r,rep.stick{i}.tex);
     endif
   endfor
 
   for i = 1:rep.ntriangle
-    str = pigment{rep.triangle{i}.tex};
+    str = getfield(pigment,rep.triangle{i}.tex);
     s = sprintf("%s %s %s","   triangle{<%.9f,%.9f,%.9f> <%.9f,%.9f,%.9f> <%.9f,%.9f,%.9f> texture {%s",str,"}}\n");
     n = sum(str == "%");
     rgb = fillrgb((rep.vertex{rep.triangle{i}.idx(1)}.rgb+...
@@ -119,13 +120,13 @@ function rep_write_pov(rep,file="")
               rep.vertex{rep.triangle{i}.idx(1)}.x,...
               rep.vertex{rep.triangle{i}.idx(2)}.x,...
               rep.vertex{rep.triangle{i}.idx(3)}.x,...
-              rep.texlib{rep.triangle{i}.tex},rgb);
+              rep.triangle{i}.tex,rgb);
     else
       fprintf(fid,s,
               rep.vertex{rep.triangle{i}.idx(1)}.x,...
               rep.vertex{rep.triangle{i}.idx(2)}.x,...
               rep.vertex{rep.triangle{i}.idx(3)}.x,...
-              rep.texlib{rep.triangle{i}.tex});
+              rep.triangle{i}.tex);
     end
   endfor
 
@@ -149,7 +150,7 @@ function rep_write_pov(rep,file="")
     fprintf(fid,"  }\n");
     fprintf(fid,"  texture_list {\n");
     fprintf(fid,"  1,\n");
-    s = sprintf("  texture{%s %s}",rep.texlib{rep.surf{i}.ftex},pigment{rep.surf{i}.ftex});
+    s = sprintf("  texture{%s %s}",rep.surf{i}.ftex,getfield(pigment,rep.surf{i}.ftex));
     fprintf(fid,s,fillrgb(rep.surf{i}.frgb)/255);
     fprintf(fid,"\n  }\n");
     fprintf(fid,"  face_indices {\n");

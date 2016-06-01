@@ -20,7 +20,7 @@ function tri = triangle()
 %
 
   tri = struct();
-  tri.tex = 0;
+  tri.tex = "";
   tri.idx = [0 0 0];
   
 endfunction

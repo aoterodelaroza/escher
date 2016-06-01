@@ -39,7 +39,7 @@ function rep = representation_()
   rep.nlight = 0;            # Number of lights in the scene
   rep.light = cell();        # Definition for each light
   rep.bgcolor = zeros(1,3);  # color in the backgound
-  rep.texlib = {};
+  rep.texlib = struct();
 
   rep.load = struct();
   rep.load.shapes = 0;

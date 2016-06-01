@@ -23,6 +23,6 @@ function ba = ball()
   ba.x = [0 0 0];
   ba.r = 0;
   ba.rgb = [0 0 0 0 0];
-  ba.tex = 0;
+  ba.tex = "";
 
 endfunction

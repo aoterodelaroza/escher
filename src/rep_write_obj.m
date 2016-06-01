@@ -41,7 +41,7 @@ function rep_write_obj(rep,file="",filemtl="",ndiv=1,nbase=16,LOG=0)
     rep.ball{i}.rgb = fillrgb(rep.ball{i}.rgb);
     found = 0;
     for j = 1:nrgb
-      if (all(abs(rep.ball{i}.rgb - rgb(j,:)) < 1e-5) && strcmpi(tex{j},rep.texlib{rep.ball{i}.tex}))
+      if (all(abs(rep.ball{i}.rgb - rgb(j,:)) < 1e-5) && strcmpi(tex{j},rep.ball{i}.tex))
         found = 1;
         rep.ball{i}.irgb = j;
       endif
@@ -49,7 +49,7 @@ function rep_write_obj(rep,file="",filemtl="",ndiv=1,nbase=16,LOG=0)
     if (!found)
       nrgb = nrgb + 1;
       rgb(nrgb,1:5) = rep.ball{i}.rgb;
-      tex{nrgb} = rep.texlib{rep.ball{i}.tex};
+      tex{nrgb} = rep.ball{i}.tex;
       rep.ball{i}.irgb = nrgb;
     endif
   endfor
@@ -58,7 +58,7 @@ function rep_write_obj(rep,file="",filemtl="",ndiv=1,nbase=16,LOG=0)
     rep.stick{i}.rgb = fillrgb(rep.stick{i}.rgb);
     found = 0;
     for j = 1:nrgb
-      if (all(abs(rep.stick{i}.rgb - rgb(j,:)) < 1e-5) && strcmpi(tex{j},rep.texlib{rep.stick{i}.tex}))
+      if (all(abs(rep.stick{i}.rgb - rgb(j,:)) < 1e-5) && strcmpi(tex{j},rep.stick{i}.tex))
         found = 1;
         rep.stick{i}.irgb = j;
       endif
@@ -66,7 +66,7 @@ function rep_write_obj(rep,file="",filemtl="",ndiv=1,nbase=16,LOG=0)
     if (!found)
       nrgb = nrgb + 1;
       rgb(nrgb,1:5) = rep.stick{i}.rgb;
-      tex{nrgb} = rep.texlib{rep.stick{i}.tex};
+      tex{nrgb} = rep.stick{i}.tex;
       rep.stick{i}.irgb = nrgb;
     endif
   endfor
