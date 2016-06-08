@@ -121,6 +121,13 @@ function tex_dbstart();
   texdb{n}.string = "finish {phong 0.2 diffuse 0.5 ambient 0.3 reflection 0.03 brilliance 1.0}";
   texdb{n}.pigment = "pigment {leopard scale 0.04 frequency 10 color_map{[0.0 color rgbft <1,1,1>] [0.5 color rgbft <1,1,1>] [0.5 color rgb <%.4f,%.4f,%.4f,%.4f,%.4f>]}}";
 
+  n++;
+  texdb{n} = texture();
+  texdb{n}.typ = "pov";
+  texdb{n}.name = "deadfish";
+  texdb{n}.string = "finish {diffuse 0.7}";
+  texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
+
   #### obj textures ####
   ## a simple default
   nstart = n;
