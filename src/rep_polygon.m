@@ -38,9 +38,6 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], .
     rep = addto;
   else
     rep = representation_();
-    if (isfield(mol,"name") && !isempty(mol.name))
-      rep.name = mol.name;
-    endif
   endif
 
   ## center of mass
@@ -71,93 +68,19 @@ function rep = rep_polygon(addto="", x0, frgb=[0 0 128 0 128], ergb=[0 0 128], .
     endfor
   endif  
 
-#  ## covalent radii
-#  nc = molc.nat;
-#  nv = molv.nat;
-#  if (dist(1) < 0)
-#    rcovc = zeros(1,nc);
-#    for i = 1:nc
-#      [sym atom] = mol_dbsymbol(molc.atnumber(i));
-#      rcovc(i) = atom.rcov;
-#    endfor
-#    rcovv = zeros(1,nv);
-#    for i = 1:nv
-#      [sym atom] = mol_dbsymbol(molv.atnumber(i));
-#      rcovv(i) = atom.rcov;
-#    endfor
-#  endif
-#
-#  for ic = 1:nc
-#    useit = (ischar(at) && regexp(tolower(molc.atname{ic}),tolower(at)));
-#    useit = useit || (isscalar(at) && molc.atnumber(ic) == at);
-#    useit = useit || (length(at)==3 && norm(molc.atxyz(:,ic)-at)<1e-10);
-#    if (useit)
-#      idx = [];
-#      for iv = 1:nv
-#        useit = 0;
-#        if (iscell(by))
-#          for k = 1:length(by)
-#            useit = useit || regexp(tolower(molv.atname{iv}),tolower(by{k}));
-#          endfor
-#        elseif (ischar(by))
-#          useit = useit || regexp(tolower(molv.atname{iv}),tolower(by));
-#        elseif (isscalar(by))
-#          useit = useit || regexp(tolower(molv.atnumber(iv)),tolower(by));
-#        else
-#          for k = 1:length(by)
-#            useit = useit || (molv.atnumber(iv) == by(k));
-#          endfor
-#        endif
-#        if (!useit)
-#          continue
-#        endif
-#        d = norm(molc.atxyz(:,ic) - molv.atxyz(:,iv));
-#        if (dist(1) < 0)
-#          useit = (d <= dist(2) * (rcovv(iv) + rcovc(ic)));
-#        else
-#          useit = (d >= dist(1)) && (d <= dist(2));
-#        endif
-#        if (useit) 
-#          idx = [idx iv];
-#        endif
-#      endfor
-#
-#      ## build the polyhedron using the convex hull
-#      v = molv.atxyz(:,idx)';
-#      h = convhulln(v);
-#      if (!isempty(frgb))
-#        nv0 = rep.nvertex;
-#        for i = 1:length(idx)
-#          rep.nvertex += 1;
-#          rep.vertex{rep.nvertex}.x = molv.atxyz(:,idx(i))';
-#          rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
-#        endfor
-#        nv0 = rep.ntriangle;
-#        [rep iftex] = rep_registertexture(rep,ftex);
-#        for i = 1:size(h,1)
-#          rep.ntriangle += 1;
-#          rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
-#          rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
-#          rep.triangle{rep.ntriangle}.tex = iftex;
-#        endfor
-#      endif
-#      if (!isempty(ergb))
-#        icon = zeros(length(idx));
-#        kk = [1 2; 1 3; 2 3];
-#        [rep ietex] = rep_registertexture(rep,etex);
-#        for i = 1:size(h,1)
-#          for j = 1:3
-#            rep.nstick = rep.nstick + 1;
-#            rep.stick{rep.nstick}.name = "";
-#            rep.stick{rep.nstick}.x0 = v(h(i,kk(j,1)),:);
-#            rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);
-#            rep.stick{rep.nstick}.r = erad;
-#            rep.stick{rep.nstick}.rgb = ergb;
-#            rep.stick{rep.nstick}.tex = ietex;
-#          endfor
-#        endfor
-#      endif
-#    endif
-#  endfor
+  if (!isempty(ergb))
+    [rep ietex] = rep_registertexture(rep,etex);
+    n = size(x0,1);
+    for i = 1:n
+      rep.nstick += 1;
+      rep.stick{rep.nstick} = stick();
+      rep.stick{rep.nstick}.name = "";
+      rep.stick{rep.nstick}.x0 = x0(i,:);
+      rep.stick{rep.nstick}.x1 = x0(mod(i,n)+1,:);
+      rep.stick{rep.nstick}.r = erad;
+      rep.stick{rep.nstick}.rgb = ergb;
+      rep.stick{rep.nstick}.tex = ietex;
+    endfor
+  endif
 
 endfunction
