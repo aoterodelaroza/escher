@@ -12,7 +12,7 @@
 
 function [molout] = mol_reorder(molin, iorder1, iorder2, LOG=0)
 %
-% mol_reorder - achange the order of atoms from the list in iorder1 to the
+% mol_reorder - change the order of atoms from the list in iorder1 to the
 %    list in iorder2. For instance, mol_reorder(mol,1:6, 6:-1:1) reverses
 %    the order of the first sixth atoms.
 %
