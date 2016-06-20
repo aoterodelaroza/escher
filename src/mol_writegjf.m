@@ -23,7 +23,7 @@ function err = mol_writegjf(mol, filename="none")
      [fid,msg] = fopen(filename,"w");
      if (fid < 0 || ferror(fid)) 
        disp(msg)
-       error("mol_readgjf: Could not find -- %s",filename);
+       error("mol_writegjf: Could not open -- %s",filename);
      endif
   endif
 
