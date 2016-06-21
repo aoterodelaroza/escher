@@ -27,5 +27,6 @@ function mol = molecule_()
   mol.atnumber = [];   # List of the Z atomic numbers
   mol.atmass = [];     # Atomic masses (gr/mol)
   mol.atxyz = [];      # Cartesian coordinates
+  mol.adjl = [];       # Adjacency list (atomic connectivity)
 
 endfunction
