@@ -101,7 +101,7 @@ v means variable (global)
 | + | mol_dbsymbol         | fun          | string,atom    | Return atomic info from the atomic number                   |
 | + | mol_rcov             | fun          | number         | Return the covalent radius from the atomic number           |
 | + | mol_polyhedron       | fun          | rep,mol,mol    | Return a rep of polyhedra formed by atoms                   |
-| + | mol_permute          | fun          | mol            | Permute the atoms in a molecule                             |
+| + | mol_reorder          | fun          | mol            | Permute the atoms in a molecule                             |
 | + | mol_order            | fun          | mol            | Sort the atoms in a molecule in some order (e.g. atnumber)  |
 | + | mol_inertiamatrix    | fun          | array(2)       | Calculate and diagonalize the inertia matrix                |
 | + | mol_transform        | fun          | mol            | Rotate and translate a molecule                             |
@@ -123,6 +123,7 @@ v means variable (global)
 | + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box              |
 | + | mol_formula          | fun          | string         | Determine the empirical/molecular formula of mol            |
 | + | mol_connectivity     | fun          | mol            | Use openbabel to calculate the atomic connectivity          |
+| + | mol_sanezmatrix      | fun          | mol,...        | Write a z-matrix with rotatable dihedrals                   |
 
 
 ** Atom
