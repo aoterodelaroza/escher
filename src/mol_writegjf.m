@@ -27,13 +27,20 @@ function err = mol_writegjf(mol, filename="none")
      endif
   endif
 
+  nelec = sum(mol.atnumber);
+  if (mod(nelec,2) == 0)
+    mult = 1;
+  else
+    mult = 2;
+  endif
+
   fprintf(fid, "%%mem=2GB\n");
   fprintf(fid, "%%nproc=4\n");
   fprintf(fid, "#p b3lyp sto-3g\n");
   fprintf(fid, "\n");
   fprintf(fid, "title\n");
   fprintf(fid, "\n");
-  fprintf(fid, "0 1\n");
+  fprintf(fid, "0 %d\n",mult);
   for i = 1 : mol.nat;
      fprintf(fid,"   %-2s  ", mol.atname{i});
      fprintf(fid,"  %15.9f %15.9f %15.9f", mol.atxyz(1:3,i));
