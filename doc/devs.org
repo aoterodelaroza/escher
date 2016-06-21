@@ -78,6 +78,7 @@ v means variable (global)
 | + | mol_readlog          | fun          | mol            | Read a gaussian output file                                 |
 | + | mol_readcube         | fun          | mol            | Read the header of a gaussian cube file                     |
 | + | mol_readfchk         | fun          | mol            | Read a gaussian formatted checkpoint file                   |
+| + | mol_readct           | fun          | mol            | Read the atomic connectivity from a ct file                 |
 | + | mol_fillatnumber     | fun          | mol            | Fill mol.atnumber using mol.atname                          |
 | + | mol_fillatmass       | fun          | mol            | Fill mol.atmass using mol.atnumber                          |
 | + | mol_ball             | fun          | rep            | Create a rep of the atoms as balls                          |
@@ -121,6 +122,8 @@ v means variable (global)
 | + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)           |
 | + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box              |
 | + | mol_formula          | fun          | string         | Determine the empirical/molecular formula of mol            |
+| + | mol_connectivity     | fun          | mol            | Use openbabel to calculate the atomic connectivity          |
+
 
 ** Atom
 
@@ -314,6 +317,9 @@ v means variable (global)
 | op_roty(angle)                 | a 3x3 matrix representing a rotation of angle around the y- axis                       |
 | op_rotz(angle)                 | a 3x3 matrix representing a rotation of angle around the z- axis                       |
 | op_rot3D(a1,a2,a3,mode)        | construct a 3d rotation matrix given three angles, several modes supported.            |
+| op_dist(x0,x1)                 | calculate the distance between x0 and x1                                               |
+| op_angle(x0,x1,x2)             | calculate the x0-x1-x2 angle                                                           |
+| op_dihedral(x0,x1,x2,x3)       | calculate the x0-x1-x2-x3 dihedral                                                     |
 | zmat_step(x0,x1,x2,d,ang,dieh) | stepper to build cartesian coordinates from z-matrix                                   |
 | run_povray(name,crop)          | run povray on a pov file, possibly cropping the margins                                |
 
