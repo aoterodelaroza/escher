@@ -94,6 +94,7 @@ v means variable (global)
 | + | mol_writeg09         | fun          | stdout         | Write a g09 template file                                   |
 | + | mol_writegjf         | fun          | stdout         | Write a g09 template file (simplified version)              |
 | + | mol_writenw          | fun          | stdout         | Write a nwchem template file                                |
+| + | mol_writeturbo       | fun          | stdout         | Write a turbomole "define" input                            |
 | + | mol_writexyz         | fun          | stdout         | Write a xyz file                                            |
 | + | mol_writezmat        | fun          | stdout         | Write the molecular geometry as z-matrix (see zmat_step)    |
 | + | mol_dbstart          | fun          | number         | Initialize the internal atomic constants table              |
