@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
-% function zmat = mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
+function xzmat = mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
+% function xzmat = mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
 %
 % mol_writezmat - write a zmatrix calculated from the Cartesian
 %   coordinates in mol. If no izmat is present, the atoms are taken in the
@@ -34,17 +34,20 @@ function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
 % mol: the input molecule
 %
 % Optional input variables:
-% file: output file (zmat). If not present, write to standard output.
+% file: output file (zmat). If not present, inhibit output.
 % header: if true (1), write a proper Gaussian input file.
 % izmat: array of atomic indices for the z-matrix construction. 
 % If not present, use the atomic sequence in input order.
+%
+% Output variables:
+% xzmat: array containing distances, angles, and dihedrals.
 %
 
   ## open the output file
   if (!isempty(file))
     fid = fopen(file,"w");
   else
-    fid = stdout();
+    fid = fopen("/dev/null","w");
   endif
 
   ## fill the izmat
@@ -80,6 +83,7 @@ function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
   nvars = 0;
   svars = {};
   dvars = [];
+  xzmat = zeros(rows(izmat),3);
   for i = 1:rows(izmat)
     ii0 = izmat(i,1);
     fprintf(fid,"%s ",mol.atname{ii0});
@@ -95,6 +99,7 @@ function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
       else
         fprintf(fid,"%d %.10f ",i1,a);
       endif
+      xzmat(i,1) = a;
     endif
     if (izmat(i,3) > 0)
       i2 = izmat(i,3);
@@ -108,6 +113,7 @@ function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
       else
         fprintf(fid,"%d %.10f ",i2,a);
       endif
+      xzmat(i,2) = a;
     endif
     if (izmat(i,4) > 0)
       i3 = izmat(i,4);
@@ -121,6 +127,7 @@ function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
       else
         fprintf(fid,"%d %.10f ",i3,a);
       endif
+      xzmat(i,3) = a;
     endif
     fprintf(fid,"\n");
   endfor
@@ -133,9 +140,7 @@ function mol_writezmat(mol,file="",header=0,izmat=[],izvar=[])
   fprintf(fid,"\n");
 
   ## close the file
-  if (!isempty(file))
-    fclose(fid);
-  endif
+  fclose(fid);
 
 endfunction
 

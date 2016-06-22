@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [izmat izvar mol] = mol_sanezmatrix(mol0,dihlist)
-% function [izmat izvar mol] = mol_sanezmatrix(mol0,dihlist)
+function [izmat izvar mol] = mol_sanezmatrix(mol0,dihlist=[])
+% function [izmat izvar mol] = mol_sanezmatrix(mol0,dihlist=[])
 %
 % mol_sanezmatrix - write z-matrix in a format that allows rotation
 % around the given list of dihedrals without changing the distances
@@ -28,7 +28,8 @@ function [izmat izvar mol] = mol_sanezmatrix(mol0,dihlist)
 %      Turn the dihedrals in this list.  These bonds have to be edges
 %      in the connectivity graph. If they are not part of the graph,
 %      you can precompute the connectivity graph before passing the
-%      molecule and add them.
+%      molecule and add them. If dihlist is empty, build the z-matrix
+%      in input order.
 %
 % Output variables:
 % izmat: indices for the z-matrix, in a format understandable by mol_writezmat.
@@ -39,6 +40,15 @@ function [izmat izvar mol] = mol_sanezmatrix(mol0,dihlist)
 % mol: output molecule, containing the atomic connectivity if it was
 % not provided in input.
 %
+
+  ## empty dihlist
+  if (isempty(dihlist))
+    izvar = izmat = zeros(mol.nat,4);
+    for i = 1:mol.nat
+      izmat(i,:) = max([i i-1 i-2 i-3],0);
+    endfor
+    return
+  endif
 
   ## calculate the adjacency list
   mol = mol0;
