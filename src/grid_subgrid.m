@@ -43,7 +43,7 @@ function [newgrid] = grid_subgrid (grid, X0, X1, LOG=0)
 % would be a more powerful method.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Aug 2015
   #angtobohr = 1.88972613288564;
   #bohrtoans = 0.52917720859;

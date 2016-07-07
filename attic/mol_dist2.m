@@ -24,7 +24,7 @@ function D = mol_dist2(mol1, iat1, mol2, iat2, LOG=0)
 % {LOG}: print the final result if LOG>0.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2012
 
 D = zeros(length(iat1),length(iat2));

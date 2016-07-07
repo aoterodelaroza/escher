@@ -23,7 +23,7 @@ function [rep] = rep_merge(varargin);
 % {rep}: merged representation.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2011
 
   rep = representation_();

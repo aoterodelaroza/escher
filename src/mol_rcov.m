@@ -19,7 +19,7 @@ function rcov = mol_rcov(z)
 % z: atomic number.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Nov 2012
 
   global atdb

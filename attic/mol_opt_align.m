@@ -47,7 +47,7 @@ function [mol2new,R] = mol_opt_align(mol1, iat1, mol2, iat2, bondfactor=1.2, LOG
 %      position.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2012
 
 # Check input data, particularly iat1 and iat2.

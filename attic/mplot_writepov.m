@@ -26,7 +26,7 @@ function mplot_writepov(rootname, runpov=1, size=[600,600], LOG=1))
 % {LOG}: print the final result if LOG>0.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2011
 
 global ge 

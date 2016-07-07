@@ -20,7 +20,7 @@ function d = mol_dist(mol, at1, at2)
 % at1, at1: atoms whose distance is being calculated.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 
 x = mol.atxyz(1:3,at1) - mol.atxyz(1:3,at2);

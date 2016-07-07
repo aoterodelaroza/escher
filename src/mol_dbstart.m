@@ -25,7 +25,7 @@ function mol_dbstart(color="csd",rcov="tessel",rvdw="csd")
 % atdb: database of atomic properties.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 
    global atdb

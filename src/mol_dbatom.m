@@ -20,7 +20,7 @@ function [Z,atom] = mol_dbatom (symbol)
 % symbol: name of the element to be identified.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 % Modified: Jan 2012: (VLC) symbols can have a numerical label like C2 or C_2
 

@@ -28,7 +28,7 @@ function limits = mol_limits (mol, mode='normal', LOG=0)
 %               along the xyz axes.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: January 2012
 
 if (isequal(method,'normal'))

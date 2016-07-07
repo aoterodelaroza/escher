@@ -26,7 +26,7 @@ function geom = mol_groupgeometry (mol, g1, g2, LOG=1)
 % {LOG}: current level of printing. 0: no printing.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: November 2011
 
 % 1st test: distances between g1 and g2:

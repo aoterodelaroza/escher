@@ -28,7 +28,7 @@ function [X0,X1] = mol_fragdim(mol, frag, LOG=1)
 % {LOG}: print the final result if LOG>0.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Aug 2015
 % early attempt:
 %  for i=1:3

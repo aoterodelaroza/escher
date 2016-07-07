@@ -26,7 +26,7 @@ function [mol] = mol_readxyz (filename, LOG=0)
 %            LOG = 2  like 1 plus a complete list of the points read in.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 
   if (LOG>0)

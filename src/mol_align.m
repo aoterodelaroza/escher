@@ -40,7 +40,7 @@ function [mol2new,R] = mol_align(mol1, iat1, mol2, iat2, LOG=1)
 %      position.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2011
 
 # Check input data, particularly iat1 and iat2.

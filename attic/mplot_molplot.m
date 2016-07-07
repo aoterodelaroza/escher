@@ -16,7 +16,7 @@ function mplot_molplot (mol, LOG=1)
 % mplot_molplot - add mol to the graphics database.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2011
 
 global ge 

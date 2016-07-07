@@ -20,7 +20,7 @@ function m = op_roty (angle)
 % angle: rotation angle in degrees.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 
 c = cos(angle*pi/180);

@@ -28,7 +28,7 @@ function isnew = mol_isnew(mol, xyz, eps=1e-8, LOG=1)
 % {isnew}: result of the test.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2012
 
 j = 1;

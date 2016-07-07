@@ -20,7 +20,7 @@ function cr_write_espresso(cr,file="")
 % file: name of the output file. If no file is given (default), then
 %       the file is written to the stdout.
 %
-% Authors: AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+% Authors: AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 %          VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
 % Created: Nov. 2012
 

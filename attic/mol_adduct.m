@@ -38,7 +38,7 @@ function [mol] = mol_adduct(mol1, mol2, iat1=-1, iat2=-1, rtp1=[0,0,0], iang1=[0
 % {mol}: molecular database for the adduct.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2011
 
 n1 = mol1.nat;

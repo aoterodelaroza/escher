@@ -51,7 +51,7 @@ function [mol,cpu] = mol_cr2topo (root, qal=6, mrg=2, rho=1, mep=1, cube=0, ctyp
 % {dx}: grid resolution.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2013
 
    bohrtoans = 0.52917720859;

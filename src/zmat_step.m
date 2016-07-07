@@ -24,7 +24,7 @@ function xf = zmat_step(x0,x1,x2,d,ang,dieh)
 % dieh: dihedral (degrees)
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: March 2012
   
   ## transform units

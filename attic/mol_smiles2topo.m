@@ -38,7 +38,7 @@ function [mol] = mol_smiles2topo (smiles="O=C(O)C(N)C Ala", code="mol", conditio
 % 
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2013
 
    tic;

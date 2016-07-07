@@ -46,7 +46,7 @@ function err = mol_fchk2topo (name, conditions=struct([]), LOG=1)
 % {LOG=1}: print information about the data read in if LOG>0.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2013
 
    bohrtoans = 0.52917720859;

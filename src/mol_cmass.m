@@ -26,7 +26,7 @@ function [cm,mass] = mol_cmass(mol,noweight=0)
 % mass: total mass of the molecule or fragment.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2011
 
   if (!noweight)

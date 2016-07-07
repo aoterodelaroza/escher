@@ -41,7 +41,7 @@ function [x0, nx, dx] = mol_cuberange (mol, qual=6, marg=1, cube=0, LOG=1)
 % {dx}: grid resolution.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Dec 2012
 
    qual = fix(qual);

@@ -21,7 +21,7 @@ function dh = mol_dihedral(mol, at1, at2, at3, at4)
 % at1, at2, at3, at4: return the at1-at2-at3-at4 dihedral angle (in degrees).
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Nov 2012
 
   b1 = mol.atxyz(:,at2)-mol.atxyz(:,at1); 

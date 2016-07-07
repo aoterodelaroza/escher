@@ -36,7 +36,7 @@ function err = mol_writeg09(mol, code="def", conditions=struct([]), LOG=2)
 % err: error code. 0 means no error.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: January 2012
 % ReCreated: January 2013
 

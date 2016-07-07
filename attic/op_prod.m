@@ -24,7 +24,7 @@ function T = op_prod (R, S)
 % Optional input variables (all with default values):
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: July 2011
 
 T(1:3,1:3) = R(1:3,1:3) * S(1:3,1:3);

@@ -24,7 +24,7 @@ function geom = get_geom_xyz (filexyz,LOG=1)
 % {LOG}: current level of printing. 0: no printing.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: October 2012
 
 err = mol_dbstart(0);

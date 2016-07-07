@@ -26,7 +26,7 @@ function [cr] = cr_read_vasp(file="CONTCAR",potcar="POTCAR",LOG=0)
 % cr: crystal description. If no POTCAR is provided, the atom types
 %     will be missing from the structure.
 %
-% Authors: AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+% Authors: AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 %          VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
 % Created: Nov. 2012
 

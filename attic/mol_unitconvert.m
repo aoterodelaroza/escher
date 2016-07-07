@@ -28,7 +28,7 @@ function molout = mol_unitconvert (mol, conv='bohr2angstrom', LOG=1)
 % molout: structure with the output molecular description.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2012
 
 angtobohr = 1.88972613288564;

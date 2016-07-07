@@ -35,7 +35,7 @@ function [cell,G,V] = cr_pw2cell(ibrav, celldm, cell_param, LOG=1)
 % Referencia: pwscf, routine flib/latgen.f90 and documentation of the code.
 %
 % Authors: VLC Victor Lua~na .......... <victor@carbono.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@carbono.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: April 2012
 
 switch (ibrav)

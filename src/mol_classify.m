@@ -32,7 +32,7 @@ function [iclass] = mol_classify(mol, iat, bondfactor=1.2, LOG=1)
 % {iclass}: class for each atom. Atoms with iclass<0 have not been classed.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: December 2012
 
 # Check iat data.

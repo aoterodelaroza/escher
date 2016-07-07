@@ -31,7 +31,7 @@ function [uniqlist,excludelist] = mol_uniqatoms(mol, eps=1e-8, LOG=1)
 % {excludelist}: list of atoms that could be a copy of the unique list.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: Jan 2012
 
 nuniq = 0;

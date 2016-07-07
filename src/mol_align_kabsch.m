@@ -33,7 +33,7 @@ function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
 % rmsd: 
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 
   if (mol0.nat != mol1.nat)

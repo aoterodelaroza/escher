@@ -49,7 +49,7 @@ function  err = mol_writexyz (mol, filename="none", mode="axyz")
 %       "anxyz" ---> atomic symbol + atomic number + (x,y,z) coordinates    
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: June 2011
 
   angtobohr = 1.88972613288564;

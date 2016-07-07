@@ -28,7 +28,7 @@ function [molout] = mol_reorder(molin, iorder1, iorder2, LOG=0)
 % {molout}: the output molecule.
 %
 % Authors: VLC Victor Lua~na .......... <victor@fluor.quimica.uniovi.es>
-%          AOR Alberto Otero-de-la-Roza <alberto@fluor.quimica.uniovi.es>
+%          AOR Alberto Otero-de-la-Roza <aoterodelaroza@gmail.com>
 % Created: January 2012
 
 if (length(iorder1) != length(iorder2))
