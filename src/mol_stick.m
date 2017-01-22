@@ -78,7 +78,11 @@ function rep = mol_stick(mol, addto="", s1=".+", s2=".+", dist=[-1 1.15], strict
     rcov = zeros(1,nat);
     for i = 1:nat
       [sym atom] = mol_dbsymbol(mol.atnumber(i));
-      rcov(i) = atom.rcov;
+      if (mol.atnumber(i) > 103)
+        rcov(i) = 0;
+      else
+        rcov(i) = atom.rcov;
+      endif
     endfor
   endif
 
