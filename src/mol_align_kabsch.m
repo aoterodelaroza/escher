@@ -39,24 +39,29 @@ function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
   if (mol0.nat != mol1.nat)
     error("inconsistent number of atoms in mol0 and mol1")
   endif
+  mol0.atxyz = mol0.atxyz - mol_cmass(mol0) * ones(1,mol0.nat);
+  mol1.atxyz = mol1.atxyz - mol_cmass(mol1) * ones(1,mol1.nat);
   a = mol0.atxyz * mol1.atxyz';
   [v,s,w] = svd(a);
   d = sign(det(w * v'));
   mat = [1 0 0; 0 1 0; 0 0 d];
   u = w * mat * v';
-  rmsd = sum(sum((u * mol0.atxyz - mol1.atxyz).^2)) / 3 / mol0.nat;
+  atxyz0 = u * mol0.atxyz;
+  rmsd = sqrt(sum(sum((atxyz0 - mol1.atxyz).^2)) / mol0.nat);
   
   if (allow_inversion)
     mat = [1 0 0; 0 1 0; 0 0 -d];
     u2 = w * mat * v';
-    rmsd2 = sum(sum((u * mol0.atxyz - mol1.atxyz).^2)) / 3 / mol0.nat;
+    atxyz1 = u * mol0.atxyz;
+    rmsd2 = sqrt(sum(sum((atxyz1 - mol1.atxyz).^2)) / mol0.nat);
     if (rmsd2 < rmsd)
-      rmsd = rmsd2
-      u = u2
+      rmsd = rmsd2;
+      u = u2;
+      atxyz0 = atxyz1;
     endif
   endif
 
   molout = mol0;
-  molout.atxyz = u * mol0.atxyz;
+  molout.atxyz = atxyz0;
 
 endfunction
