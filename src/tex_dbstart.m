@@ -89,6 +89,13 @@ function tex_dbstart();
   n++;
   texdb{n} = texture();
   texdb{n}.typ = "pov";
+  texdb{n}.name = "metal4";
+  texdb{n}.string = "finish { ambient 0.35 brilliance 1 diffuse 0.3 metallic specular 0.80 roughness 1/20 reflection 0.1}";
+  texdb{n}.pigment = "pigment {color rgbft <%.4f,%.4f,%.4f,%.4f,%.4f>}";
+
+  n++;
+  texdb{n} = texture();
+  texdb{n}.typ = "pov";
   texdb{n}.name = "starfield";
   texdb{n}.string = "finish { diffuse 0 ambient 1 }";
   texdb{n}.pigment = "pigment { granite color_map { [ 0.000  0.260 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.260  0.300 color rgb <.5,.5,.4> color rgb <.8,.8,.4> ] [ 0.300  0.460 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.460  0.500 color rgb <.4,.4,.5> color rgb <.4,.4,.8> ] [ 0.500  0.660 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.660  0.700 color rgb <.5,.4,.4> color rgb <.8,.4,.4> ] [ 0.700  0.860 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ] [ 0.860  0.900 color rgb <.5,.5,.5> color rgb < 1, 1, 1> ] [ 0.900  1.000 color rgb < 0, 0, 0> color rgb < 0, 0, 0> ]} turbulence 1 sine_wave scale .5 }";
