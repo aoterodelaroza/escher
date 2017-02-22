@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [cm,mass] = mol_cmass(mol,noweight=0)
-% function [cm,mass] = mol_cmass(mol)
+function [cm,mass] = mol_cmass(mol,noweight=1)
+% function [cm,mass] = mol_cmass(mol,noweight=1)
 %
 % mol_cmass - determine the center of mass of a molecule. If noweight=1,
 % make all the atoms weigh the same.
