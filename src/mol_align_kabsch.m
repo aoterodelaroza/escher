@@ -13,22 +13,24 @@
 function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
 % function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
 %
-% mol_align_kabsch - rotate the first molecule in order to minimize
-% the rmsd of the atomic distances to the second molecule. The two
+% mol_align_kabsch - rotate the mol0 molecule in order to minimize the
+% rmsd of the atomic positions compared to the mol1 molecule. The two
 % molecules must have the same number of atoms and the atoms must be
-% ordered in the same way. Uses Kabsch algorithm. The output molecule is
-% the rotated molecule, the rotation matrix u, and RMSD of the atomic
-% positions.
+% in the same order. The output molecule is the mol0 molecule, rotated
+% and translated to the mol1 center of mass.  The rotation matrix u,
+% and the RMSD of the atomic positions (rmsd) are also given.  This
+% routine uses Kabsch algorithm (W. Kabsch, Acta Cryst. A 32 (1976)
+% 922).
 %
 % Input variables:
-% mol0: molecule to be rotated.
-% mol1: target molecule
-% allow_inversion: if 1, permit the application of an inversion operation
-% to match the two molecules. Warning: if mol0 is chiral, it is
-% converted to its enantiomer.
+% mol0: rotated molecule
+% mol1: target molecule.
+% allow_inversion: if 1, permit the application of an inversion
+% operation to match the two molecules. Warning: if mol0 is chiral, it
+% is converted to its enantiomer.
 %
 % Output variables:
-% molout: rotated mol0.
+% molout: rotated and translated mol0.
 % u: rotation matrix.
 % rmsd: 
 %
@@ -39,8 +41,11 @@ function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
   if (mol0.nat != mol1.nat)
     error("inconsistent number of atoms in mol0 and mol1")
   endif
-  mol0.atxyz = mol0.atxyz - mol_cmass(mol0) * ones(1,mol0.nat);
-  mol1.atxyz = mol1.atxyz - mol_cmass(mol1) * ones(1,mol1.nat);
+  xcm0 = mol_cmass(mol0);
+  xcm1 = mol_cmass(mol1);
+  mol0.atxyz = mol0.atxyz - xcm0 * ones(1,mol0.nat);
+  mol1.atxyz = mol1.atxyz - xcm1 * ones(1,mol1.nat);
+
   a = mol0.atxyz * mol1.atxyz';
   [v,s,w] = svd(a);
   d = sign(det(w * v'));
@@ -62,6 +67,6 @@ function [molout u rmsd] = mol_align_kabsch(mol0, mol1, allow_inversion=0)
   endif
 
   molout = mol0;
-  molout.atxyz = atxyz0;
+  molout.atxyz = atxyz0 + xcm1 * ones(1,mol0.nat);
 
 endfunction

@@ -65,67 +65,68 @@ v means variable (global)
 
 * Molecule
 
-|   | Variable             | Type         | Dim./Res.      | Apropos                                                     |
-|---+----------------------+--------------+----------------+-------------------------------------------------------------|
-| + | molecule_            | fun          | mol            | Constructor                                                 |
-| o | name                 | string       |                | Name of the mol                                             |
-| x | nat                  | scalar       | integer        | Number of atoms                                             |
-| x | atname               | cell(string) | 1xnat          | Atomic names                                                |
-| x | atnumber             | array        | 1xnat          | Atomic numbers                                              |
-| x | atmass               | array        | 1xnat          | Atomic masses                                               |
-| x | atxyz                | array        | 3xnat          | Coordinates (angstrom)                                      |
-| + | mol_readxyz          | fun          | mol            | Read an xyz file (in different formats)                     |
-| + | mol_readlog          | fun          | mol            | Read a gaussian output file                                 |
-| + | mol_readcube         | fun          | mol            | Read the header of a gaussian cube file                     |
-| + | mol_readfchk         | fun          | mol            | Read a gaussian formatted checkpoint file                   |
-| + | mol_readct           | fun          | mol            | Read the atomic connectivity from a ct file                 |
-| + | mol_fillatnumber     | fun          | mol            | Fill mol.atnumber using mol.atname                          |
-| + | mol_fillatmass       | fun          | mol            | Fill mol.atmass using mol.atnumber                          |
-| + | mol_ball             | fun          | rep            | Create a rep of the atoms as balls                          |
-| + | mol_stick            | fun          | rep            | Create a rep of the bonds as sticks                         |
-| + | mol_distmatrix       | fun          | array(nat,nat) | Calculate the distance matrix                               |
-| + | mol_distance         | fun          | number         | Calculate the distance between two atoms                    |
-| + | mol_angle            | fun          | number         | Calculate the angle between three atoms                     |
-| + | mol_dihedral         | fun          | number         | Calculate the dihedral between four atoms                   |
-| + | mol_cmass            | fun          | array(1x3)     | Calculate the center of mass                                |
-| + | mol_burst            | fun          | cell(mol)      | Partition a mol into a cell array of connected submolecules |
-| + | mol_getfragment      | fun          | mol            | Create a mol from a subset of atoms of another mol          |
-| + | mol_merge            | fun          | mol            | Merge two or more mols                                      |
-| + | mol_writeg09         | fun          | stdout         | Write a g09 template file                                   |
-| + | mol_writegjf         | fun          | stdout         | Write a g09 template file (simplified version)              |
-| + | mol_writenw          | fun          | stdout         | Write a nwchem template file                                |
-| + | mol_writeturbo       | fun          | stdout         | Write a turbomole "define" input                            |
-| + | mol_writexyz         | fun          | stdout         | Write a xyz file                                            |
-| + | mol_writezmat        | fun          | stdout         | Write the molecular geometry as z-matrix (see zmat_step)    |
-| + | mol_dbstart          | fun          | number         | Initialize the internal atomic constants table              |
-| + | mol_dbatom           | fun          | number,atom    | Return atomic info from the atomic symbol                   |
-| + | mol_dbsymbol         | fun          | string,atom    | Return atomic info from the atomic number                   |
-| + | mol_rcov             | fun          | number         | Return the covalent radius from the atomic number           |
-| + | mol_polyhedron       | fun          | rep,mol,mol    | Return a rep of polyhedra formed by atoms                   |
-| + | mol_reorder          | fun          | mol            | Permute the atoms in a molecule                             |
-| + | mol_order            | fun          | mol            | Sort the atoms in a molecule in some order (e.g. atnumber)  |
-| + | mol_inertiamatrix    | fun          | array(2)       | Calculate and diagonalize the inertia matrix                |
-| + | mol_transform        | fun          | mol            | Rotate and translate a molecule                             |
-| + | mol_classify         | fun          | mol            | Group the atoms in the molecule into classes                |
-| + | mol_addatom          | fun          | mol            | Add an atom to a molecule                                   |
-| + | mol_rmatom           | fun          | mol            | Remove a list of atoms from a molecule                      |
-| + | mol_isplanar         | fun          | bool,array     | True if the molecule is planar (and the perp vector)        |
-| + | mol_islinear         | fun          | bool,array     | True if the molecule is linear (and parallel vector)        |
-| + | mol_isnew            | fun          | bool           | True if the given atom is identical to one in the molecule  |
-| + | mol_geom             | fun          | void           | Print distances, angles, and dihedrals of a molecule        |
-| + | mol_2molsgeometry    | fun          | void           | Calculate distances between atoms in two different mols     |
-| + | mol_internalgeometry | fun          | void           | Calculate and print information about the geoemtry of a mol |
-| + | mol_align            | fun          | mol,array      | Rotate and translate a mol to match a different mol         |
-| + | mol_align_kabsch     | fun          | mol,array      | Similar to mol_align but using Kabsch algorithm             |
-| + | mol_opt_align        | fun          | mol,array      | Translate and rotate a mol for best alignment with another  |
-| + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol      |
-| + | mol_getsmiles        | fun          | mol            | Use openbabel to get a mol from a SMILES code               |
-| + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)           |
-| + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box              |
-| + | mol_formula          | fun          | string         | Determine the empirical/molecular formula of mol            |
-| + | mol_connectivity     | fun          | mol            | Use openbabel to calculate the atomic connectivity          |
-| + | mol_sanezmatrix      | fun          | mol,...        | Write a z-matrix with rotatable dihedrals                   |
-| + | mol_fromzmat         | fun          | mol,...        | Recalculate the atomic coordinates from a z-matrix          |
+|   | Variable             | Type         | Dim./Res.      | Apropos                                                                  |
+|---+----------------------+--------------+----------------+--------------------------------------------------------------------------|
+| + | molecule_            | fun          | mol            | Constructor                                                              |
+| o | name                 | string       |                | Name of the mol                                                          |
+| x | nat                  | scalar       | integer        | Number of atoms                                                          |
+| x | atname               | cell(string) | 1xnat          | Atomic names                                                             |
+| x | atnumber             | array        | 1xnat          | Atomic numbers                                                           |
+| x | atmass               | array        | 1xnat          | Atomic masses                                                            |
+| x | atxyz                | array        | 3xnat          | Coordinates (angstrom)                                                   |
+| + | mol_readxyz          | fun          | mol            | Read an xyz file (in different formats)                                  |
+| + | mol_readlog          | fun          | mol            | Read a gaussian output file                                              |
+| + | mol_readcube         | fun          | mol            | Read the header of a gaussian cube file                                  |
+| + | mol_readfchk         | fun          | mol            | Read a gaussian formatted checkpoint file                                |
+| + | mol_readct           | fun          | mol            | Read the atomic connectivity from a ct file                              |
+| + | mol_fillatnumber     | fun          | mol            | Fill mol.atnumber using mol.atname                                       |
+| + | mol_fillatmass       | fun          | mol            | Fill mol.atmass using mol.atnumber                                       |
+| + | mol_ball             | fun          | rep            | Create a rep of the atoms as balls                                       |
+| + | mol_stick            | fun          | rep            | Create a rep of the bonds as sticks                                      |
+| + | mol_distmatrix       | fun          | array(nat,nat) | Calculate the distance matrix                                            |
+| + | mol_distance         | fun          | number         | Calculate the distance between two atoms                                 |
+| + | mol_angle            | fun          | number         | Calculate the angle between three atoms                                  |
+| + | mol_dihedral         | fun          | number         | Calculate the dihedral between four atoms                                |
+| + | mol_cmass            | fun          | array(1x3)     | Calculate the center of mass                                             |
+| + | mol_burst            | fun          | cell(mol)      | Partition a mol into a cell array of connected submolecules              |
+| + | mol_getfragment      | fun          | mol            | Create a mol from a subset of atoms of another mol                       |
+| + | mol_merge            | fun          | mol            | Merge two or more mols                                                   |
+| + | mol_writeg09         | fun          | stdout         | Write a g09 template file                                                |
+| + | mol_writegjf         | fun          | stdout         | Write a g09 template file (simplified version)                           |
+| + | mol_writenw          | fun          | stdout         | Write a nwchem template file                                             |
+| + | mol_writeturbo       | fun          | stdout         | Write a turbomole "define" input                                         |
+| + | mol_writexyz         | fun          | stdout         | Write a xyz file                                                         |
+| + | mol_writezmat        | fun          | stdout         | Write the molecular geometry as z-matrix (see zmat_step)                 |
+| + | mol_dbstart          | fun          | number         | Initialize the internal atomic constants table                           |
+| + | mol_dbatom           | fun          | number,atom    | Return atomic info from the atomic symbol                                |
+| + | mol_dbsymbol         | fun          | string,atom    | Return atomic info from the atomic number                                |
+| + | mol_rcov             | fun          | number         | Return the covalent radius from the atomic number                        |
+| + | mol_polyhedron       | fun          | rep,mol,mol    | Return a rep of polyhedra formed by atoms                                |
+| + | mol_reorder          | fun          | mol            | Permute the atoms in a molecule                                          |
+| + | mol_order            | fun          | mol            | Sort the atoms in a molecule in some order (e.g. atnumber)               |
+| + | mol_inertiamatrix    | fun          | array(2)       | Calculate and diagonalize the inertia matrix                             |
+| + | mol_transform        | fun          | mol            | Rotate and translate a molecule                                          |
+| + | mol_classify         | fun          | mol            | Group the atoms in the molecule into classes                             |
+| + | mol_addatom          | fun          | mol            | Add an atom to a molecule                                                |
+| + | mol_rmatom           | fun          | mol            | Remove a list of atoms from a molecule                                   |
+| + | mol_isplanar         | fun          | bool,array     | True if the molecule is planar (and the perp vector)                     |
+| + | mol_islinear         | fun          | bool,array     | True if the molecule is linear (and parallel vector)                     |
+| + | mol_isnew            | fun          | bool           | True if the given atom is identical to one in the molecule               |
+| + | mol_geom             | fun          | void           | Print distances, angles, and dihedrals of a molecule                     |
+| + | mol_2molsgeometry    | fun          | void           | Calculate distances between atoms in two different mols                  |
+| + | mol_internalgeometry | fun          | void           | Calculate and print information about the geoemtry of a mol              |
+| + | mol_align_kabsch     | fun          | mol,array      | Rotate and translate a mol to match a different mol (Kabsch algorithm)   |
+| + | mol_align_kearsley   | fun          | mol,array      | Rotate and translate a mol to match a different mol (Kearsley algorithm) |
+| + | mol_align_walker     | fun          | mol,array      | Rotate and translate a mol to match a different mol (Kabsch algorithm)   |
+| + | mol_opt_align        | fun          | mol,array      | Translate and rotate a mol for best alignment with another               |
+| + | mol_smiles2xyz       | fun          | mol            | Use openbabel to transform a SMILES into xyz, then mol                   |
+| + | mol_getsmiles        | fun          | mol            | Use openbabel to get a mol from a SMILES code                            |
+| + | mol_uniqatoms        | fun          | array(2)       | List atoms that are repeated (distance criterion)                        |
+| + | mol_fragdim          | fun          | array(2)       | Coordinates for the encompassing molecular box                           |
+| + | mol_formula          | fun          | string         | Determine the empirical/molecular formula of mol                         |
+| + | mol_connectivity     | fun          | mol            | Use openbabel to calculate the atomic connectivity                       |
+| + | mol_sanezmatrix      | fun          | mol,...        | Write a z-matrix with rotatable dihedrals                                |
+| + | mol_fromzmat         | fun          | mol,...        | Recalculate the atomic coordinates from a z-matrix                       |
 
 
 ** Atom
