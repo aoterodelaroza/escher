@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function mol = mol_transform (mol0, op, t=[0 0 0], local=0)
-% function mol = mol_transform (molin, op, t=[0 0 0], local=0)
+function mol = mol_transform (mol0, op=[], t=[0 0 0], local=0)
+% function mol = mol_transform (molin, op=[], t=[0 0 0], local=0)
 %
 % mol_transform - apply the "op" rotation (3x3) and the t translation
 % (3x1) to the coordinates of the input molecule.
@@ -33,16 +33,23 @@ function mol = mol_transform (mol0, op, t=[0 0 0], local=0)
 % Created: June 2011
 
   mol = mol0;
-  if (all(size(t) == [1 3]))
-    t = t';
+  t = t(:);
+  if (!isempty(op) && all(size(op) == [3 3]))
+    error("Invalid rotation.")
+  elseif (!isvector(t) || length(t) != 3)
+    error("Invalid translation.")
   endif
   if (local)
     cm = mol_cmass(mol,1);
     mol.atxyz = mol.atxyz - cm * ones(1,mol.nat);
-    mol.atxyz = op * mol.atxyz;
+    if (!isempty(op))
+      mol.atxyz = op * mol.atxyz;
+    endif
     mol.atxyz = mol.atxyz + cm * ones(1,mol.nat);
   else
-    mol.atxyz = op * mol.atxyz;
+    if (!isempty(op))
+      mol.atxyz = op * mol.atxyz;
+    endif
   endif
   mol.atxyz = mol.atxyz + t * ones(1,mol.nat);
 
