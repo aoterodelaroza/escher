@@ -34,7 +34,7 @@ function mol = mol_transform (mol0, op=[], t=[0 0 0], local=0)
 
   mol = mol0;
   t = t(:);
-  if (!isempty(op) && all(size(op) == [3 3]))
+  if (!isempty(op) && !all(size(op) == [3 3]))
     error("Invalid rotation.")
   elseif (!isvector(t) || length(t) != 3)
     error("Invalid translation.")
