@@ -36,7 +36,8 @@ function [check,vector] = mol_islinear(mol, eps=1e-6, LOG=0)
 
 # Center of mass:
 n = mol.nat;
-cm = mol.atxyz * mol.atmass' / sum(mol.atmass);
+mz = [mol.atmass{:}];
+cm = mol.atxyz * mz' / sum(mz);
 # Place cm at the origin:
 x = mol.atxyz - cm * ones(1,n);
 
