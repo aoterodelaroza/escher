@@ -10,10 +10,12 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function [mol] = mol_readlog (filename)
-% function [mol] = mol_readlog (filename)
+function [mol] = mol_readlog(filename,multi=0)
+% function [mol] = mol_readlog(filename,multi=0)
 %
-% mol_readlog - read a molecule from a gaussian output.
+% mol_readlog - read a molecule from a gaussian output. If multi, read
+% all "Input orientation" geometries from the output and return a cell
+% array.
 %
 % Required input variables:
 % filename: name of the data file.
@@ -29,32 +31,42 @@ function [mol] = mol_readlog (filename)
   endif
 
   ## get the last geometry
+  ipos = [];
   while (!feof(fid))
     line = fgetl(fid);
-    if (strfind(line,"orientation:"))
-      ipos = ftell(fid);
+    if (strfind(line,"Input orientation:"))
+      ipos = [ipos ftell(fid)];
     endif
   endwhile
 
   if (!exist("ipos","var")) 
-    error("Valid geometry not found!")
+    error("No geometry not found!")
   endif
 
   ## read the orientation block
-  mol = molecule_();
-  fseek(fid,ipos);
-  fskipl(fid,4);
-  while (1)
-    line = fgetl(fid);
-    if (strfind(line,"-----"))
-      break
-    endif
-    [n atnum zero x y z] = sscanf(line,"%d %d %d %f %f %f","C");
-    mol.atnumber(n) = atnum;
-    [mol.atname{n}, atom] = mol_dbsymbol(atnum);
-    mol.atmass{n} = atom.mass;
-    mol.atxyz(:,n) = [x y z]';
-  endwhile
-  mol.nat = n;
+  smol = cell();
+  for i = 1:length(ipos)
+    mol = molecule_();
+    fseek(fid,ipos(i));
+    fskipl(fid,4);
+    while (1)
+      line = fgetl(fid);
+      if (strfind(line,"-----"))
+        break
+      endif
+      [n atnum zero x y z] = sscanf(line,"%d %d %d %f %f %f","C");
+      mol.atnumber(n) = atnum;
+      [mol.atname{n}, atom] = mol_dbsymbol(atnum);
+      mol.atmass{n} = atom.mass;
+      mol.atxyz(:,n) = [x y z]';
+    endwhile
+    mol.nat = n;
+    smol{i} = mol;
+  endfor
+  if (multi)
+    mol = smol;
+  else
+    mol = smol{end};
+  endif
 
 endfunction
