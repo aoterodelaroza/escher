@@ -34,7 +34,7 @@ function rep = rep_addlight(repi,pos,shadowless=0,intensity=1,LOG=0);
   endif
 
   rep.nlight = rep.nlight + 1;
-  rep.light{rep.nlight} = light();
+  rep.light{rep.nlight} = light_();
   rep.light{rep.nlight}.x = pos;
   rep.light{rep.nlight}.color = [255 255 255];
   rep.light{rep.nlight}.shadowless = shadowless;

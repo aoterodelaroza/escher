@@ -10,8 +10,8 @@
 % FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 % more details.
 
-function li = light()
-% function li = light()
+function li = light_()
+% function li = light_()
 %
 % light - create a light.
 %
