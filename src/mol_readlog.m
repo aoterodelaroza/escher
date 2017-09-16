@@ -57,7 +57,7 @@ function [mol] = mol_readlog(filename,multi=0)
       [n atnum zero x y z] = sscanf(line,"%d %d %d %f %f %f","C");
       mol.atnumber(n) = atnum;
       [mol.atname{n}, atom] = mol_dbsymbol(atnum);
-      mol.atmass{n} = atom.mass;
+      mol.atmass(n) = atom.mass;
       mol.atxyz(:,n) = [x y z]';
     endwhile
     mol.nat = n;
