@@ -42,7 +42,7 @@ function cr_write_crystal(cr,file="",basisfile="",acpfile="")
     alines{i};
     if (spg < 0 && regexp(alines{i},"Space group.*Hermann-Mauguin.*"))
       aa = strsplit(alines{i});
-      spg = str2num(aa{end}(1:end-1));
+      spg = str2num(aa{7}(1:end-1));
     elseif (length(holo) == 0 && regexp(alines{i},"Holohedry"))
       holo = strsplit(alines{i});
       holo = holo{3};
@@ -80,7 +80,7 @@ function cr_write_crystal(cr,file="",basisfile="",acpfile="")
 
   aa = cr.a * bohrtoans;
   bb = cr.b * 180 / pi;
-  if (strcmpi(holo,"trigonal") && (any(abs(bb(1:2)-90) > 1e-8) || abs(bb(3)-120) > 1e-8))
+  if (strcmpi(holo,"trigonal") && (any(abs(bb(1:2)-90) > 1e-4) || abs(bb(3)-120) > 1e-4))
     rhomb = 1;
   else
     rhomb = 0;
@@ -94,7 +94,7 @@ function cr_write_crystal(cr,file="",basisfile="",acpfile="")
   if (strcmpi(holo,"triclinic"))
     fprintf(lu,"%.10f %.10f %.10f %.4f %.4f %.4f\n",aa,bb);
   elseif (strcmpi(holo,"monoclinic"))
-    fprintf(lu,"%.10f %.10f %.10f %.4f\n",aa,bb(find(abs(bb - 90) > 1e-8)));
+    fprintf(lu,"%.10f %.10f %.10f %.4f\n",aa,bb(find(abs(bb - 90) > 1e-4)));
   elseif (strcmpi(holo,"orthorhombic"))
     fprintf(lu,"%.10f %.10f %.10f\n",aa);
   elseif (strcmpi(holo,"tetragonal"))
@@ -174,7 +174,7 @@ function cr_write_crystal(cr,file="",basisfile="",acpfile="")
           for k = 1:length(alist)
             found2 = 0;
             for l = 1:this.nblock
-              if (strcmpi(this.block{l}.name,alist{k}))
+              if (strcmpi(this.block{l}.name,alist{k}) && this.block{l}.nterm > 0)
                 found2 = 1;
                 nterm(k) += this.block{l}.nterm;
                 for m = 1:this.block{l}.nterm
