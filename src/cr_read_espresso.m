@@ -52,6 +52,7 @@ function cr = cr_read_espresso(file, LOG=0)
   fid = fopen(file,"r");
 
   ## parse the output file
+  idocart = -1;
   line = fgetl(fid);
   do 
     ## at the beginning of the run
@@ -122,6 +123,9 @@ function cr = cr_read_espresso(file, LOG=0)
       rinv = inv(r);
     endif
     if (regexp(line,"^ATOMIC_POSITIONS"))
+      if (regexp(lower(line),"angstrom"))
+        idocart = bohrtoans;
+      endif
       cr.x = zeros(cr.nat,3);
       for i = 1:cr.nat
         line = fgetl(fid);
@@ -130,6 +134,14 @@ function cr = cr_read_espresso(file, LOG=0)
     endif
     line = fgetl(fid);
   until (!ischar(line) && (line == -1))
+
+  if (idocart > 0)
+    rinv = inv(r);
+    cr.x /= idocart;
+    for i = 1:cr.nat
+      cr.x(i,:) = cr.x(i,:) * rinv;
+    endfor
+  endif
 
   cr.r = r;
   cr.g = r * r';
