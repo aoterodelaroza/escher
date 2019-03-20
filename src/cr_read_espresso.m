@@ -54,6 +54,7 @@ function cr = cr_read_espresso(file, LOG=0)
   ## parse the output file
   idocart = -1;
   line = fgetl(fid);
+  nocrystalaxes = 0;
   do 
     ## at the beginning of the run
     if(strfind(line,"Title:"))
@@ -66,7 +67,7 @@ function cr = cr_read_espresso(file, LOG=0)
       cr.nat = sscanf(substr(line,index(line,"=")+1),"%d");
     elseif(strfind(line,"number of atomic types"))
       cr.ntyp = sscanf(substr(line,index(line,"=")+1),"%d");
-    elseif(strfind(line,"crystal axes:"))
+    elseif(strfind(line,"crystal axes:") && !nocrystalaxes)
       r = zeros(3,3);
       for i = 1:3
         line = fgetl(fid);
@@ -129,6 +130,7 @@ function cr = cr_read_espresso(file, LOG=0)
       endif
       r = reshape(fscanf(fid,"%f"),3,3)';
       rinv = inv(r);
+      nocrystalaxes = 1;
     endif
     if (regexp(line,"^ATOMIC_POSITIONS"))
       if (regexp(lower(line),"angstrom"))
