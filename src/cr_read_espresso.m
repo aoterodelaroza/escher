@@ -118,7 +118,15 @@ function cr = cr_read_espresso(file, LOG=0)
     if(regexp(line,"^CELL_PARAMETERS"))
       [dum1 dum2 alat] = sscanf(line,"%s %s %s","C");
       alat = alat(1:length(alat)-1);
-      alat = str2num(alat);
+      if (!isempty(alat)) 
+        alat = str2num(alat);
+      else
+        if (regexp(dum2,"bohr"))
+          alat = 1;
+        else
+          error("fixme: cannot handle angstrom in CELL_PARAMETERS of the output")
+        endif
+      endif
       r = reshape(fscanf(fid,"%f"),3,3)';
       rinv = inv(r);
     endif
