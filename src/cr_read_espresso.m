@@ -55,6 +55,7 @@ function cr = cr_read_espresso(file, LOG=0)
   idocart = -1;
   line = fgetl(fid);
   nocrystalaxes = 0;
+  noatpos = 0;
   do 
     ## at the beginning of the run
     if(strfind(line,"Title:"))
@@ -93,7 +94,7 @@ function cr = cr_read_espresso(file, LOG=0)
     endif
 
     ## coordinates in the input section
-    if(regexp(line,"^ *Cartesian axes *$"));
+    if(regexp(line,"^ *Cartesian axes *$") && !noatpos);
       line = fgetl(fid); line = fgetl(fid);
       cr.typ = zeros(1,cr.nat);
       cr.x = zeros(cr.nat,3);
@@ -133,6 +134,7 @@ function cr = cr_read_espresso(file, LOG=0)
       nocrystalaxes = 1;
     endif
     if (regexp(line,"^ATOMIC_POSITIONS"))
+      noatpos = 1;
       if (regexp(lower(line),"angstrom"))
         idocart = bohrtoans;
       endif
