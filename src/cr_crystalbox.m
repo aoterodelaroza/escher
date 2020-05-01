@@ -65,8 +65,8 @@ endfor
 ## of the atoms in the unit cell to save memory.
 mol = molecule_();
 mol.atname = cell();
-mol.atnumber = zeros(1,nvecsm1*cr.nat+nvecs*cr.nat/4);
-mol.atxyz = zeros(3,nvecsm1*cr.nat+nvecs*cr.nat/4);
+mol.atnumber = zeros(1,ceil(nvecsm1*cr.nat+nvecs*cr.nat/4));
+mol.atxyz = zeros(3,ceil(nvecsm1*cr.nat+nvecs*cr.nat/4));
 mask = crmask();
 n = 0;
 for i = 1:cr.nat
