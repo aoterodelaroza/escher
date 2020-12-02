@@ -38,9 +38,17 @@ function [mol] = mol_readlog(filename,multi=0)
       ipos = [ipos ftell(fid)];
     endif
   endwhile
-
-  if (!exist("ipos","var")) 
-    error("No geometry not found!")
+  if (isempty(ipos)) 
+    frewind(fid);
+    while (!feof(fid))
+      line = fgetl(fid);
+      if (strfind(line,"Standard orientation:"))
+        ipos = [ipos ftell(fid)];
+      endif
+    endwhile
+    if (isempty(ipos))
+      error("No geometry found!")
+    endif
   endif
 
   ## read the orientation block
