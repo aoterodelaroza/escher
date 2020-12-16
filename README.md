@@ -1,5 +1,4 @@
-Overview
---------
+# Overview
 
 Escher is a collection of octave routines for the visualization and
 plotting of molecules and crystals. The emphasis in escher is in i)
@@ -15,22 +14,22 @@ high quality representations of periodic and finite molecular
 structures, which is good, because we are not particularly satisfied
 with the state of (free) visualization software at the moment.
 
-We now know, however, that tessel has some annoying drawbacks: i) for
-most condensed matter applications it is difficult to set the camera
-in the orientation that generates a clear plot, ii) it is
-time-consuming to write an input for every single graphical
-representation, and iii) when we have a problem that exceeds the
-possibilities of the implemented keyword list, it is necessary to
-reprogram part of the code.
+We now know, however, that tessel has some annoying drawbacks:
+  - for most condensed matter applications it is difficult to set the camera
+    in the orientation that generates a clear plot
+  - it is time-consuming to write an input for every single graphical
+    representation
+  - when we have a problem that exceeds the possibilities of the implemented
+    keyword list, it is necessary to reprogram part of the code.
 
 So, because efficiency is almost never an issue with plots, we decided
 to port tessel into a more flexible language: a scripting language
 like octave. The first part of escher is a collection of octave
 routines that read molecular or crystal information from a variety of
-sources (gaussian, Quantum ESPRESSO, VASP), and generates
+sources (`gaussian`, `Quantum ESPRESSO`, `VASP`), and generates
 'representations' (balls, sticks, surfaces,...)  that are written to a
 graphical output format. For best results, this output format is
-POV-Ray, but it can be wavefront obj, geomview off, etc. The scene
+`POV-Ray`, but it can be wavefront obj, `geomview` off, etc. The scene
 contained in the representation is then rendered to generate the
 plot. Consequently, in order to create a figure, one has to write a
 script using the functions in the escher library.
@@ -43,7 +42,7 @@ authors when they get carried away. This time, however, it is not as
 bad as it sounds. A few octave lines are usually enough to generate a
 very reasonable plot with current default options and we provide
 routines that make placing the camera very easy using programs like
-view3dscene.
+`view3dscene`.
 
 Escher is still experimental. The syntax may change at any time, and
 it's probably riddled with bugs and inconsistencies. So beware.  We
@@ -53,8 +52,7 @@ to software development itself), so escher naturally reflects these
 inclinations.  Contributions in any other direction, comments and
 suggestions are greatly appreciated.
 
-Installation
-------------
+# Installation
 
 In order to use escher, you will need octave
 (http://www.gnu.org/software/octave/), which these days comes in the
@@ -65,25 +63,27 @@ https://github.com/aoterodelaroza/escher
 
 or uncompress the package:
 
-    tar xjvf escher.tar.bz2
+```
+tar xjvf escher.tar.bz2
+```
 
 and then add the following line to your .octaverc:
 
-    addpath("~/path/to/escher/src")
+```octave
+addpath("~/path/to/escher/src")
+```
 
 replacing the string with your particular path. Once this is done, you
 can check that your installation is working by opening octave and
 trying to call some of the functions in escher (e.g. molecule_()).
 
-Documentation
--------------
+# Documentation
 
 The only valid documentation file is doc/devs.org, which contains a
 list of all the routines with an apropos entry. The documentation
 inside each m script should also be up to date. 
 
-Use
----
+# Use
 
 Escher is a collection of octave functions to manipulate crystal and
 molecular geometries, so this software can be used in two ways: i)
@@ -106,40 +106,42 @@ creation of plot for a crystal. A representation is a scene that is
 meant to be plotted. Instead of atoms and bonds, there are balls,
 sticks, cameras and lights. The representation can be obtained from a
 crystal or a molecule object, and it is usually written to a graphical
-file format, such as a POV-Ray file (pov) or an obj.
+file format, such as a `POV-Ray` file (pov) or an obj.
 
 A simple example of usage is:
 
-    #! /usr/bin/octave -q
+```octave
+#!/usr/bin/octave -q
 
-    cr = cr_read_espresso("crystal.scf.out");
-    mol = cr_crystalbox(cr);
-    rep = mol_ball(mol);
-    rep = mol_stick(mol,rep);
-    rep = rep_setdefaultscene(rep);
-    rep_write_pov(rep,"crystal.pov");
+cr = cr_read_espresso("crystal.scf.out");
+mol = cr_crystalbox(cr);
+rep = mol_ball(mol);
+rep = mol_stick(mol,rep);
+rep = rep_setdefaultscene(rep);
+rep_write_pov(rep,"crystal.pov");
+```
 
 A crystal object is created by reading the output of a Quantum
 ESPRESSO calculation (crystal.scf.out). Then, a molecule is generated
 by taking a unit cell (with a little border) from the crystal. A
 representation is obtained from the molecule by representing the atoms
-as spheres (mol_ball), the bonds as sticks (mol_stick) and by setting
+as spheres (`mol_ball`), the bonds as sticks (`mol_stick`) and by setting
 the default parameters for the camera and lights
-(rep_setdefaultscene). The scene is written to a POV-Ray file
-(crystal.pov) using rep_write_pov. This file can be rendered doing:
+(`rep_setdefaultscene`). The scene is written to a POV-Ray file
+(`crystal.pov`) using `rep_write_pov`. This file can be rendered doing:
 
-    povray -D -UV +Icrystal.pov +Ocrystal.png +W1000 +H1000 +A
+```
+povray -D -UV +Icrystal.pov +Ocrystal.png +W1000 +H1000 +A
+```
 
-Examples
---------
+# Examples
 
 You can find several examples of escher plots in the examples
-directory (escher_data), which can be downloaded from:
+directory (`escher_data`), which can be downloaded from:
 
 https://github.com/aoterodelaroza/escher_examples
 
-Copyright notice
-----------------
+# Copyright notice
 
 Copyright (c) 2013-2015 Alberto Otero de la Roza, and Víctor Luaña Cabal. 
 
