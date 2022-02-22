@@ -51,7 +51,6 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
 % molc1: the molecule containing the polyhedra centers (subset of molc).
 % molv1: the molecule containing the polyhedra vertices (subset of molv).
 %
-
   ## initial representation
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
@@ -120,49 +119,60 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         endif
       endfor
 
-      ## skip polyhedra with less than 4 points
-      if (length(idx) < 4)
-        continue
-      endif
+      ## determine if the set of vectors is coplanar
+      xdif = zeros(3,length(idx));
+      for i = 1:length(idx)
+        xdif(:,i) = molv.atxyz(:,idx(i)) - molc.atxyz(:,ic);
+      endfor
 
+      if (rank(xdif) == 3)
+        ## non-coplanar: a polyhedron
+        ## build the polyhedron using the convex hull
+        v = molv.atxyz(:,idx)';
+        h = convhulln(v);
+        if (!isempty(frgb))
+          nv0 = rep.nvertex;
+          for i = 1:length(idx)
+            rep.nvertex += 1;
+            rep.vertex{rep.nvertex} = vertex();
+            rep.vertex{rep.nvertex}.x = molv.atxyz(:,idx(i))';
+            rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
+          endfor
+          for i = 1:size(h,1)
+            rep.ntriangle += 1;
+            rep.triangle{rep.ntriangle} = triangle();
+            rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
+            rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
+            rep.triangle{rep.ntriangle}.tex = iftex;
+          endfor
+        endif
+        if (!isempty(ergb))
+          icon = zeros(length(idx));
+          kk = [1 2; 1 3; 2 3];
+          for i = 1:size(h,1)
+            for j = 1:3
+              rep.nstick = rep.nstick + 1;
+              rep.stick{rep.nstick} = stick();
+              rep.stick{rep.nstick}.name = "";
+              rep.stick{rep.nstick}.x0 = v(h(i,kk(j,1)),:);
+              rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);
+              rep.stick{rep.nstick}.r = erad;
+              rep.stick{rep.nstick}.rgb = ergb;
+              rep.stick{rep.nstick}.tex = ietex;
+            endfor
+          endfor
+        endif
+      elseif (rank(xdif) == 2)
+        ## coplanar: a polygon
+        x0 = molv.atxyz(:,idx)';
+        rep = rep_polygon(rep,x0,frgb,ergb,ftex,etex,erad);
+      else
+        idx
+        ic
+        error("collinear atoms!")
+      endif
       ic1 = [ic1 ic];
       iv1 = unique([iv1 idx]);
-
-      ## build the polyhedron using the convex hull
-      v = molv.atxyz(:,idx)';
-      h = convhulln(v);
-      if (!isempty(frgb))
-        nv0 = rep.nvertex;
-        for i = 1:length(idx)
-          rep.nvertex += 1;
-          rep.vertex{rep.nvertex} = vertex();
-          rep.vertex{rep.nvertex}.x = molv.atxyz(:,idx(i))';
-          rep.vertex{rep.nvertex}.rgb = fillrgb(frgb);
-        endfor
-        for i = 1:size(h,1)
-          rep.ntriangle += 1;
-          rep.triangle{rep.ntriangle} = triangle();
-          rep.triangle{rep.ntriangle}.idx = nv0 + h(i,:);
-          rep.triangle{rep.ntriangle}.rgb = fillrgb(frgb);
-          rep.triangle{rep.ntriangle}.tex = iftex;
-        endfor
-      endif
-      if (!isempty(ergb))
-        icon = zeros(length(idx));
-        kk = [1 2; 1 3; 2 3];
-        for i = 1:size(h,1)
-          for j = 1:3
-            rep.nstick = rep.nstick + 1;
-            rep.stick{rep.nstick} = stick();
-            rep.stick{rep.nstick}.name = "";
-            rep.stick{rep.nstick}.x0 = v(h(i,kk(j,1)),:);
-            rep.stick{rep.nstick}.x1 = v(h(i,kk(j,2)),:);
-            rep.stick{rep.nstick}.r = erad;
-            rep.stick{rep.nstick}.rgb = ergb;
-            rep.stick{rep.nstick}.tex = ietex;
-          endfor
-        endfor
-      endif
     endif
   endfor
 
