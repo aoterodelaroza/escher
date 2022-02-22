@@ -125,7 +125,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         xdif(:,i) = molv.atxyz(:,idx(i)) - molc.atxyz(:,ic);
       endfor
 
-      if (rank(xdif) == 3)
+      if (rank(xdif) == 3 && length(idx) > 3)
         ## non-coplanar: a polyhedron
         ## build the polyhedron using the convex hull
         v = molv.atxyz(:,idx)';
@@ -162,7 +162,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
             endfor
           endfor
         endif
-      elseif (rank(xdif) == 2)
+      elseif (rank(xdif) > 1)
         ## coplanar: a polygon
         x0 = molv.atxyz(:,idx)';
         rep = rep_polygon(rep,x0,frgb,ergb,ftex,etex,erad);

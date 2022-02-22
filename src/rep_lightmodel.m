@@ -14,11 +14,11 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
 % function rep = rep_lightmodel(repi,model)
 %
 % rep_lightmodel - given a representation, position the lights relative
-% to the location of the camera using one of the known "models". 
+% to the location of the camera using one of the known "models".
 %
 % Input variables:
 % repi: input representation.
-% model: 
+% model:
 %   "tessel" - one light at the camera poistion, one in the sky
 %   "tessel-noshadow" - same as tessel but lights do not cast shadows.
 %   "direct" - one light at the camera, one to the side and above,
@@ -49,7 +49,7 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     endif
   elseif (strcmpi(model,"direct") || strcmpi(model,"direct-noshadow"))
     ## one at the camera
-    if (strcmpi(model,"direct")) 
+    if (strcmpi(model,"direct"))
       rep = rep_addlight(rep,rep.cam.location,0,0.5*ifac);
     else
       rep = rep_addlight(rep,rep.cam.location,1,0.5*ifac);
@@ -59,12 +59,12 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     xc = rep.cam.lookat(:) - x0;
     dc = norm(xc); xc = xc / dc;
     xu = rep.cam.sky(:); xu = xu / norm(xu);
-    xd = cross(xc,xu); 
+    xd = cross(xc,xu);
     if (norm(xd) < 1e-14)
-      xd = cross(xc,rep.cam.right(:)); 
+      xd = cross(xc,rep.cam.right(:));
     endif
     xd = xd / norm(xd);
-    
+
     ## fill light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
     x = x0 + dc * tan(thk) * xd + dc * tan(thk) * xu;
@@ -85,16 +85,16 @@ function rep = rep_lightmodel(repi,model="",ifac=1)
     xc = rep.cam.lookat(:) - x0;
     dc = norm(xc); xc = xc / dc;
     xu = rep.cam.sky(:); xu = xu / norm(xu);
-    xd = cross(xc,xu); 
+    xd = cross(xc,xu);
     if (norm(xd) < 1e-14)
-      xd = cross(xc,rep.cam.right(:)); 
+      xd = cross(xc,rep.cam.right(:));
     endif
     xd = xd / norm(xd);
-    
+
     ## the key light, 20 degrees to the side and above the camera
     thk = 20 * pi / 180;
     x = x0 + dc * tan(thk) * xd + dc * tan(thk) * xu;
-    if (strcmpi(model,"3point")) 
+    if (strcmpi(model,"3point"))
       rep = rep_addlight(rep,x,0,ifac*0.5);
       rep = rep_addlight(rep,x,0,ifac*0.5);
     else
