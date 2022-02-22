@@ -36,12 +36,12 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
 % Optional input variables (all have default values):
 % addto: add the new graphics elements to this representation.
 % dist: minimum and maximum atomic distance to place a polyhedron, in the form
-%       dist = [dmin dmax]. If the form [-1 f] is used, then place a polyhedron 
+%       dist = [dmin dmax]. If the form [-1 f] is used, then place a polyhedron
 %       if the atomic distance is less than f times the sum of covalent radii.
-% frgb: rgbft for the face color (from 0 to 255). Make it empty ("" or []) to 
+% frgb: rgbft for the face color (from 0 to 255). Make it empty ("" or []) to
 %       deactivate faces.
-% ergb: rgbft for the edge color (from 0 to 255). Make it empty ("" or []) to 
-%       deactivate edges. 
+% ergb: rgbft for the edge color (from 0 to 255). Make it empty ("" or []) to
+%       deactivate edges.
 % ftex: face texture.
 % etex: edge texture.
 % erad: edge radius.
@@ -52,7 +52,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
 % molv1: the molecule containing the polyhedra vertices (subset of molv).
 %
 
-  ## initial representation 
+  ## initial representation
   if (!isempty(addto) && isstruct(addto))
     rep = addto;
   else
@@ -115,7 +115,7 @@ function [rep molc1 molv1]  = mol_polyhedron(molc, molv, addto="", at="", by="",
         else
           useit = (d >= dist(1)) && (d <= dist(2));
         endif
-        if (useit) 
+        if (useit)
           idx = [idx iv];
         endif
       endfor
