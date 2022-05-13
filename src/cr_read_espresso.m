@@ -87,8 +87,9 @@ function cr = cr_read_espresso(file, LOG=0)
       cr.qtyp = zeros(1,cr.ntyp);
       for i = 1:cr.ntyp
         line = fgetl(fid);
-        [dum1 cr.zvaltyp(i) dum2 cr.attyp{i}] = sscanf(line,"%s %f %f %s","C");
-        cr.ztyp(i) = mol_dbatom(cr.attyp{i},0);
+        [dum1 cr.zvaltyp(i) dum2 dum3] = sscanf(line,"%s %f %f %s","C");
+        cr.attyp{i} = substr(dum3,1,min(length(dum3),2));
+        cr.ztyp(i) = mol_dbatom(cr.attyp{i});
         cr.attyp{i} = dum1;
       endfor
     endif
